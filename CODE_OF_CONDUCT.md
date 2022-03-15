@@ -1,6 +1,6 @@
 # Code of Conduct
 
-This code of conduct provides guidance on participation in Amazon-managed open source communities,
+This code of conduct provides guidance on participation in TREEHOOSE community,
 and outlines the process for reporting unacceptable behavior.
 As an organization and community, we are committed to providing an inclusive environment for everyone.
 Anyone violating this code of conduct may be removed and banned from the community.

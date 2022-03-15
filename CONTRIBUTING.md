@@ -24,22 +24,7 @@ Please try to include as much information as you can. Details like these are inc
 
 ## Contributing via Pull Requests
 
-### Pull Request Checklist
-
-- [ ] Testing
-  - Unit test added (prefer not to modify an existing test, otherwise,
-    it's probably a breaking change)
-- [ ] Docs
-  - **README**: README updated if necessary
-- [ ] Title and Description
-  - **Change type**: title prefixed with **fix**, **feat** and module name in parens, which will appear in changelog
-  - **Title**: use lower-case and doesn't end with a period
-  - **Breaking?**: last paragraph: "BREAKING CHANGE: \<describe what changed + link for details\>"
-  - **Issues**: Indicate issues fixed via: "**Fixes #xxx**" or "**Closes #xxx**"
-
 Contributions via pull requests are much appreciated. Before sending us a pull request, please ensure that:
-
-1. You are working against the latest source on the _main_ branch.
 
 ---
 
@@ -56,7 +41,7 @@ Make sure you are working against the latest source on the _main_ branch.
 
 ### Step 3: Develop
 
-This repository use [pre-commit](https://pre-commit.com/) hooks for linting
+This repository uses [pre-commit](https://pre-commit.com/) hooks for linting.
 
 1. Follow the [quickstart guide](https://pre-commit.com/#quick-start) for pre-commit (skipping step #2)
 1. Install dependencies : `TODO`
@@ -75,20 +60,33 @@ Send us a [pull request](https://help.github.com/articles/creating-a-pull-reques
 answering any default questions in the pull request interface.
 Pay attention to any automated CI failures reported in the pull request, and stay involved in the conversation.
 
+#### Pull Request Checklist
+
+- [ ] Testing
+  - Unit test added (prefer not to modify an existing test, otherwise,
+    it's probably a breaking change)
+- [ ] Docs
+  - **README**: README updated if necessary
+- [ ] Title and Description
+  - **Change type**: title prefixed with **fix**, **feat** and module name in parens, which will appear in changelog
+  - **Title**: use lower-case and doesn't end with a period
+  - **Breaking?**: last paragraph: "BREAKING CHANGE: \<describe what changed + link for details\>"
+  - **Issues**: Indicate issues fixed via: "**Fixes #xxx**" or "**Closes #xxx**"
+
 ## Finding contributions to work on
 
 Looking at the existing issues is a great way to find something to contribute on.
-As our projects, by default, use the default GitHub issue labels (enhancement/bug/duplicate/help wanted/invalid/question/wontfix),
+As our projects, use the default GitHub issue labels (enhancement/bug/duplicate/help wanted/invalid/question/wontfix),
 looking at any 'help wanted' issues is a great place to start.
 
 ## Code of Conduct
 
 For more information see the [Code of Conduct](./CODE_OF_CONDUCT.md) or contact
-TODO with any additional questions or comments.
+`TODO` with any additional questions or comments.
 
 ## Security issue notifications
 
-If you discover a potential security issue in this project we ask that you notify TODO.
+If you discover a potential security issue in this project we ask that you notify `TODO`.
 Please do **not** create a public github issue.
 
 ## Licensing

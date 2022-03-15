@@ -43,11 +43,11 @@ body:
   - type: input
     id: treehoose-version
     attributes:
-      label: treehoose version
-      description: What version of treehoose are you using?
+      label: TREEHOOSE version
+      description: What version of TREEHOOSE are you using?
     validations:
       required: true
-      
+
   - type: textarea
     id: other
     attributes:
