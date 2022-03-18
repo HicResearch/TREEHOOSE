@@ -1,0 +1,11 @@
+# Uninstallation Guide
+
+---
+
+## Steps
+
+---
+
+## Verification
+
+---
