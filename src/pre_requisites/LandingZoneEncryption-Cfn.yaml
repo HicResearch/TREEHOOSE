@@ -41,7 +41,7 @@ Resources:
             Action:
               - kms:Decrypt*
               - kms:GenerateDataKey*
-            Resource: "*"       
+            Resource: "*"
 
   LZKmsKeyAlias:
     Type: AWS::KMS::Alias
