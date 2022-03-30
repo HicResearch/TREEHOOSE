@@ -118,10 +118,10 @@ Resources:
       BlockDeviceMappings:
         - DeviceName: /dev/xvda
           Ebs:
-            VolumeType: gp2
+            VolumeType: gp3
             VolumeSize: 40
             DeleteOnTermination: true
-            Encrypted: false
+            Encrypted: true
       UserData: !Base64
         'Fn::Join':
           - ''
