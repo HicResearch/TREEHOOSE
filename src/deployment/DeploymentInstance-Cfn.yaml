@@ -1,0 +1,450 @@
+# (c) 2022 Amazon Web Services, Inc. or its affiliates. All Rights Reserved.
+# This AWS Content is provided subject to the terms of the AWS Customer
+# Agreement available at https://aws.amazon.com/agreement or other written
+# agreement between Customer and Amazon Web Services, Inc.
+
+###############################################################################
+
+AWSTemplateFormatVersion: "2010-09-09"
+Description: Provision an EC2 instance to be used for TRE deployment.
+
+Parameters:
+  InstanceKeyName:
+    Description: Specify the name of an existing EC2 KeyPair for access to the EC2 instance
+    Type: 'AWS::EC2::KeyPair::KeyName'
+    AllowedPattern : ".+"
+    ConstraintDescription: The provided EC2 KeyPair must exist.
+
+  InstanceAllowIP:
+    Description: Specify the IP address that will be granted SSH access to the EC2 instance
+    Type: String
+    AllowedPattern: '(\d{1,3})\.(\d{1,3})\.(\d{1,3})\.(\d{1,3})/32'
+    ConstraintDescription: The IP provided must be of the form x.x.x.x/32.
+
+  VPCNetworkRange:
+    Description: Specify the VPC where the EC2 instance should reside in
+    Type: String
+    Default: "10.0.0.0/28"
+    AllowedPattern: '(\d{1,3})\.(\d{1,3})\.(\d{1,3})\.(\d{1,3})/(\d{1,2})'
+
+  SubnetNetworkRange:
+    Description: Specify the Subnet where the EC2 instance should reside in
+    Type: String
+    Default: "10.0.0.0/28"
+    AllowedPattern: '(\d{1,3})\.(\d{1,3})\.(\d{1,3})\.(\d{1,3})/(\d{1,2})'
+
+Resources:
+  VPC:
+    Type: AWS::EC2::VPC
+    Properties:
+      CidrBlock: !Ref VPCNetworkRange
+
+  Subnet:
+    Type: AWS::EC2::Subnet
+    Properties:
+      VpcId: !Ref VPC
+      CidrBlock: !Ref SubnetNetworkRange
+      MapPublicIpOnLaunch: true
+
+  InternetGateway:
+    Type: AWS::EC2::InternetGateway
+
+  InternetGatewayAttachment:
+    Type: AWS::EC2::VPCGatewayAttachment
+    Properties:
+      InternetGatewayId: !Ref InternetGateway
+      VpcId: !Ref VPC
+
+  SubnetRouteTable:
+    Type: AWS::EC2::RouteTable
+    Properties:
+      VpcId: !Ref VPC
+
+  InternetGatewayRoute:
+    Type: AWS::EC2::Route
+    Properties:
+      DestinationCidrBlock: "0.0.0.0/0"
+      GatewayId: !Ref InternetGateway
+      RouteTableId: !Ref SubnetRouteTable
+
+  SubnetRouteTableAssociation:
+    Type: AWS::EC2::SubnetRouteTableAssociation
+    Properties:
+      SubnetId: !Ref Subnet
+      RouteTableId: !Ref SubnetRouteTable
+
+  Instance:
+    Type: AWS::EC2::Instance
+    Metadata:
+      AWS::CloudFormation::Init:
+        config:
+          commands:
+            dependencies:
+              command: "su ec2-user -c ' \
+                      sudo yum update -y; \
+                      mkdir ~/tmp; \
+                      cd ~/tmp; \
+                      curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.34.0/install.sh | bash; \
+                      . ~/.nvm/nvm.sh; \
+                      source ~/.bashrc; \
+                      nvm install v14.17.0; \
+                      npm install -g pnpm; \
+                      npm install -g serverless; \
+                      sudo yum install -y yum-utils; \
+                      curl \"https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip\" -o \"awscliv2.zip\"; \
+                      sudo unzip awscliv2.zip; \
+                      ./aws/install; \
+                      sudo yum install -y git; \
+                      wget https://go.dev/dl/go1.18.linux-amd64.tar.gz; \
+                      sudo rm -rf /usr/local/go; \
+                      sudo tar -C /usr/local -xzf go1.18.linux-amd64.tar.gz; \
+                      echo \"export PATH=/usr/local/go/bin:$PATH\" >>~/.bash_profile; \
+                      sudo yum -y install jq; \
+                      mkdir ~/.aws; \
+                      echo \"[default]\" > ~/.aws/config; \
+                      echo \"region = eu-west-2\" >> ~/.aws/config; \
+                      echo \"[default]\" > ~/.aws/credentials; \
+                      echo \"region = eu-west-2\" >> ~/.aws/credentials; \
+                      existing_vpc=`aws ec2 describe-vpcs --filters Name=isDefault,Values=true --query \"Vpcs[].VpcId\" --profile default | jq .[0]`; \
+                      if [ \"$existing_vpc_id\" == \"null\" ]; then aws ec2 create-default-vpc; fi;'"
+    Properties:
+      InstanceType: t2.medium
+      IamInstanceProfile: !Ref InstanceProfile
+      SubnetId: !Ref Subnet
+      SecurityGroupIds:
+        - !GetAtt InstanceSG.GroupId
+      KeyName: !Ref InstanceKeyName
+      ImageId: ami-03e88be9ecff64781
+      BlockDeviceMappings:
+        - DeviceName: /dev/xvda
+          Ebs:
+            VolumeType: gp2
+            VolumeSize: 40
+            DeleteOnTermination: true
+            Encrypted: false
+      UserData: !Base64
+        'Fn::Join':
+          - ''
+          - - |
+              #!/bin/bash -x
+            - |
+            - yum install -y aws-cfn-bootstrap
+            - |+
+
+            - |
+            - '/opt/aws/bin/cfn-init -v '
+            - '         --stack '
+            - !Ref 'AWS::StackName'
+            - '         --resource Instance '
+            - '         --region '
+            - !Ref 'AWS::Region'
+            - |+
+
+            - |
+            - '/opt/aws/bin/cfn-signal -e $? '
+            - '         --stack '
+            - !Ref 'AWS::StackName'
+            - '         --resource Instance '
+            - '         --region '
+            - !Ref 'AWS::Region'
+            - |+
+    CreationPolicy:
+      ResourceSignal:
+        Count: 1
+        Timeout: PT3M
+
+  InstanceSG:
+    Type: AWS::EC2::SecurityGroup
+    Properties:
+      GroupDescription: Enable SSH access to the SWB instance
+      SecurityGroupIngress:
+        - IpProtocol: tcp
+          FromPort: 22
+          ToPort: 22
+          CidrIp: !Ref InstanceAllowIP
+          Description: Allow incoming SSH traffic only from specified IP address
+      SecurityGroupEgress:
+        - IpProtocol: "-1"
+          FromPort: 0
+          ToPort: 0
+          CidrIp: "0.0.0.0/0"
+          Description: Allow all outgoing traffic
+      VpcId: !Ref VPC
+
+  InstanceProfile:
+    Type: AWS::IAM::InstanceProfile
+    Properties:
+      Roles:
+        - !Ref InstanceIAMRole
+
+  InstanceIAMRole:
+    Type: AWS::IAM::Role
+    Properties:
+      AssumeRolePolicyDocument:
+        Version: "2012-10-17"
+        Statement:
+          - Effect: Allow
+            Principal:
+              Service:
+                - ec2.amazonaws.com
+            Action:
+              - 'sts:AssumeRole'
+      ManagedPolicyArns:
+        - arn:aws:iam::aws:policy/AmazonAppStreamFullAccess
+      Policies:
+        - PolicyName: EC2Access
+          PolicyDocument:
+            Statement:
+              - Action:
+                  - ec2:DescribeRegions
+                Effect: Allow
+                Resource: "*"
+        - PolicyName: CloudFormationAccess
+          PolicyDocument:
+            Statement:
+              - Action:
+                  - cloudformation:CreateStack
+                  - cloudformation:DescribeStacks
+                  - cloudformation:UpdateStack
+                  - cloudformation:DeleteStack
+                  - cloudformation:UpdateTerminationProtection
+                  - cloudformation:ListStackResources
+                  - cloudformation:ValidateTemplate
+                  - cloudformation:DescribeStackEvents
+                Effect: Allow
+                Resource: "*"
+        - PolicyName: LogsAccess
+          PolicyDocument:
+            Statement:
+              - Effect: Allow
+                Action:
+                  - logs:CreateLogGroup
+                  - logs:CreateLogStream
+                  - logs:PutLogEvents
+                Resource: "*"
+        - PolicyName: IAMAccess
+          PolicyDocument:
+            Statement:
+              - Effect: Allow
+                Action:
+                  - iam:GetRolePolicy
+                  - iam:CreateRole
+                  - iam:DeleteRole
+                  - iam:CreatePolicy
+                  - iam:GetPolicy
+                  - iam:DeletePolicy
+                  - iam:PutRolePolicy
+                  - iam:DeleteRolePolicy
+                  - iam:AttachRolePolicy
+                  - iam:DetachRolePolicy
+                  - iam:UpdateAssumeRolePolicy
+                  - iam:ListPolicyVersions
+                  - iam:PassRole
+                  - iam:GetRole
+                  - iam:GetInstanceProfile
+                  - iam:CreateInstanceProfile
+                  - iam:DeleteInstanceProfile
+                  - iam:AddRoleToInstanceProfile
+                  - iam:RemoveRoleFromInstanceProfile
+                  - iam:CreateServiceLinkedRole
+                  - iam:TagRole
+                Resource:
+                  - "*"
+        - PolicyName: CloudFrontAccess
+          PolicyDocument:
+            Statement:
+              - Effect: Allow
+                Action:
+                  - cloudfront:CreateCloudFrontOriginAccessIdentity
+                  - cloudfront:CreateDistribution
+                  - cloudfront:TagResource
+                  - cloudfront:GetDistribution
+                  - cloudfront:CreateInvalidation
+                Resource: "*"
+        - PolicyName: APIGateway
+          PolicyDocument:
+            Statement:
+              - Effect: Allow
+                Action:
+                  - apigateway:GET
+                  - apigateway:POST
+                  - apigateway:PUT
+                  - apigateway:PATCH
+                  - apigateway:DELETE
+                Resource: "*"
+        - PolicyName: DynamodbPermissions
+          PolicyDocument:
+            Statement:
+              - Effect: Allow
+                Action:
+                  - dynamodb:DescribeTable
+                  - dynamodb:CreateTable
+                  - dynamodb:DescribeTimeToLive
+                  - dynamodb:UpdateTimeToLive
+                  - dynamodb:DeleteTable
+                  - dynamodb:TagResource
+                Resource: "*"
+        - PolicyName: CloudwatchLogsPolicy
+          PolicyDocument:
+            Statement:
+              - Effect: Allow
+                Action:
+                  - logs:DeleteLogGroup
+                  - lambda:GetFunction
+                  - lambda:CreateFunction
+                  - lambda:GetFunctionConfiguration
+                Resource: "*"
+        - PolicyName: S3Access
+          PolicyDocument:
+            Statement:
+              - Action:
+                  - s3:GetObject
+                  - s3:PutObject
+                  - s3:DeleteObject
+                  - s3:ListBucket
+                  - s3:CreateBucket
+                  - S3:DeleteBucket
+                  - s3:GetEncryptionConfiguration
+                  - s3:PutEncryptionConfiguration
+                  - s3:PutBucketPublicAccessBlock
+                  - s3:PutBucketLogging
+                  - s3:GetBucketLocation
+                  - s3:PutBucketAcl
+                  - s3:PutObjectAcl
+                  - s3:HeadObject
+                  - s3:PutBucketWebsite
+                  - s3:PutBucketPolicy
+                  - s3:GetBucketAcl
+                  - s3:DeleteBucketPolicy
+                  - s3:PutBucketCORS
+                  - s3:PutBucketVersioning
+                  - s3:PutBucketOwnershipControls
+                Effect: Allow
+                Resource: "*"
+        - PolicyName: CloudwatchPolicy
+          PolicyDocument:
+            Statement:
+              - Effect: Allow
+                Action:
+                  - events:PutRule 
+                  - events:DescribeRule
+                  - events:PutTargets
+                  - events:RemoveTargets
+                  - events:DeleteRule
+                Resource: "*"
+        - PolicyName: LambdaPolicy
+          PolicyDocument:
+            Statement:
+              - Effect: Allow
+                Action:
+                  - lambda:AddPermission
+                  - lambda:InvokeFunction
+                  - lambda:RemovePermission
+                  - lambda:DeleteFunction
+                  - lambda:UpdateFunctionCode
+                Resource: "*"
+        - PolicyName: SMWorkflowPolicy
+          PolicyDocument:
+            Statement:
+              - Effect: Allow
+                Action:
+                  - states:CreateStateMachine
+                  - states:TagResource
+                  - states:DeleteStateMachine
+                  - states:DescribeStateMachine
+                Resource: "*"
+        - PolicyName: SSMPolicy
+          PolicyDocument:
+            Statement:
+              - Effect: Allow
+                Action:
+                  - ssm:PutParameter
+                  - ssm:AddTagsToResource
+                  - ssm:DeleteParameter
+                  - ssm:GetParameters
+                Resource: "*"
+        - PolicyName: SNSPolicy
+          PolicyDocument:
+            Statement:
+              - Effect: Allow
+                Action:
+                  - sns:GetTopicAttributes
+                  - sns:CreateTopic
+                  - sns:TagResource
+                  - sns:DeleteTopic
+                Resource: "*"
+        - PolicyName: KMSPolicy
+          PolicyDocument:
+            Statement:
+              - Effect: Allow
+                Action:
+                  - kms:TagResource
+                  - kms:CreateKey
+                  - kms:Create*
+                  - kms:Describe*
+                  - kms:Enable*
+                  - kms:List*
+                  - kms:Put*
+                  - kms:Update*
+                  - kms:Revoke*
+                  - kms:Disable*
+                  - kms:Get*
+                  - kms:Delete*
+                  - kms:ScheduleKeyDeletion
+                  - kms:CancelKeyDeletion
+                  - kms:Encrypt
+                  - kms:Decrypt
+                  - kms:ReEncrypt
+                  - kms:GenerateDataKey*
+                  - kms:DescribeKey
+                Resource: "*"
+        - PolicyName: EC2Policy
+          PolicyDocument:
+            Statement:
+              - Effect: Allow
+                Action:
+                  - ec2:CopyImage
+                  - ec2:CreateImage
+                  - ec2:CreateSnapshot
+                  - ec2:CreateTags
+                  - ec2:CreateVolume
+                  - ec2:DeleteSnapshot
+                  - ec2:DeregisterImage
+                  - ec2:DescribeImageAttribute
+                  - ec2:DescribeImages
+                  - ec2:DescribeInstances
+                  - ec2:DescribeInstanceStatus
+                  - ec2:DescribeSnapshots
+                  - ec2:DescribeTags
+                  - ec2:ModifyImageAttribute
+                  - ec2:ModifyInstanceAttribute
+                  - ec2:ModifySnapshotAttribute
+                  - ec2:RegisterImage
+                  - ec2:RunInstances
+                  - ec2:StopInstances
+                  - ec2:TerminateInstances
+                  - ec2:CreateKeypair
+                  - ec2:CreateSecurityGroup
+                  - ec2:AuthorizeSecurityGroupIngress
+                  - ec2:DescribeSecurityGroups
+                  - ec2:DeleteSecurityGroup
+                  - ec2:DeleteKeyPair
+                  - ec2:DeleteVolume
+                  - ec2:AttachVolume
+                  - ec2:DetachVolume
+                  - ec2:RevokeSecurityGroup*
+                  - ec2:AuthorizeSecurityGroup*
+                  - ec2:DescribeSubnets
+                  - ec2:DescribeVolumes
+                  - ec2:CreateDefaultVpc
+                Resource: "*"
+
+Outputs:
+  InstanceId:
+    Description: TRE Deployment Instance ID
+    Value: !Ref Instance
+  InstancePublicIP:
+    Description: TRE Deployment Instance Public IP
+    Value: !GetAtt
+      - Instance
+      - PublicIp
