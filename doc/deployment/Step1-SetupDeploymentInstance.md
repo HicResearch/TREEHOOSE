@@ -17,11 +17,7 @@ The EC2 instance used for deploying the solution is protected by a security grou
 
 Before you can create the instance in step 1C, you will need the IP address of the machine from which you will initiate the SSH connection to the EC2 instance.
 
-To obtain the IP address, you can either:
-1) Search using a browser for "my ip" (e.g. https://www.google.com/search?q=my+ip)
-2) Access the [*Create security group page in AWS Console*](https://eu-west-2.console.aws.amazon.com/ec2/v2/home?region=eu-west-2#CreateSecurityGroup:), locate section *Inbound rules*, press on button *Add rule* and select in *Source*: "My IP". You should see your IP next to the *Source* field like in the image below. Copy it and exit the page without creating any resources 
-
-![Guidance to obtain IP address](../../res/images/Guidance-ObtainIPAddress.png)
+To view your IP address, you can use this link: https://checkip.amazonaws.com/.
 
 ### Step 1C. Launch pre-configured EC2 instance
 

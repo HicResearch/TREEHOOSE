@@ -30,7 +30,7 @@ cp .defaults.yml treprod.yml
 nano treprod.yml
 ```
 
-Inside the treprod.yml file, change the parameters below as instructed and then save the file.
+Inside the `treprod.yml` file, change the parameters below as instructed and then save the file.
 
 - [ ] Add:
 ```
