@@ -2,13 +2,13 @@
 
 > Required before deploying the TREEHOOSE TRE solution
 
-**Total time to configure**: Approximately 90 minutes
+**Total time to configure**: Approximately 105 minutes
 
 Ensure all steps below are executed in AWS region: [London (eu-west-2)](https://eu-west-2.console.aws.amazon.com/).
 
 ## Step 1. Setup Accounts
 
-**Time to configure**: Approximately 80 minutes
+**Time to configure**: Approximately 90 minutes
 
 Log in to the [AWS Management Console](https://console.aws.amazon.com/) using your organization's **Management** account.
 
@@ -20,12 +20,14 @@ The solution must be deployed in a multi-account environment created and managed
 
 ### Step 1A. Initialise AWS Organizations
 
+**Time to configure**: Approximately 5 minutes
+
 - [ ] Go to Service: [AWS Organizations](https://us-east-1.console.aws.amazon.com/organizations/v2/home?region=eu-west-2#)
 - [ ] Press on button *Create an organization* and verify email as instructed
 
 ### Step 1B. Create Encryption Key for AWS Control Tower
 
-**Time to configure**: Approximately 5 minutes
+**Time to configure**: Approximately 10 minutes
 
 - [ ] Go to Service: [AWS CloudFormation](https://eu-west-2.console.aws.amazon.com/cloudformation/home?region=eu-west-2#/)
 
@@ -73,6 +75,8 @@ Wait until the Control Tower Landing Zone Setup completes successfully.
 ![Control Tower Setup Success](../../res/images/Status-ControlTowerSetup-Success.png)
 
 ### Step 1D. Change default settings
+
+**Time to configure**: Approximately 5 minutes
 
 - [ ] Go to Service:
   [AWS Control Tower](https://eu-west-2.console.aws.amazon.com/controltower)
@@ -124,6 +128,8 @@ The resulting [organizational structure](https://eu-west-2.console.aws.amazon.co
 
 ## Step 2. Initialise Cost Explorer
 
+**Time to configure**: Approximately 5 minutes
+
 Log in to the [AWS Management Console](https://console.aws.amazon.com/) using your organization's **Management** account.
 
 - [ ] Go to Service: [AWS Cost Explorer](https://us-east-1.console.aws.amazon.com/cost-management/home?region=eu-west-2)
@@ -133,6 +139,10 @@ If the service is not already initialised, a message will appear like in the ima
 ![Cost Explorer](../../res/images/Init-CostExplorer.png)
 
 ## Step 3. Initialise Lake Formation
+
+**Time to configure**: Approximately 5 minutes
+
+Required for all accounts created under the **TRE Data Prod** OU.
 
 Log in to the [AWS Management Console](https://console.aws.amazon.com/) using your **TRE Datalake 1 Prod** account.
 
@@ -144,6 +154,10 @@ A prompt will appear to add the current account as an administrator for Lake For
 
 ## Step 4. Initialise AppStream
 
+**Time to configure**: Approximately 5 minutes
+
+Required for all accounts created under the **TRE Projects Prod** OU.
+
 Log in to the [AWS Management Console](https://console.aws.amazon.com/) using your **TRE Project 1 Prod** account.
 
 - [ ] Go to Service: [Amazon AppStream 2.0](https://eu-west-2.console.aws.amazon.com/appstream2/home?region=eu-west-2#/)
@@ -154,4 +168,5 @@ Log in to the [AWS Management Console](https://console.aws.amazon.com/) using yo
 These steps are optional, but recommended for implementing best practices on AWS.
 
 - [ ] To secure the **Management** account, please follow these [instructions](https://docs.aws.amazon.com/organizations/latest/userguide/orgs_best-practices_mgmt-acct.html)
-- [ ] To allow non-Management accounts to view billing-related pages on AWS, please follow these [instructions](https://docs.aws.amazon.com/awsaccountbilling/latest/aboutv2/control-access-billing.html#ControllingAccessWebsite-Activate)
+- [ ] To manage SSO access to your AWS accounts, please follow these [instructions](https://docs.aws.amazon.com/singlesignon/latest/userguide/manage-your-accounts.html)
+- [ ] To allow IAM users to view Billing on AWS, please follow these [instructions](https://docs.aws.amazon.com/awsaccountbilling/latest/aboutv2/control-access-billing.html#ControllingAccessWebsite-Activate)
