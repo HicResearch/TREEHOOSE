@@ -12,7 +12,7 @@ Parameters:
   EgressAppAccount:
     Type: String
     Description: Account number of the account that is hosting the Egress Add-On Application
-  
+
   EgressAppStackName:
     Type: String
     Description: Stack name used for the Egress-Backend
@@ -67,7 +67,7 @@ Resources:
           - Sid: Enable Access From Egress App Account
             Effect: Allow
             Principal:
-              AWS: 
+              AWS:
                 # - !Sub 'arn:aws:iam::${EgressAppAccount}:role/${EgressAppStackName}-${EgressAppCopyLambdaPrefix}*'
                 # - !Sub 'arn:aws:iam::${EgressAppAccount}:role/${EgressAppStackName}-${EgressAppDownloadLambdaPrefix}*'
                 - !Sub 'arn:aws:iam::${EgressAppAccount}:root'
@@ -227,7 +227,7 @@ Resources:
               - s3:GetBucket*
               - s3:List*
             Effect: Allow
-            Resource: 
+            Resource:
               - !Sub '${TRETargetBucket.Arn}/*'
               - !Sub '${TRETargetBucket.Arn}'
             Principal:
@@ -240,10 +240,10 @@ Resources:
               - s3:PutObject
               - s3:Abort*
             Effect: Allow
-            Resource: 
+            Resource:
               - !Sub '${TRETargetBucket.Arn}/*'
             Principal:
-              AWS: 
+              AWS:
                 # - !Sub 'arn:aws:iam::${EgressAppAccount}:role/${EgressAppStackName}-${EgressAppCopyLambdaPrefix}*'
                 - !Sub 'arn:aws:iam::${EgressAppAccount}:root'
 
@@ -348,7 +348,7 @@ Resources:
               - kms:UntagResource
               - kms:ScheduleKeyDeletion
               - kms:CancelKeyDeletion
-            Resource: 
+            Resource:
               - !GetAtt TRESourceBucketKMSKey.Arn
               - !GetAtt TRETargetBucketKMSKey.Arn
 
@@ -366,7 +366,7 @@ Resources:
               - kms:ReEncrypt
               - kms:GenerateDataKey
               - kms:DescribeKey
-            Resource: 
+            Resource:
               - !GetAtt TRESourceBucketKMSKey.Arn
               - !GetAtt TRETargetBucketKMSKey.Arn
 
@@ -422,7 +422,7 @@ Resources:
                 - !Sub ${AWS::AccountId}
             Action:
               - 'sts:AssumeRole'
-        
+
   TREAdminRole:
     Type: AWS::IAM::Role
     Properties:
