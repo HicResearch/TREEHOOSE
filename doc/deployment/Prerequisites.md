@@ -2,13 +2,13 @@
 
 > Required before deploying the TREEHOOSE TRE solution
 
-**Total time to configure**: Approximately 105 minutes
+**Total time to configure**: Approximately 100 minutes
 
 Ensure all steps below are executed in AWS region: [London (eu-west-2)](https://eu-west-2.console.aws.amazon.com/).
 
 ## Step 1. Setup Accounts
 
-**Time to configure**: Approximately 90 minutes
+**Time to configure**: Approximately 85 minutes
 
 Log in to the [AWS Management Console](https://console.aws.amazon.com/) using your organization's **Management** account.
 
@@ -18,43 +18,18 @@ The solution must be deployed in a multi-account environment created and managed
 
 ![Deployment Account Structure](../../res/images/Diagram-DeploymentAccountStructure.png)
 
-### Step 1A. Initialise AWS Organizations
+### Step 1A. Create Encryption Key for AWS Control Tower
 
 **Time to configure**: Approximately 5 minutes
 
-- [ ] Go to Service: [AWS Organizations](https://us-east-1.console.aws.amazon.com/organizations/v2/home?region=eu-west-2#)
-- [ ] Press on button *Create an organization* and verify email as instructed
-
-### Step 1B. Create Encryption Key for AWS Control Tower
-
-**Time to configure**: Approximately 10 minutes
-
 - [ ] Go to Service: [AWS CloudFormation](https://eu-west-2.console.aws.amazon.com/cloudformation/home?region=eu-west-2#/)
-
-#### Part 1
-
-Apply this setup to the current **Management** account.
-
 - [ ] Select the [*Stacks*](https://eu-west-2.console.aws.amazon.com/cloudformation/home?region=eu-west-2#/stacks) menu option on the left side
 - [ ] Press button: [*Create Stack* with new resources](https://eu-west-2.console.aws.amazon.com/cloudformation/home?region=eu-west-2#/stacks/create/template)
 - [ ] Select option *Upload a template file* to upload CloudFormation template file: [landing zone encryption](../../src/pre_requisites/LandingZoneEncryption-Cfn.yaml) and press on button *Next*
 - [ ] Provide *Stack name*: "ControlTowerSetup-EncryptionKey-ManagementAccount", press on button *Next* twice and then press on button *Create stack*
 - [ ] Confirm the stack status is "CREATE_COMPLETE"
 
-#### Part 2
-
-Ensure this setup is also automatically applied to all enrolled Control Tower accounts.
-
-- [ ] Select the [*StackSets*](https://eu-west-2.console.aws.amazon.com/cloudformation/home?region=eu-west-2#/stacksets) menu option on the left side
-- [ ] If you get message "Enable trusted access with AWS Organizations to use service-managed permissions.", press on button *Enable trusted access*
-- [ ] Press button: [*Create StackSet*](https://eu-west-2.console.aws.amazon.com/cloudformation/home?region=eu-west-2#/stacksets/create)
-- [ ] Select option *Service-managed permissions*
-- [ ] Select option *Upload a template file* to upload CloudFormation template file: [landing zone encryption](../../src/pre_requisites/templates/LandingZoneEncryption-Cfn.yaml) and press on button *Next*
-- [ ] Provide *StackSet name*: "ControlTowerSetup-EncryptionKey" and press on button *Next* twice
-- [ ] For *Deployment targets*, ensure *Automatic deployment* is set to Enabled and select region *eu-west-2 (London)*, then press on button *Next* and *Submit*
-- [ ] Click on the stack set created and confirm the status is "ACTIVE"
-
-### Step 1C. Create Landing Zone in AWS Control Tower
+### Step 1B. Create Landing Zone in AWS Control Tower
 
 **Time to configure**: Approximately 25 minutes
 
@@ -67,14 +42,30 @@ Leave every option set to default in the Control Tower Landing Zone Setup, excep
 
 - [ ] Step 1 Page - Ensure Home Region is *London*
 - [ ] Step 2 Page - For *Additional OU*, add **TRE Solution Prod**
-- [ ] Step 3 Page - Provide email addresses for the **Log Archive** and **Audit** accounts. Enable KMS Encryption and select the **ControlTowerSetup-Landing-Zone** key created previously
+- [ ] Step 3 Page - Provide email addresses for the **Log Archive** and **Audit** accounts. Enable KMS Encryption and select the **ControlTowerSetup-Landing-Zone** key created in Step 1A
 - [ ] Step 4 Page - Ensure the list matches the diagram above for the **Default Setup** for the 3 initial accounts plus **TRE Solution Prod**, then press on button *Set up landing zone*
 
 Wait until the Control Tower Landing Zone Setup completes successfully.
 
 ![Control Tower Setup Success](../../res/images/Status-ControlTowerSetup-Success.png)
 
-### Step 1D. Change default settings
+### Step 1C. Add encryption to enrolled accounts in AWS Control Tower
+
+**Time to configure**: Approximately 5 minutes
+
+Ensure the encryption key setup in Step 1A is also automatically applied to all enrolled Control Tower accounts.
+
+- [ ] Go to Service: [AWS CloudFormation](https://eu-west-2.console.aws.amazon.com/cloudformation/home?region=eu-west-2#/)
+- [ ] Select the [*StackSets*](https://eu-west-2.console.aws.amazon.com/cloudformation/home?region=eu-west-2#/stacksets) menu option on the left side
+- [ ] If you get message "Enable trusted access with AWS Organizations to use service-managed permissions.", press on button *Enable trusted access*
+- [ ] Press button: [*Create StackSet*](https://eu-west-2.console.aws.amazon.com/cloudformation/home?region=eu-west-2#/stacksets/create)
+- [ ] Select option *Service-managed permissions*
+- [ ] Select option *Upload a template file* to upload CloudFormation template file: [landing zone encryption](../../src/pre_requisites/templates/LandingZoneEncryption-Cfn.yaml) and press on button *Next*
+- [ ] Provide *StackSet name*: "ControlTowerSetup-EncryptionKey" and press on button *Next* twice
+- [ ] For *Deployment targets*, ensure *Automatic deployment* is set to Enabled and select region *eu-west-2 (London)*, then press on button *Next* and *Submit*
+- [ ] Click on the stack set created and confirm the status is "ACTIVE"
+
+### Step 1D. Change default settings in AWS Control Tower
 
 **Time to configure**: Approximately 5 minutes
 
