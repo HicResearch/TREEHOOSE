@@ -175,6 +175,8 @@ Resources:
         BlockPublicPolicy: True
         IgnorePublicAcls: True
         RestrictPublicBuckets: True
+      VersioningConfiguration:
+        Status: Enabled
 
   TREAnalystResultsBucket:
     Type: AWS::S3::Bucket
@@ -190,6 +192,8 @@ Resources:
         BlockPublicPolicy: True
         IgnorePublicAcls: True
         RestrictPublicBuckets: True
+      VersioningConfiguration:
+        Status: Enabled
 
   TRELakeAdminResultsBucket:
     Type: AWS::S3::Bucket
@@ -205,6 +209,8 @@ Resources:
         BlockPublicPolicy: True
         IgnorePublicAcls: True
         RestrictPublicBuckets: True
+      VersioningConfiguration:
+        Status: Enabled
 
   TRETargetBucketPolicy:
     Type: AWS::S3::BucketPolicy
@@ -508,8 +514,7 @@ Resources:
                   - lakeformation:*
                   - lakeformation:GetDataAccess
                   - lakeformation:GrantPermissions
-                Resource:
-                  - '*'
+                Resource: '*'
       Path: /
 
   TRES3DataLakePolicy:
@@ -544,6 +549,11 @@ Resources:
 
   TRES3DataAnalystPolicy:
     Type: AWS::IAM::ManagedPolicy
+    Metadata:
+      cfn_nag:
+        rules_to_suppress:
+          - id: W13
+            reason: KMS ListAliases does not support resource ARNs
     Properties:
       PolicyDocument:
         Version: '2012-10-17'
