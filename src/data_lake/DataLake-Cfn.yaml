@@ -136,9 +136,114 @@ Resources:
             Action: kms:*
             Resource: '*'
 
+  TREAccessLogsBucketKMSKey:
+    Type: AWS::KMS::Key
+    Properties:
+      Description: Key for TRE access logs bucket
+      EnableKeyRotation: true
+      KeyPolicy:
+        Version: 2012-10-17
+        Statement:
+          - Sid: Enable IAM Policies
+            Effect: Allow
+            Principal:
+              AWS: !Sub 'arn:aws:iam::${AWS::AccountId}:root'
+            Action: kms:*
+            Resource: '*'
+
+  TREAccessLogsBucket:
+    Type: AWS::S3::Bucket
+    Metadata:
+      cfn_nag:
+        rules_to_suppress:
+          - id: W35
+            reason: S3 bucket hosting access logs shouldn't have access logging configured
+    Properties:
+      BucketName: tre-access-logs-bucket
+      BucketEncryption:
+        ServerSideEncryptionConfiguration:
+          - BucketKeyEnabled: true
+            ServerSideEncryptionByDefault:
+              SSEAlgorithm: aws:kms
+              KMSMasterKeyID: !GetAtt TREAccessLogsBucketKMSKey.Arn
+      PublicAccessBlockConfiguration:
+        BlockPublicAcls: True
+        BlockPublicPolicy: True
+        IgnorePublicAcls: True
+        RestrictPublicBuckets: True
+      VersioningConfiguration:
+        Status: Enabled
+
+  TREAccessLogsBucketPolicy:
+    Type: AWS::S3::BucketPolicy
+    Properties:
+      Bucket: !Ref TREAccessLogsBucket
+      PolicyDocument:
+        Version: 2012-10-17
+        Statement:
+          - Sid: S3ServerAccessLogsPolicy-TRETargetBucket
+            Action:
+              - 's3:PutObject'
+            Effect: Allow
+            Resource: "arn:aws:s3:::tre-access-logs-bucket/logs-tre-target-bucket*"
+            Principal:
+              Service: logging.s3.amazonaws.com
+            Condition:
+              ArnLike:
+                'aws:SourceArn':
+                  - !GetAtt TRETargetBucket.Arn
+              StringEquals:
+                'aws:SourceAccount':
+                  -  !Sub "${AWS::AccountId}"
+          - Sid: S3ServerAccessLogsPolicy-TRESourceBucket
+            Action:
+              - 's3:PutObject'
+            Effect: Allow
+            Resource: "arn:aws:s3:::tre-access-logs-bucket/logs-tre-source-bucket*"
+            Principal:
+              Service: logging.s3.amazonaws.com
+            Condition:
+              ArnLike:
+                'aws:SourceArn':
+                  - !GetAtt TRESourceBucket.Arn
+              StringEquals:
+                'aws:SourceAccount':
+                  -  !Sub "${AWS::AccountId}"
+          - Sid: S3ServerAccessLogsPolicy-TREAnalystResultsBucket
+            Action:
+              - 's3:PutObject'
+            Effect: Allow
+            Resource: "arn:aws:s3:::tre-access-logs-bucket/logs-tre-analyst-results-bucket*"
+            Principal:
+              Service: logging.s3.amazonaws.com
+            Condition:
+              ArnLike:
+                'aws:SourceArn':
+                  - !GetAtt TREAnalystResultsBucket.Arn
+              StringEquals:
+                'aws:SourceAccount':
+                  -  !Sub "${AWS::AccountId}"
+          - Sid: S3ServerAccessLogsPolicy-TRELakeAdminResultsBucket
+            Action:
+              - 's3:PutObject'
+            Effect: Allow
+            Resource: "arn:aws:s3:::tre-access-logs-bucket/logs-tre-lake-admin-results-bucket*"
+            Principal:
+              Service: logging.s3.amazonaws.com
+            Condition:
+              ArnLike:
+                'aws:SourceArn':
+                  - !GetAtt TRELakeAdminResultsBucket.Arn
+              StringEquals:
+                'aws:SourceAccount':
+                  -  !Sub "${AWS::AccountId}"
+
   TRETargetBucket:
     Type: AWS::S3::Bucket
     Properties:
+      LoggingConfiguration:
+        DestinationBucketName: !Ref TREAccessLogsBucket
+        LogFilePrefix: logs-tre-target-bucket
       BucketEncryption:
         ServerSideEncryptionConfiguration:
           - BucketKeyEnabled: true
@@ -164,6 +269,9 @@ Resources:
   TRESourceBucket:
     Type: AWS::S3::Bucket
     Properties:
+      LoggingConfiguration:
+        DestinationBucketName: !Ref TREAccessLogsBucket
+        LogFilePrefix: logs-tre-source-bucket
       BucketEncryption:
         ServerSideEncryptionConfiguration:
           - BucketKeyEnabled: true
@@ -181,6 +289,9 @@ Resources:
   TREAnalystResultsBucket:
     Type: AWS::S3::Bucket
     Properties:
+      LoggingConfiguration:
+        DestinationBucketName: !Ref TREAccessLogsBucket
+        LogFilePrefix: logs-tre-analyst-results-bucket
       BucketEncryption:
         ServerSideEncryptionConfiguration:
           - BucketKeyEnabled: true
@@ -198,6 +309,9 @@ Resources:
   TRELakeAdminResultsBucket:
     Type: AWS::S3::Bucket
     Properties:
+      LoggingConfiguration:
+        DestinationBucketName: !Ref TREAccessLogsBucket
+        LogFilePrefix: logs-tre-lake-admin-results-bucket
       BucketEncryption:
         ServerSideEncryptionConfiguration:
           - BucketKeyEnabled: true
