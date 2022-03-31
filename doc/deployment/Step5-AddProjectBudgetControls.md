@@ -31,7 +31,7 @@ Log in to the [AWS Management Console](https://console.aws.amazon.com/) using yo
 |AnnualBudgetActionThreshold|Budget threshold percentage for stopping new SWB workspace creation|*99*|
 |BudgetNotifySNSTopicName|The name of the SNS topic whose subscribers (includes TREAdminEmailAddress) receive alerts regarding project budget|*No default - must be specified*|
 |TREAdminEmailAddress|The email address for the TRE admin who will receive alerts regarding project budget|*No default - must be specified*|
-|SWBStackID|Specify the ID of existing IAM role initial-stack-<ID>-xacc-env-mgmt|*No default - must be specified*|
+|SWBStackID|Specify the ID of existing IAM role initial-stack-ID-xacc-env-mgmt|*No default - must be specified*|
 
 - [ ] Confirm the stack status is "CREATE_COMPLETE"
 
