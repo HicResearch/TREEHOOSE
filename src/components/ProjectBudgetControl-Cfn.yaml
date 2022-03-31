@@ -1,0 +1,184 @@
+# (c) 2022 Amazon Web Services, Inc. or its affiliates. All Rights Reserved.
+# This AWS Content is provided subject to the terms of the AWS Customer
+# Agreement available at https://aws.amazon.com/agreement or other written
+# agreement between Customer and Amazon Web Services, Inc.
+
+###############################################################################
+
+AWSTemplateFormatVersion: "2010-09-09"
+Description: Provision an annual TRE project budget with notifications and action to stop SWB workspace creation.
+
+Parameters:
+  SWBStackID:
+    Description: Specify the ID of existing IAM role initial-stack-<ID>-xacc-env-mgmt
+    Type: String
+    MinLength: 1
+    AllowedPattern : "[0-9]+"
+    ConstraintDescription: Ensure only the ID part of the IAM role name is provided
+
+  AnnualBudgetLimit:
+    Type: String
+    Description: Estimated annual account spend in USD
+
+  AnnualBudgetNotificationThreshold1:
+    Type: String
+    Description: Budget threshold percentage for first notification
+    Default: 80
+
+  AnnualBudgetNotificationThreshold2:
+    Type: String
+    Description: Budget threshold percentage for second notification
+    Default: 99
+
+  AnnualBudgetActionThreshold:
+    Type: String
+    Description: Budget threshold percentage for preventing workspace creation
+    Default: 99
+
+  TREAdminEmailAddress:
+    Type: String
+    Description: TRE admin email address who will receive budget alerts
+    MinLength: 1
+
+  BudgetNotifySNSTopicName:
+    Type: String
+    Description: SNS topic whose subscribers receive budget alerts
+    MinLength: 1
+    Default: "TREProject1Prod-BudgetNotifications"
+
+Resources:
+  BudgetNotifyKMSKey:
+    Type: AWS::KMS::Key
+    Properties:
+      Description: Key for the TRE Project Budget Notification SNS Topic
+      EnableKeyRotation: true
+      KeyPolicy:
+        Version: 2012-10-17
+        Statement:
+          - Sid: Enable IAM Policies
+            Effect: Allow
+            Principal:
+              AWS: !Sub 'arn:aws:iam::${AWS::AccountId}:root'
+            Action: kms:*
+            Resource: '*'
+          - Sid: Enable Budgets to publish to encrypted SNS topic
+            Effect: Allow
+            Principal:
+              Service: budgets.amazonaws.com
+            Action:
+              - kms:GenerateDataKey*
+              - kms:Decrypt
+            Resource: '*'
+
+  BudgetNotifySNS:
+    Type: AWS::SNS::Topic
+    Properties:
+      DisplayName: !Sub 'TRE Project Budget Notification Group'
+      KmsMasterKeyId: !GetAtt BudgetNotifyKMSKey.KeyId
+      TopicName: !Ref BudgetNotifySNSTopicName
+      Subscription:
+        - Endpoint: !Ref TREAdminEmailAddress
+          Protocol: email
+
+  BudgetNotifySNSPolicy:
+    Type: AWS::SNS::TopicPolicy
+    Properties:
+      PolicyDocument:
+        Id: BudgetNotifySNSPolicy
+        Version: '2012-10-17'
+        Statement:
+        - Sid: BudgetNotifySNSPolicyId1
+          Effect: Allow
+          Principal:
+            Service: budgets.amazonaws.com
+          Action: SNS:Publish
+          Resource: !Sub "arn:aws:sns:${AWS::Region}:${AWS::AccountId}:${BudgetNotifySNSTopicName}"
+      Topics:
+      - !Ref BudgetNotifySNS
+
+  AWSBudgetsExecutionRole:
+    Type: AWS::IAM::Role
+    Properties:
+      AssumeRolePolicyDocument:
+        Version: "2012-10-17"
+        Statement:
+          - Effect: Allow
+            Principal:
+              Service:
+                - budgets.amazonaws.com
+            Action:
+              - 'sts:AssumeRole'
+      ManagedPolicyArns:
+        - arn:aws:iam::aws:policy/AWSBudgetsActionsWithAWSResourceControlAccess
+      Policies:
+        - PolicyName: AllowIAMRolePolicyUpdates
+          PolicyDocument:
+            Statement:
+              - Action:
+                  - iam:DetachRolePolicy
+                  - iam:DeleteRolePolicy
+                  - iam:AttachRolePolicy
+                  - iam:PutRolePolicy
+                  - iam:GetRolePolicy
+                Effect: Allow
+                Resource: !Sub "arn:aws:iam::${AWS::AccountId}:role/initial-stack-${SWBStackID}-xacc-env-mgmt"
+
+  DenyCreateWorkSpacePolicy:
+    Type: AWS::IAM::ManagedPolicy
+    Properties:
+      PolicyDocument:
+        Version: '2012-10-17'
+        Statement:
+          - Effect: Deny
+            Action:
+              - cloudformation:CreateStack
+              - cloudformation:CreateChangeSet
+              - cloudformation:ExecuteChangeSet
+            Resource: !Sub "arn:aws:cloudformation:*:${AWS::AccountId}:stack/SC-${AWS::AccountId}-pp-*"
+
+  TREProjectBudget:
+    Type: AWS::Budgets::Budget
+    Properties:
+      Budget:
+        BudgetLimit:
+          Amount: !Ref AnnualBudgetLimit
+          Unit: USD
+        BudgetName: !Sub "TRE Project AccountID ${AWS::AccountId} - Annual Budget"
+        BudgetType: COST
+        TimeUnit: ANNUALLY
+      NotificationsWithSubscribers:
+        - Notification:
+            NotificationType: ACTUAL
+            ComparisonOperator: GREATER_THAN
+            Threshold: !Ref AnnualBudgetNotificationThreshold1
+          Subscribers:
+            - SubscriptionType: SNS
+              Address: !Ref BudgetNotifySNS
+        - Notification:
+            NotificationType: ACTUAL
+            ComparisonOperator: GREATER_THAN
+            Threshold: !Ref AnnualBudgetNotificationThreshold2
+          Subscribers:
+            - SubscriptionType: SNS
+              Address: !Ref BudgetNotifySNS
+
+  TREProjectBudgetAction:
+    Type: AWS::Budgets::BudgetsAction
+    Properties: 
+      ActionThreshold: 
+        Type: PERCENTAGE
+        Value: !Ref AnnualBudgetActionThreshold
+      ActionType: APPLY_IAM_POLICY
+      ApprovalModel: AUTOMATIC
+      BudgetName: !Sub "TRE Project AccountID ${AWS::AccountId} - Annual Budget"
+      Definition: 
+        IamActionDefinition: 
+          PolicyArn: !Ref 'DenyCreateWorkSpacePolicy'
+          Roles:
+            - !Sub "initial-stack-${SWBStackID}-xacc-env-mgmt"
+      ExecutionRoleArn: !GetAtt AWSBudgetsExecutionRole.Arn
+      NotificationType: ACTUAL
+      Subscribers: 
+        - Type: SNS
+          Address: !Ref BudgetNotifySNS
+    DependsOn: TREProjectBudget
