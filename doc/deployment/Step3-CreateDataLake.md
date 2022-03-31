@@ -12,5 +12,14 @@ Log in to the [AWS Management Console](https://console.aws.amazon.com/) using yo
 - [ ] Select the [*Stacks*](https://eu-west-2.console.aws.amazon.com/cloudformation/home?region=eu-west-2#/stacks) menu option on the left side
 - [ ] Press button: [*Create Stack* with new resources](https://eu-west-2.console.aws.amazon.com/cloudformation/home?region=eu-west-2#/stacks/create/template)
 - [ ] Select option *Upload a template file* to upload CloudFormation template file: [data lake](../../src/data_lake/DataLake-Cfn.yaml) and press on button *Next*
-- [ ] Provide *Stack name*: "TREDataLake1". Add **TRE Project 1 Prod** account number for the *EgressAppAccount* parameter. Press on button *Next* twice and then press on button *Create stack*
+- [ ] Provide *Stack name*: "TREDataLake1". Add the parameters required. Press on button *Next* twice and then press on button *Create stack*
+
+|Parameter Name|Description|Default value|
+|-----------------|-----------|-------------|
+|EgressAppAccount|Account number which is hosting the Egress Add-On Application (Add **TRE Project 1 Prod** account number)|*No default - must be specified*|
+|EgressAppStackName|Part of the Egress Add-On Application: Stack name used for the Egress-Backend|*Dev-EgressBackend*|
+|EgressAppCopyLambdaPrefix|Prefix for the lambda function which copies approved egress data to the data lake|*EgressAppCopyLambdaPrefix*|
+|EgressAppDownloadLambdaPrefix|Prefix for the lambda function which downloads approved egress data from the data lake|*EgressApiLambdaServiceRole*|
+|LFDatabaseName|Lake Formation database name that will be created|*No default - must be specified*|
+
 - [ ] Confirm the stack status is "CREATE_COMPLETE"

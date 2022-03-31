@@ -11,7 +11,10 @@ Description: Provision a data lake setup for TRE projects.
 Parameters:
   EgressAppAccount:
     Type: String
-    Description: Account number of the account that is hosting the Egress Add-On Application
+    Description: Account number which is hosting the Egress Add-On Application
+    MinLength: 12
+    MaxLength: 12
+    AllowedPattern: "[0-9]+"
 
   EgressAppStackName:
     Type: String
@@ -30,8 +33,7 @@ Parameters:
 
   LFDatabaseName:
     Type: String
-    Description: Lake Formation database name to be created to store a governed table.
-    Default: tredatalake1
+    Description: Lake Formation database name to store a governed table
 
 Metadata:
   AWS::CloudFormation::Interface:
@@ -68,8 +70,6 @@ Resources:
             Effect: Allow
             Principal:
               AWS:
-                # - !Sub 'arn:aws:iam::${EgressAppAccount}:role/${EgressAppStackName}-${EgressAppCopyLambdaPrefix}*'
-                # - !Sub 'arn:aws:iam::${EgressAppAccount}:role/${EgressAppStackName}-${EgressAppDownloadLambdaPrefix}*'
                 - !Sub 'arn:aws:iam::${EgressAppAccount}:root'
             Action:
               - kms:Encrypt
@@ -185,6 +185,11 @@ Resources:
             ServerSideEncryptionByDefault:
               SSEAlgorithm: aws:kms
               KMSMasterKeyID: !GetAtt TREAnalystBucketKMSKey.Arn
+      PublicAccessBlockConfiguration:
+        BlockPublicAcls: True
+        BlockPublicPolicy: True
+        IgnorePublicAcls: True
+        RestrictPublicBuckets: True
 
   TRELakeAdminResultsBucket:
     Type: AWS::S3::Bucket
@@ -195,6 +200,11 @@ Resources:
             ServerSideEncryptionByDefault:
               SSEAlgorithm: aws:kms
               KMSMasterKeyID: !GetAtt TRELakeAdminBucketKMSKey.Arn
+      PublicAccessBlockConfiguration:
+        BlockPublicAcls: True
+        BlockPublicPolicy: True
+        IgnorePublicAcls: True
+        RestrictPublicBuckets: True
 
   TRETargetBucketPolicy:
     Type: AWS::S3::BucketPolicy
@@ -232,8 +242,6 @@ Resources:
               - !Sub '${TRETargetBucket.Arn}'
             Principal:
               AWS:
-                # - !Sub 'arn:aws:iam::${EgressAppAccount}:role/${EgressAppStackName}-${EgressAppCopyLambdaPrefix}*'
-                # - !Sub 'arn:aws:iam::${EgressAppAccount}:role/${EgressAppStackName}-${EgressAppDownloadLambdaPrefix}*'
                 - !Sub 'arn:aws:iam::${EgressAppAccount}:root'
           - Sid: AllowWriteFromEgressAppAccount
             Action:
@@ -244,7 +252,6 @@ Resources:
               - !Sub '${TRETargetBucket.Arn}/*'
             Principal:
               AWS:
-                # - !Sub 'arn:aws:iam::${EgressAppAccount}:role/${EgressAppStackName}-${EgressAppCopyLambdaPrefix}*'
                 - !Sub 'arn:aws:iam::${EgressAppAccount}:root'
 
   TRESourceBucketPolicy:
