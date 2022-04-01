@@ -21,24 +21,31 @@ Parameters:
     Description: Estimated annual account spend in USD
 
   AnnualBudgetNotificationThreshold1:
-    Type: String
+    Type: Number
     Description: Budget threshold percentage for first notification
     Default: 80
+    MinValue: 0.001
+    MaxValue: 40000000000
 
   AnnualBudgetNotificationThreshold2:
-    Type: String
+    Type: Number
     Description: Budget threshold percentage for second notification
     Default: 99
+    MinValue: 0.001
+    MaxValue: 40000000000
 
   AnnualBudgetActionThreshold:
-    Type: String
+    Type: Number
     Description: Budget threshold percentage for preventing workspace creation
     Default: 99
+    MinValue: 0.001
+    MaxValue: 40000000000
 
   TREAdminEmailAddress:
     Type: String
     Description: TRE admin email address who will receive budget alerts
     MinLength: 1
+    AllowedPattern: '^[^\s@]+@[^\s@]+\.[^\s@]+$'
 
   BudgetNotifySNSTopicName:
     Type: String
@@ -47,35 +54,11 @@ Parameters:
     Default: "TREProject1Prod-BudgetNotifications"
 
 Resources:
-  BudgetNotifyKMSKey:
-    Type: AWS::KMS::Key
-    Properties:
-      Description: Key for the TRE Project Budget Notification SNS Topic
-      EnableKeyRotation: true
-      KeyPolicy:
-        Version: 2012-10-17
-        Statement:
-          - Sid: Enable IAM Policies
-            Effect: Allow
-            Principal:
-              AWS: !Sub 'arn:aws:iam::${AWS::AccountId}:root'
-            Action: kms:*
-            Resource: '*'
-          - Sid: Enable Budgets to publish to encrypted SNS topic
-            Effect: Allow
-            Principal:
-              Service: budgets.amazonaws.com
-            Action:
-              - kms:GenerateDataKey*
-              - kms:Decrypt
-            Resource: '*'
-
   BudgetNotifySNS:
     Type: AWS::SNS::Topic
     Properties:
-      DisplayName: !Sub 'TRE Project Budget Notification Group'
-      KmsMasterKeyId: !GetAtt BudgetNotifyKMSKey.KeyId
-      TopicName: !Ref BudgetNotifySNSTopicName
+      DisplayName: !Ref BudgetNotifySNSTopicName
+      KmsMasterKeyId: !ImportValue LandingZoneKeyARN
       Subscription:
         - Endpoint: !Ref TREAdminEmailAddress
           Protocol: email
@@ -92,7 +75,7 @@ Resources:
           Principal:
             Service: budgets.amazonaws.com
           Action: SNS:Publish
-          Resource: !Sub "arn:aws:sns:${AWS::Region}:${AWS::AccountId}:${BudgetNotifySNSTopicName}"
+          Resource: !Ref BudgetNotifySNS
       Topics:
       - !Ref BudgetNotifySNS
 

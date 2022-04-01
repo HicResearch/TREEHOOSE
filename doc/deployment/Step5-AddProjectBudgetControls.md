@@ -6,7 +6,7 @@ Ensure all steps below are executed in AWS region: [London (eu-west-2)](https://
 
 Due to design considerations, do this step once for any account part of the **TRE Projects Prod** OU.
 
-Log in to the [AWS Management Console](https://console.aws.amazon.com/) using your **TRE Project 1 Prod** account.
+Log in to the [AWS Management Console](https://console.aws.amazon.com/) using your **TRE Project 1 Prod** account and Admin privileges.
 
 ### Step 5A. Find existing IAM role
 
