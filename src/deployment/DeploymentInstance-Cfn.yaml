@@ -31,6 +31,9 @@ Resources:
     Type: AWS::EC2::VPC
     Properties:
       CidrBlock: !Ref VPCNetworkRange
+      Tags:
+        - Key: "Name"
+          Value: "TREDeploymentInstance-VPC"
 
   Subnet:
     Metadata:
@@ -43,6 +46,9 @@ Resources:
       VpcId: !Ref VPC
       CidrBlock: !Ref SubnetNetworkRange
       MapPublicIpOnLaunch: true
+      Tags:
+        - Key: "Name"
+          Value: "TREDeploymentInstance-Subnet"
 
   InternetGateway:
     Type: AWS::EC2::InternetGateway
@@ -80,46 +86,49 @@ Resources:
             dependencies:
               command: !Sub |
                         "su ec2-user -c ' \
-                        echo "Initiating yum packages installation"; \
+                        echo \"Initiating yum packages installation\"; \
                         sudo yum update -y; \
                         sudo yum install -y yum-utils git jq; \
-                        echo "Completed yum packages installation"; \
-                        echo "---"; \
-                        echo "Initiating nodejs and serverless installs"; \
+                        echo \"Completed yum packages installation\"; \
+                        echo \"---\"; \
+                        echo \"Initiating nodejs and serverless installs\"; \
                         curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.34.0/install.sh | bash; \
                         . ~/.nvm/nvm.sh; \
                         source ~/.bashrc; \
                         nvm install v14.17.0; \
                         npm install -g pnpm serverless; \
-                        echo "Completed nodejs and serverless installs"; \
-                        echo "---"; \
-                        echo "Downloading additional packages"; \
+                        echo \"Completed nodejs and serverless installs\"; \
+                        echo \"---\"; \
+                        echo \"Downloading additional packages\"; \
                         mkdir ~/tmp && cd ~/tmp; \
                         curl \"https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip\" -o \"awscliv2.zip\"; \
                         wget https://go.dev/dl/go1.18.linux-amd64.tar.gz; \
-                        echo "Finished downloading additional packages"; \
-                        echo "---"; \
-                        echo "Extracting additional packages"; \
+                        echo \"Finished downloading additional packages\"; \
+                        echo \"---\"; \
+                        echo \"Extracting additional packages\"; \
                         sudo unzip awscliv2.zip; \
                         sudo rm -rf /usr/local/go; \
                         sudo tar -C /usr/local -xzf go1.18.linux-amd64.tar.gz; \
-                        echo "Finished extracting additional packages"; \
-                        echo "---"; \
-                        echo "Installing additional packages"; \
+                        echo \"Finished extracting additional packages\"; \
+                        echo \"---\"; \
+                        echo \"Installing additional packages\"; \
                         ./aws/install; \
                         echo \"export PATH=/usr/local/go/bin:$PATH\" >>~/.bash_profile; \
-                        echo "Finished installing additional packages"; \
-                        echo "---"; \
-                        echo "Create default AWS profile"; \
+                        echo \"Finished installing additional packages\"; \
+                        echo \"---\"; \
+                        echo \"Create default AWS profile\"; \
                         mkdir ~/.aws; \
                         echo \"[default]\" > ~/.aws/config; \
                         echo \"region = ${AWS::Region}\" >> ~/.aws/config; \
                         echo \"[default]\" > ~/.aws/credentials; \
                         echo \"region = ${AWS::Region}\" >> ~/.aws/credentials; \
-                        echo "Create default VPC"; \
+                        echo \"Create default VPC\"; \
                         existing_vpc=`aws ec2 describe-vpcs --filters Name=isDefault,Values=true --query \"Vpcs[].VpcId\" --profile default | jq .[0]`; \
                         if [ \"$existing_vpc_id\" == \"null\" ]; then aws ec2 create-default-vpc; fi;'"
     Properties:
+      Tags:
+        - Key: "Name"
+          Value: "TREDeploymentInstance"
       InstanceType: t2.medium
       IamInstanceProfile: !Ref InstanceProfile
       SubnetId: !Ref Subnet
@@ -160,7 +169,7 @@ Resources:
     CreationPolicy:
       ResourceSignal:
         Count: 1
-        Timeout: PT3M
+        Timeout: PT5M
 
   InstanceProfile:
     Type: AWS::IAM::InstanceProfile
@@ -178,6 +187,9 @@ Resources:
           - id: F38
             reason: "Asterisks in the policy are required"
     Properties:
+      Tags:
+        - Key: "Name"
+          Value: "TREDeploymentInstance-IAMRole"
       AssumeRolePolicyDocument:
         Version: "2012-10-17"
         Statement:
