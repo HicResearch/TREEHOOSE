@@ -16,6 +16,11 @@ Parameters:
     MaxLength: 12
     AllowedPattern: "[0-9]+"
 
+  EgressAppDomainName:
+    Type: String
+    Description: Domain name used for the Egress App
+    Default: "*"
+
   EgressAppStackName:
     Type: String
     Description: Stack name used for the Egress-Backend
@@ -39,8 +44,9 @@ Metadata:
   AWS::CloudFormation::Interface:
     ParameterGroups:
       - Label:
-          default: Egress Integration Configuration
+          default: Egress App Integration Configuration
         Parameters:
+          - EgressAppDomainName
           - EgressAppAccount
           - EgressAppCopyLambdaPrefix
           - EgressAppDownloadLambdaPrefix
@@ -262,7 +268,7 @@ Resources:
           - AllowedMethods:
             - 'GET'
             AllowedOrigins:
-            - '*'
+            - !Ref EgressAppDomainName
             AllowedHeaders:
             - '*'
 
@@ -552,6 +558,11 @@ Resources:
 
   TREAdminRole:
     Type: AWS::IAM::Role
+    Metadata:
+      cfn_nag:
+        rules_to_suppress:
+          - id: W44
+            reason: TRE Admin should have elevated privileges
     Properties:
       ManagedPolicyArns:
         - arn:aws:iam::aws:policy/PowerUserAccess
@@ -625,7 +636,6 @@ Resources:
                   - !GetAtt TRETargetBucketKMSKey.Arn
               - Effect: Allow
                 Action:
-                  - lakeformation:*
                   - lakeformation:GetDataAccess
                   - lakeformation:GrantPermissions
                 Resource: '*'
