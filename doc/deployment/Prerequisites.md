@@ -10,7 +10,7 @@ Ensure all steps below are executed in AWS region: [London (eu-west-2)](https://
 
 **Time to configure**: Approximately 85 minutes
 
-Log in to the [AWS Management Console](https://console.aws.amazon.com/) using your organization's **Management** account.
+Log in to the [AWS Management Console](https://console.aws.amazon.com/) using your organization's **Management** account and Admin privileges.
 
 The solution must be deployed in a multi-account environment created and managed using AWS Control Tower. The structure is shown in the image below.
 
@@ -121,7 +121,7 @@ The resulting [organizational structure](https://eu-west-2.console.aws.amazon.co
 
 **Time to configure**: Approximately 5 minutes
 
-Log in to the [AWS Management Console](https://console.aws.amazon.com/) using your organization's **Management** account.
+Log in to the [AWS Management Console](https://console.aws.amazon.com/) using your organization's **Management** account and Admin privileges.
 
 - [ ] Go to Service: [AWS Cost Explorer](https://us-east-1.console.aws.amazon.com/cost-management/home?region=eu-west-2)
 
@@ -135,7 +135,7 @@ If the service is not already initialised, a message will appear like in the ima
 
 Required for all accounts created under the **TRE Data Prod** OU.
 
-Log in to the [AWS Management Console](https://console.aws.amazon.com/) using your **TRE Datalake 1 Prod** account.
+Log in to the [AWS Management Console](https://console.aws.amazon.com/) using your **TRE Datalake 1 Prod** account and Admin privileges.
 
 - [ ] Go to Service: [AWS Lake Formation](https://eu-west-2.console.aws.amazon.com/lakeformation/home?region=eu-west-2)
 
@@ -149,7 +149,7 @@ A prompt will appear to add the current account as an administrator for Lake For
 
 Required for all accounts created under the **TRE Projects Prod** OU.
 
-Log in to the [AWS Management Console](https://console.aws.amazon.com/) using your **TRE Project 1 Prod** account.
+Log in to the [AWS Management Console](https://console.aws.amazon.com/) using your **TRE Project 1 Prod** account and Admin privileges.
 
 - [ ] Go to Service: [Amazon AppStream 2.0](https://eu-west-2.console.aws.amazon.com/appstream2/home?region=eu-west-2#/)
 - [ ] Press on button *Get Started*, then *Skip*. This will create a role in the background which will be used later in the deployment process.
