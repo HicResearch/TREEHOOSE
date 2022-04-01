@@ -96,6 +96,9 @@ npm run start-image-builder -- default eu-west-2 default default
 ```
 
 #### Part 2
+
+Log in to the [AWS Management Console](https://console.aws.amazon.com/) using your **TRE Project 1 Prod** account and Admin privileges.
+
 - [ ] Go to Service: [AWS AppStream](https://eu-west-2.console.aws.amazon.com/appstream2/home?region=eu-west-2)
 - [ ] Select menu option *Images* -> [*Image builder*](https://eu-west-2.console.aws.amazon.com/appstream2/home?region=eu-west-2#/image-builder)
 - [ ] Select the image builder created in Part 1 above, then press on button *Connect*
