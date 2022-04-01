@@ -6,7 +6,7 @@ Ensure all steps below are executed in AWS region: [London (eu-west-2)](https://
 
 ### Step 2A. Log in to the EC2 instance
 
-- [ ] Follow these [instructions](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/AccessingInstancesLinux.html) to learn how to use the key in step 1A to connect to the EC2 instance in step 1C via SSH.
+- [ ] Follow these [instructions](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/session-manager.html) to learn how to connect via SSM to the EC2 instance created in Step 1.
 - [ ] Run the following command to initialise your environment:
 ```
 source ~/.bash_profile
