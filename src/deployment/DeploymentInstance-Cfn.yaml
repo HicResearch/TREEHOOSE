@@ -84,8 +84,7 @@ Resources:
         config:
           commands:
             dependencies:
-              command: !Sub |
-                        "su ec2-user -c ' \
+              command: !Sub "su ec2-user -c ' \
                         echo \"Initiating yum packages installation\"; \
                         sudo yum update -y; \
                         sudo yum install -y yum-utils git jq; \
