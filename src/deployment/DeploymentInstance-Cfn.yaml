@@ -33,11 +33,16 @@ Resources:
       CidrBlock: !Ref VPCNetworkRange
 
   Subnet:
+    Metadata:
+      cfn_nag:
+        rules_to_suppress:
+          - id: W33
+            reason: "Public IP address is required"
     Type: AWS::EC2::Subnet
     Properties:
       VpcId: !Ref VPC
       CidrBlock: !Ref SubnetNetworkRange
-      MapPublicIpOnLaunch: false
+      MapPublicIpOnLaunch: true
 
   InternetGateway:
     Type: AWS::EC2::InternetGateway
@@ -73,33 +78,47 @@ Resources:
         config:
           commands:
             dependencies:
-              command: "su ec2-user -c ' \
-                      sudo yum update -y; \
-                      mkdir ~/tmp; \
-                      cd ~/tmp; \
-                      curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.34.0/install.sh | bash; \
-                      . ~/.nvm/nvm.sh; \
-                      source ~/.bashrc; \
-                      nvm install v14.17.0; \
-                      npm install -g pnpm; \
-                      npm install -g serverless; \
-                      sudo yum install -y yum-utils; \
-                      curl \"https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip\" -o \"awscliv2.zip\"; \
-                      sudo unzip awscliv2.zip; \
-                      ./aws/install; \
-                      sudo yum install -y git; \
-                      wget https://go.dev/dl/go1.18.linux-amd64.tar.gz; \
-                      sudo rm -rf /usr/local/go; \
-                      sudo tar -C /usr/local -xzf go1.18.linux-amd64.tar.gz; \
-                      echo \"export PATH=/usr/local/go/bin:$PATH\" >>~/.bash_profile; \
-                      sudo yum -y install jq; \
-                      mkdir ~/.aws; \
-                      echo \"[default]\" > ~/.aws/config; \
-                      echo \"region = eu-west-2\" >> ~/.aws/config; \
-                      echo \"[default]\" > ~/.aws/credentials; \
-                      echo \"region = eu-west-2\" >> ~/.aws/credentials; \
-                      existing_vpc=`aws ec2 describe-vpcs --filters Name=isDefault,Values=true --query \"Vpcs[].VpcId\" --profile default | jq .[0]`; \
-                      if [ \"$existing_vpc_id\" == \"null\" ]; then aws ec2 create-default-vpc; fi;'"
+              command: !Sub |
+                        "su ec2-user -c ' \
+                        echo "Initiating yum packages installation"; \
+                        sudo yum update -y; \
+                        sudo yum install -y yum-utils git jq; \
+                        echo "Completed yum packages installation"; \
+                        echo "---"; \
+                        echo "Initiating nodejs and serverless installs"; \
+                        curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.34.0/install.sh | bash; \
+                        . ~/.nvm/nvm.sh; \
+                        source ~/.bashrc; \
+                        nvm install v14.17.0; \
+                        npm install -g pnpm serverless; \
+                        echo "Completed nodejs and serverless installs"; \
+                        echo "---"; \
+                        echo "Downloading additional packages"; \
+                        mkdir ~/tmp && cd ~/tmp; \
+                        curl \"https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip\" -o \"awscliv2.zip\"; \
+                        wget https://go.dev/dl/go1.18.linux-amd64.tar.gz; \
+                        echo "Finished downloading additional packages"; \
+                        echo "---"; \
+                        echo "Extracting additional packages"; \
+                        sudo unzip awscliv2.zip; \
+                        sudo rm -rf /usr/local/go; \
+                        sudo tar -C /usr/local -xzf go1.18.linux-amd64.tar.gz; \
+                        echo "Finished extracting additional packages"; \
+                        echo "---"; \
+                        echo "Installing additional packages"; \
+                        ./aws/install; \
+                        echo \"export PATH=/usr/local/go/bin:$PATH\" >>~/.bash_profile; \
+                        echo "Finished installing additional packages"; \
+                        echo "---"; \
+                        echo "Create default AWS profile"; \
+                        mkdir ~/.aws; \
+                        echo \"[default]\" > ~/.aws/config; \
+                        echo \"region = ${AWS::Region}\" >> ~/.aws/config; \
+                        echo \"[default]\" > ~/.aws/credentials; \
+                        echo \"region = ${AWS::Region}\" >> ~/.aws/credentials; \
+                        echo "Create default VPC"; \
+                        existing_vpc=`aws ec2 describe-vpcs --filters Name=isDefault,Values=true --query \"Vpcs[].VpcId\" --profile default | jq .[0]`; \
+                        if [ \"$existing_vpc_id\" == \"null\" ]; then aws ec2 create-default-vpc; fi;'"
     Properties:
       InstanceType: t2.medium
       IamInstanceProfile: !Ref InstanceProfile
