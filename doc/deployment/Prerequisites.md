@@ -40,7 +40,7 @@ The solution must be deployed in a multi-account environment created and managed
 
 Leave every option set to default in the Control Tower Landing Zone Setup, except:
 
-- [ ] Step 1 Page - Ensure Home Region is *London*. Enable *Region deny setting*. Add *Additional AWS Regions for governance*: US East (N. Virginia) - us-east-1.
+- [ ] Step 1 Page - Ensure Home Region is *London*. Enable *Region deny setting*. Add *Additional AWS Regions for governance*: US East (N. Virginia) - us-east-1
 - [ ] Step 2 Page - For *Additional OU*, add **TRE Solution Prod**
 - [ ] Step 3 Page - Provide email addresses for the **Log Archive** and **Audit** accounts. Enable KMS Encryption and select the **ControlTowerSetup-Landing-Zone** key created in Step 1A
 - [ ] Step 4 Page - Ensure the list matches the diagram above for the **Default Setup** for the 3 initial accounts plus **TRE Solution Prod**, then press on button *Set up landing zone*
