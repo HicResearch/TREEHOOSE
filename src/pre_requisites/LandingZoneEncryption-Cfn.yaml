@@ -42,6 +42,28 @@ Resources:
               - kms:Decrypt*
               - kms:GenerateDataKey*
             Resource: "*"
+          - Sid: Enable encrypted CloudWatch Logs
+            Effect: Allow
+            Principal:
+              Service: !Sub "logs.${AWS::Region}.amazonaws.com"
+            Action:
+              - kms:Encrypt*
+              - kms:Decrypt*
+              - kms:ReEncrypt*
+              - kms:GenerateDataKey*
+              - kms:Describe*
+            Resource: "*"
+            Condition:
+              ArnLike:
+                kms:EncryptionContext:aws:logs:arn: !Sub "arn:aws:logs:${AWS::Region}:${AWS::AccountId}:*"
+          - Sid: Allow Budgets to publish on encrypted SNS topic
+            Effect: Allow
+            Principal:
+              Service: "budgets.amazonaws.com"
+            Action:
+              - kms:Decrypt*
+              - kms:GenerateDataKey*
+            Resource: "*"
 
   LZKmsKeyAlias:
     Type: AWS::KMS::Alias
@@ -55,6 +77,11 @@ Outputs:
     Value: !GetAtt LZKmsKey.Arn
     Export:
       Name: LandingZoneKeyARN
+  LZKeyId:
+    Description: KeyId of KMS Key used to encrypt LZ components
+    Value: !Ref LZKmsKey
+    Export:
+      Name: LandingZoneKeyId
   LZKeyAlias:
     Description: KMS Key used to encrypt LZ components
     Value: !Ref LZKmsKeyAlias
