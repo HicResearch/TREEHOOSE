@@ -121,10 +121,8 @@ Resources:
         Statement:
           - Effect: Deny
             Action:
-              - cloudformation:CreateStack
-              - cloudformation:CreateChangeSet
-              - cloudformation:ExecuteChangeSet
-            Resource: !Sub "arn:aws:cloudformation:*:${AWS::AccountId}:stack/SC-${AWS::AccountId}-pp-*"
+              - servicecatalog:ProvisionProduct
+            Resource: "*"
 
   TREProjectBudget:
     Type: AWS::Budgets::Budget
@@ -177,4 +175,3 @@ Resources:
       Subscribers: 
         - Type: SNS
           Address: !Ref BudgetNotifySNS
-    DependsOn: TREProjectBudget
