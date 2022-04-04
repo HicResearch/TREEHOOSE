@@ -24,22 +24,22 @@ Parameters:
     Type: Number
     Description: Budget threshold percentage for first notification
     Default: 80
-    MinValue: 0.001
-    MaxValue: 40000000000
+    MinValue: 1
+    MaxValue: 100
 
   AnnualBudgetNotificationThreshold2:
     Type: Number
     Description: Budget threshold percentage for second notification
     Default: 99
-    MinValue: 0.001
-    MaxValue: 40000000000
+    MinValue: 1
+    MaxValue: 100
 
   AnnualBudgetActionThreshold:
     Type: Number
     Description: Budget threshold percentage for preventing workspace creation
     Default: 99
-    MinValue: 0.001
-    MaxValue: 40000000000
+    MinValue: 1
+    MaxValue: 100
 
   TREAdminEmailAddress:
     Type: String
