@@ -36,7 +36,7 @@ Log in to the [AWS Management Console](https://console.aws.amazon.com/) using yo
 
 - [ ] Confirm the stack status is "CREATE_COMPLETE"
 
-When the budget action gets triggered (depends on *AnnualBudgetLimit* and *ActionThreshold*), any user trying to create a new workspace in SWB will see this error message:
+When the budget action gets triggered (depends on *AnnualBudgetLimit* and *ActionThreshold*), any allowed user trying to create a new workspace in SWB will see this error message:
 
 ![SWB Workspace Creation Expected Failure](../../res/images/Status-DenySWBWorkspaceCreation.png)
 
@@ -57,3 +57,7 @@ This step is optional if you need to remove the project budget control policy af
 - [ ] Search for *initial-stack* to locate the role with name *initial-stack-ID-xacc-env-mgmt* (ID is a number)
 - [ ] Click on the role identified above and select the policy that has *-DenyCreateWorkSpacePolicy-* in its name
 - [ ] Use the *Remove* button on the right side to detach the policy from the role
+
+When the budget control policy has been removed, any allowed user trying to create a new workspace in SWB will see the Available status message:
+
+![SWB Workspace Creation Expected Success](../../res/images/Status-AllowSWBWorkspaceCreation.png)
