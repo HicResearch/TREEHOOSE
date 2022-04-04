@@ -107,7 +107,7 @@ Log in to the [AWS Management Console](https://console.aws.amazon.com/) using yo
 - [ ] Run the following commands in Windows Powershell to create an AppStream image:
 ```
 cd ~\Documents
-Invoke-WebRequest -Uri https://raw.githubusercontent.com/awslabs/service-workbench-on-aws/mainline/scripts/app-stream/buildImage.ps1 -OutFile buildImage.ps1
+Invoke-WebRequest -Uri https://raw.githubusercontent.com/awslabs/service-workbench-on-aws/v5.1.0/scripts/app-stream/buildImage.ps1 -OutFile buildImage.ps1
 .\buildImage.ps1
 ```
 
