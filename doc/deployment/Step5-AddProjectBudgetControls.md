@@ -36,6 +36,10 @@ Log in to the [AWS Management Console](https://console.aws.amazon.com/) using yo
 
 - [ ] Confirm the stack status is "CREATE_COMPLETE"
 
+When the budget action gets triggered (depends on *AnnualBudgetLimit* and *ActionThreshold*), any user trying to create a new workspace in SWB will see this error message:
+
+![SWB Workspace Creation Expected Failure](../../res/images/Status-DenySWBWorkspaceCreation.png)
+
 ### Step 5C. Adjust Project Budget
 
 This step is optional if you need to update the project budget settings.
@@ -43,3 +47,13 @@ This step is optional if you need to update the project budget settings.
 - [ ] Go to Service: [AWS CloudFormation](https://eu-west-2.console.aws.amazon.com/cloudformation/home?region=eu-west-2#/)
 - [ ] Select the [*Stacks*](https://eu-west-2.console.aws.amazon.com/cloudformation/home?region=eu-west-2#/stacks) menu option on the left side
 - [ ] Select the stack created in Step 5B and press on button *Update* to adjust the parameters. Please note the changes will take up to 24 hours to reflect in AWS Budgets in terms of alerts and actions.
+
+### Step 5D. Remove Project Budget Control
+
+This step is optional if you need to remove the project budget control policy after e.g. increasing your budget.
+
+- [ ] Go to Service: [AWS Identity and Access Management](https://us-east-1.console.aws.amazon.com/iamv2/home)
+- [ ] Select the [*Roles*](https://us-east-1.console.aws.amazon.com/iamv2/home#/roles) menu option on the left side
+- [ ] Search for *initial-stack* to locate the role with name *initial-stack-ID-xacc-env-mgmt* (ID is a number)
+- [ ] Click on the role identified above and select the policy that has *-DenyCreateWorkSpacePolicy-* in its name
+- [ ] Use the *Remove* button on the right side to detach the policy from the role
