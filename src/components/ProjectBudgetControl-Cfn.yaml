@@ -20,23 +20,30 @@ Parameters:
     Type: String
     Description: Estimated annual account spend in USD
 
-  AnnualBudgetNotificationThreshold1:
+  NotificationThresholdActualCost1:
     Type: Number
-    Description: Budget threshold percentage for first notification
+    Description: Budget threshold percentage for first notification based on actual costs
     Default: 80
     MinValue: 1
     MaxValue: 100
 
-  AnnualBudgetNotificationThreshold2:
+  NotificationThresholdActualCost2:
     Type: Number
-    Description: Budget threshold percentage for second notification
+    Description: Budget threshold percentage for second notification based on actual costs
     Default: 99
     MinValue: 1
     MaxValue: 100
 
-  AnnualBudgetActionThreshold:
+  NotificationThresholdForecastedCost:
     Type: Number
-    Description: Budget threshold percentage for preventing workspace creation
+    Description: Budget threshold percentage for notification based on forecasted costs
+    Default: 90
+    MinValue: 1
+    MaxValue: 100
+
+  ActionThreshold:
+    Type: Number
+    Description: Budget threshold percentage for preventing workspace creation based on actual costs
     Default: 99
     MinValue: 1
     MaxValue: 100
@@ -126,21 +133,27 @@ Resources:
         BudgetLimit:
           Amount: !Ref AnnualBudgetLimit
           Unit: USD
-        BudgetName: !Sub "TRE Project AccountID ${AWS::AccountId} - Annual Budget"
         BudgetType: COST
         TimeUnit: ANNUALLY
       NotificationsWithSubscribers:
         - Notification:
             NotificationType: ACTUAL
             ComparisonOperator: GREATER_THAN
-            Threshold: !Ref AnnualBudgetNotificationThreshold1
+            Threshold: !Ref NotificationThresholdActualCost1
           Subscribers:
             - SubscriptionType: SNS
               Address: !Ref BudgetNotifySNS
         - Notification:
             NotificationType: ACTUAL
             ComparisonOperator: GREATER_THAN
-            Threshold: !Ref AnnualBudgetNotificationThreshold2
+            Threshold: !Ref NotificationThresholdActualCost2
+          Subscribers:
+            - SubscriptionType: SNS
+              Address: !Ref BudgetNotifySNS
+        - Notification:
+            NotificationType: FORECASTED
+            ComparisonOperator: GREATER_THAN
+            Threshold: !Ref NotificationThresholdForecastedCost
           Subscribers:
             - SubscriptionType: SNS
               Address: !Ref BudgetNotifySNS
@@ -148,12 +161,12 @@ Resources:
   TREProjectBudgetAction:
     Type: AWS::Budgets::BudgetsAction
     Properties: 
-      ActionThreshold: 
+      ActionThreshold:
         Type: PERCENTAGE
-        Value: !Ref AnnualBudgetActionThreshold
+        Value: !Ref ActionThreshold
       ActionType: APPLY_IAM_POLICY
       ApprovalModel: AUTOMATIC
-      BudgetName: !Sub "TRE Project AccountID ${AWS::AccountId} - Annual Budget"
+      BudgetName: !Ref TREProjectBudget
       Definition: 
         IamActionDefinition: 
           PolicyArn: !Ref 'DenyCreateWorkSpacePolicy'

@@ -26,9 +26,10 @@ Log in to the [AWS Management Console](https://console.aws.amazon.com/) using yo
 |Parameter Name|Description|Default value|
 |:-----------------|:-----------|:-------------|
 |AnnualBudgetLimit|Estimated annual account spend in USD|*No default - must be specified*|
-|AnnualBudgetNotificationThreshold1|Budget threshold percentage for receiving first notification|*80*|
-|AnnualBudgetNotificationThreshold2|Budget threshold percentage for receiving second notification|*99*|
-|AnnualBudgetActionThreshold|Budget threshold percentage for stopping new SWB workspace creation|*99*|
+|NotificationThresholdActualCost1|Budget threshold percentage for receiving first notification based on actual costs|*80*|
+|NotificationThresholdActualCost2|Budget threshold percentage for receiving second notification based on actual costs|*99*|
+|NotificationThresholdForecastedCost|Budget threshold percentage for notification based on forecasted costs|*90*|
+|ActionThreshold|Budget threshold percentage for stopping new SWB workspace creation based on forecasted costs|*99*|
 |BudgetNotifySNSTopicName|The name of the SNS topic whose subscribers (includes TREAdminEmailAddress) receive alerts regarding project budget|*No default - must be specified*|
 |TREAdminEmailAddress|The email address for the TRE admin who will receive alerts regarding project budget|*No default - must be specified*|
 |SWBStackID|Specify the ID of existing IAM role initial-stack-ID-xacc-env-mgmt|*No default - must be specified*|
@@ -39,6 +40,6 @@ Log in to the [AWS Management Console](https://console.aws.amazon.com/) using yo
 
 This step is optional if you need to update the project budget settings.
 
-- [ ] Go to Service: [AWS Budgets](https://us-east-1.console.aws.amazon.com/billing/home?region=us-east-1&skipRegion=true#/budgets/overview)
-- [ ] Select the budget created in Step 5B and edit as needed
-- [ ] View how to manage your costs with AWS Budgets on this [page](https://docs.aws.amazon.com/cost-management/latest/userguide/budgets-managing-costs.html)
+- [ ] Go to Service: [AWS CloudFormation](https://eu-west-2.console.aws.amazon.com/cloudformation/home?region=eu-west-2#/)
+- [ ] Select the [*Stacks*](https://eu-west-2.console.aws.amazon.com/cloudformation/home?region=eu-west-2#/stacks) menu option on the left side
+- [ ] Select the stack created in Step 5B and press on button *Update* to adjust the parameters. Please note the changes will take up to 24 hours to reflect in AWS Budgets in terms of alerts and actions.
