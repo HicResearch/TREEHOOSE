@@ -4,7 +4,7 @@ Ensure all steps below are executed in AWS region: [London (eu-west-2)](https://
 
 **Time to deploy**: Approximately 5 minutes
 
-Due to design considerations, create only one data lake for any account part of the **TRE Data Prod** OU.
+Due to design considerations, each account in the **TRE Data Prod** OU must contain only one data lake.
 
 Log in to the [AWS Management Console](https://console.aws.amazon.com/) using your **TRE Datalake 1 Prod** account and Admin privileges.
 
