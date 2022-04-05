@@ -190,6 +190,7 @@ Resources:
       InstanceType: t2.medium
       IamInstanceProfile: !Ref InstanceProfile
       SubnetId: !Ref Subnet
+      # amazon/amzn2-ami-kernel-5.10-hvm-2.0.20220316.0-x86_64-gp2
       ImageId: ami-03e88be9ecff64781
       BlockDeviceMappings:
         - DeviceName: /dev/xvda
