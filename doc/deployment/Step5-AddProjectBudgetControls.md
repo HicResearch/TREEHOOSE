@@ -8,14 +8,14 @@ Due to design considerations, do this step once for any account part of the **TR
 
 Log in to the [AWS Management Console](https://console.aws.amazon.com/) using your **TRE Project 1 Prod** account and Admin privileges.
 
-### Step 5A. Find existing IAM role
+### Step 5A. Locate existing IAM role
 
 - [ ] Go to Service: [AWS Identity and Access Management](https://us-east-1.console.aws.amazon.com/iamv2/home#/home)
 - [ ] Select the [*Roles*](https://us-east-1.console.aws.amazon.com/iamv2/home#/roles) menu option on the left side
 - [ ] Search for *initial-stack*
 - [ ] Extract number ID from role: *initial-stack-<number_ID>-xacc-env-mgmt*. This number is required in Step 5C
 
-### Step 5B. Find existing IAM role
+### Step 5B. Locate existing Service Catalog products
 
 - [ ] Go to Service: [AWS Service Catalog](https://eu-west-2.console.aws.amazon.com/servicecatalog/home?region=eu-west-2#/home)
 - [ ] Select the [*Portfolios*](https://eu-west-2.console.aws.amazon.com/servicecatalog/home?region=eu-west-2#portfolios?activeTab=localAdminPortfolios) menu option on the left side and click on the local portfolio created during SWB deployment (e.g. treprod-ldn-pj1)
