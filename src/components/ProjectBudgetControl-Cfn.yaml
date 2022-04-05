@@ -17,7 +17,7 @@ Parameters:
     ConstraintDescription: Ensure only the ID part of the IAM role name is provided
 
   ServiceCatalogProductsList:
-    Description: Specify all 4 products ID (prod-<ID>) for the Service Catalog portfolio
+    Description: Leave blank if you want to restrict all SWB workspace types. Otherwise, specify the 4 default products ID (prod-<ID>) from the Service Catalog portfolio created by SWB
     Type: CommaDelimitedList
 
   AnnualBudgetLimit:
@@ -63,6 +63,11 @@ Parameters:
     Description: SNS topic whose subscribers receive budget alerts
     MinLength: 1
     Default: "TREProject1Prod-BudgetNotifications"
+
+Conditions:
+  ApplyToAllSCProducts: !Equals
+    - !Join [ "", !Ref ServiceCatalogProductsList ]
+    - ""
 
 Resources:
   BudgetNotifySNS:
@@ -126,11 +131,13 @@ Resources:
           - Effect: Deny
             Action:
               - servicecatalog:ProvisionProduct
-            Resource:
-              - !Join [ "", [ "arn:aws:catalog:", !Ref AWS::Region, ":", !Ref AWS::AccountId, ":product/prod-", !Select [ 0, !Ref ServiceCatalogProductsList ] ] ]
-              - !Join [ "", [ "arn:aws:catalog:", !Ref AWS::Region, ":", !Ref AWS::AccountId, ":product/prod-", !Select [ 1, !Ref ServiceCatalogProductsList ] ] ]
-              - !Join [ "", [ "arn:aws:catalog:", !Ref AWS::Region, ":", !Ref AWS::AccountId, ":product/prod-", !Select [ 2, !Ref ServiceCatalogProductsList ] ] ]
-              - !Join [ "", [ "arn:aws:catalog:", !Ref AWS::Region, ":", !Ref AWS::AccountId, ":product/prod-", !Select [ 3, !Ref ServiceCatalogProductsList ] ] ]
+            Resource: !If
+              - ApplyToAllSCProducts
+              - "*"
+              - - !Join [ "", [ "arn:aws:catalog:", !Ref AWS::Region, ":", !Ref AWS::AccountId, ":product/prod-", !Select [ 0, !Ref ServiceCatalogProductsList ] ] ]
+                - !Join [ "", [ "arn:aws:catalog:", !Ref AWS::Region, ":", !Ref AWS::AccountId, ":product/prod-", !Select [ 1, !Ref ServiceCatalogProductsList ] ] ]
+                - !Join [ "", [ "arn:aws:catalog:", !Ref AWS::Region, ":", !Ref AWS::AccountId, ":product/prod-", !Select [ 2, !Ref ServiceCatalogProductsList ] ] ]
+                - !Join [ "", [ "arn:aws:catalog:", !Ref AWS::Region, ":", !Ref AWS::AccountId, ":product/prod-", !Select [ 3, !Ref ServiceCatalogProductsList ] ] ]
 
   TREProjectBudget:
     Type: AWS::Budgets::Budget

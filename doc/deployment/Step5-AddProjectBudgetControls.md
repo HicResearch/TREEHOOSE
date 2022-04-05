@@ -1,10 +1,12 @@
 Ensure all steps below are executed in AWS region: [London (eu-west-2)](https://eu-west-2.console.aws.amazon.com/).
 
+If this component is added, a TRE project will automatically set policies to stop new SWB workspace creation when the provided budget limit is reached.
+
 ## Step 5. Add Project Budget Controls
 
 **Time to deploy**: Approximately 10 minutes
 
-Due to design considerations, do this step once for any account part of the **TRE Projects Prod** OU.
+Apply these steps only to accounts part of the **TRE Projects Prod** OU.
 
 Log in to the [AWS Management Console](https://console.aws.amazon.com/) using your **TRE Project 1 Prod** account and Admin privileges.
 
@@ -15,13 +17,17 @@ Log in to the [AWS Management Console](https://console.aws.amazon.com/) using yo
 - [ ] Search for *initial-stack*
 - [ ] Extract number ID from role: *initial-stack-<number_ID>-xacc-env-mgmt*. This number is required in Step 5C
 
-### Step 5B. Locate existing Service Catalog products
+### Step 5B - Optional. Locate default SWB Workspace Types
+
+SWB workspace types are represented by Service Catalog products.
+
+The default behaviour is to restrict all SWB workspace types when the budget control policy is applied. To restrict workspace creation for just the 4 default workspace types SWB creates, follow the instructions below.
 
 - [ ] Go to Service: [AWS Service Catalog](https://eu-west-2.console.aws.amazon.com/servicecatalog/home?region=eu-west-2#/home)
 - [ ] Select the [*Portfolios*](https://eu-west-2.console.aws.amazon.com/servicecatalog/home?region=eu-west-2#portfolios?activeTab=localAdminPortfolios) menu option on the left side and click on the local portfolio created during SWB deployment (e.g. treprod-ldn-pj1)
 - [ ] Extract just the ID from *prod-ID* from the list which should contain 4 default SWB products. These ID strings are required in Step 5C
 
-For guidance identifying the products, please refer to the image below.
+For guidance identifying the default products created by SWB, please refer to the image below.
 
 ![SWB Service Catalog Product IDs](../../res/images/Guidance-ServiceCatalogProductsList.png)
 
@@ -43,7 +49,7 @@ For guidance identifying the products, please refer to the image below.
 |BudgetNotifySNSTopicName|The name of the SNS topic whose subscribers (includes TREAdminEmailAddress) receive alerts regarding project budget|*No default - must be specified*|
 |TREAdminEmailAddress|The email address for the TRE admin who will receive alerts regarding project budget|*No default - must be specified*|
 |SWBStackID|Specify the ID of existing IAM role initial-stack-ID-xacc-env-mgmt|*No default - must be specified*|
-|ServiceCatalogProductsList|Specify the 4 IDs (separated by commas) of the existing Service Catalog products created by SWB|*No default - must be specified*|
+|ServiceCatalogProductsList|Leave blank if you want to restrict all SWB workspace types. Otherwise, specify the 4 default products ID (prod-<ID>) from the Service Catalog portfolio created by SWB|*No default - must be specified*|
 
 - [ ] Confirm the stack status is "CREATE_COMPLETE"
 
@@ -51,17 +57,17 @@ When the budget action gets triggered (depends on *AnnualBudgetLimit* and *Actio
 
 ![SWB Workspace Creation Expected Failure](../../res/images/Status-DenySWBWorkspaceCreation.png)
 
-### Step 5D. Adjust Project Budget
+### Step 5D - Optional. Adjust Project Budget
 
-This step is optional if you need to update the project budget settings.
+Follow these instructions if you need to update the project budget settings.
 
 - [ ] Go to Service: [AWS CloudFormation](https://eu-west-2.console.aws.amazon.com/cloudformation/home?region=eu-west-2#/)
 - [ ] Select the [*Stacks*](https://eu-west-2.console.aws.amazon.com/cloudformation/home?region=eu-west-2#/stacks) menu option on the left side
 - [ ] Select the stack created in Step 5C and press on button *Update* to adjust the parameters. Please note the changes will take up to 24 hours to reflect in AWS Budgets in terms of alerts and actions.
 
-### Step 5E. Remove Project Budget Control
+### Step 5E - Optional. Remove Project Budget Control
 
-This step is optional if you need to remove the project budget control policy after e.g. increasing your budget.
+Follow these instructions if you need to remove the project budget control policy after e.g. increasing your budget.
 
 - [ ] Go to Service: [AWS Identity and Access Management](https://us-east-1.console.aws.amazon.com/iamv2/home)
 - [ ] Select the [*Roles*](https://us-east-1.console.aws.amazon.com/iamv2/home#/roles) menu option on the left side
