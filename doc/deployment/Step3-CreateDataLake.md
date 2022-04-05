@@ -16,9 +16,9 @@ Log in to the [AWS Management Console](https://console.aws.amazon.com/) using yo
 
 |Parameter Name|Description|Default value|
 |-----------------|-----------|-------------|
-|EgressAppDomainName|Egress add-on application domain name to be used as allowed origin for CORS configuration attached to TRETargetBucket|*|
+|EgressAppDomainName|Egress add-on application domain name to be used as allowed origin for CORS configuration attached to TRETargetBucket|*No default - must be specified*|
 |EgressAppAccount|Account number which is hosting the Egress add-on application (Add **TRE Project 1 Prod** account number)|*No default - must be specified*|
-|EgressAppStackName|Part of the Egress add-on application: Stack name used for the Egress-Backend|*Dev-EgressBackend*|
+|EgressAppStackName|Part of the Egress add-on application: Stack name used for the Egress-Backend|*No default - must be specified*|
 |EgressAppCopyLambdaPrefix|Prefix for the lambda function which copies approved egress data to the data lake|*EgressAppCopyLambdaPrefix*|
 |EgressAppDownloadLambdaPrefix|Prefix for the lambda function which downloads approved egress data from the data lake|*EgressApiLambdaServiceRole*|
 |LFDatabaseName|Lake Formation database name that will be created|*No default - must be specified*|

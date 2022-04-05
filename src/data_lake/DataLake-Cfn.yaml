@@ -19,12 +19,10 @@ Parameters:
   EgressAppDomainName:
     Type: String
     Description: Domain name used for the Egress App
-    Default: "*"
 
   EgressAppStackName:
     Type: String
     Description: Stack name used for the Egress-Backend
-    Default: Dev-EgressBackend
 
   EgressAppCopyLambdaPrefix:
     Type: String
