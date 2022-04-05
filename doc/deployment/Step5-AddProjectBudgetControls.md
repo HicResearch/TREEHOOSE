@@ -13,9 +13,19 @@ Log in to the [AWS Management Console](https://console.aws.amazon.com/) using yo
 - [ ] Go to Service: [AWS Identity and Access Management](https://us-east-1.console.aws.amazon.com/iamv2/home#/home)
 - [ ] Select the [*Roles*](https://us-east-1.console.aws.amazon.com/iamv2/home#/roles) menu option on the left side
 - [ ] Search for *initial-stack*
-- [ ] Extract number ID from role: *initial-stack-<number_ID>-xacc-env-mgmt*. This number is required in Step 5B
+- [ ] Extract number ID from role: *initial-stack-<number_ID>-xacc-env-mgmt*. This number is required in Step 5C
 
-### Step 5B. Add Project Budget Control
+### Step 5B. Find existing IAM role
+
+- [ ] Go to Service: [AWS Service Catalog](https://eu-west-2.console.aws.amazon.com/servicecatalog/home?region=eu-west-2#/home)
+- [ ] Select the [*Portfolios*](https://eu-west-2.console.aws.amazon.com/servicecatalog/home?region=eu-west-2#portfolios?activeTab=localAdminPortfolios) menu option on the left side and click on the local portfolio created during SWB deployment (e.g. treprod-ldn-pj1)
+- [ ] Extract product ID (prod-<ID>) from the products list which should contain 4 default SWB products. These numbers are required in Step 5C
+
+For guidance identifying the products, please refer to the image below.
+
+![SWB Service Catalog Product IDs](../../res/images/Guidance-ServiceCatalogProductsList.png)
+
+### Step 5C. Add Project Budget Control
 
 - [ ] Go to Service: [AWS CloudFormation](https://eu-west-2.console.aws.amazon.com/cloudformation/home?region=eu-west-2#/)
 - [ ] Select the [*Stacks*](https://eu-west-2.console.aws.amazon.com/cloudformation/home?region=eu-west-2#/stacks) menu option on the left side
@@ -33,6 +43,7 @@ Log in to the [AWS Management Console](https://console.aws.amazon.com/) using yo
 |BudgetNotifySNSTopicName|The name of the SNS topic whose subscribers (includes TREAdminEmailAddress) receive alerts regarding project budget|*No default - must be specified*|
 |TREAdminEmailAddress|The email address for the TRE admin who will receive alerts regarding project budget|*No default - must be specified*|
 |SWBStackID|Specify the ID of existing IAM role initial-stack-ID-xacc-env-mgmt|*No default - must be specified*|
+|ServiceCatalogProductsList|Specify the 4 IDs (separated by commas) of the existing Service Catalog products created by SWB|*No default - must be specified*|
 
 - [ ] Confirm the stack status is "CREATE_COMPLETE"
 
@@ -40,15 +51,15 @@ When the budget action gets triggered (depends on *AnnualBudgetLimit* and *Actio
 
 ![SWB Workspace Creation Expected Failure](../../res/images/Status-DenySWBWorkspaceCreation.png)
 
-### Step 5C. Adjust Project Budget
+### Step 5D. Adjust Project Budget
 
 This step is optional if you need to update the project budget settings.
 
 - [ ] Go to Service: [AWS CloudFormation](https://eu-west-2.console.aws.amazon.com/cloudformation/home?region=eu-west-2#/)
 - [ ] Select the [*Stacks*](https://eu-west-2.console.aws.amazon.com/cloudformation/home?region=eu-west-2#/stacks) menu option on the left side
-- [ ] Select the stack created in Step 5B and press on button *Update* to adjust the parameters. Please note the changes will take up to 24 hours to reflect in AWS Budgets in terms of alerts and actions.
+- [ ] Select the stack created in Step 5C and press on button *Update* to adjust the parameters. Please note the changes will take up to 24 hours to reflect in AWS Budgets in terms of alerts and actions.
 
-### Step 5D. Remove Project Budget Control
+### Step 5E. Remove Project Budget Control
 
 This step is optional if you need to remove the project budget control policy after e.g. increasing your budget.
 
