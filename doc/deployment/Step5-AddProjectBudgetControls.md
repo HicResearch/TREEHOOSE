@@ -19,7 +19,7 @@ Log in to the [AWS Management Console](https://console.aws.amazon.com/) using yo
 
 - [ ] Go to Service: [AWS Service Catalog](https://eu-west-2.console.aws.amazon.com/servicecatalog/home?region=eu-west-2#/home)
 - [ ] Select the [*Portfolios*](https://eu-west-2.console.aws.amazon.com/servicecatalog/home?region=eu-west-2#portfolios?activeTab=localAdminPortfolios) menu option on the left side and click on the local portfolio created during SWB deployment (e.g. treprod-ldn-pj1)
-- [ ] Extract just the ID from *prod-ID* from the products list which should contain 4 default SWB products. These numbers are required in Step 5C
+- [ ] Extract just the ID from *prod-ID* from the list which should contain 4 default SWB products. These ID strings are required in Step 5C
 
 For guidance identifying the products, please refer to the image below.
 
