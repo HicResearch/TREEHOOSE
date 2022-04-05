@@ -27,7 +27,7 @@ The default behaviour is to restrict all SWB workspace types when the budget con
 - [ ] Select the [*Portfolios*](https://eu-west-2.console.aws.amazon.com/servicecatalog/home?region=eu-west-2#portfolios?activeTab=localAdminPortfolios) menu option on the left side and click on the local portfolio created during SWB deployment (e.g. treprod-ldn-pj1)
 - [ ] Extract just the ID from *prod-ID* from the list which should contain 4 default SWB products. These ID strings are required in Step 5C
 
-For guidance identifying the default products created by SWB, please refer to the image below.
+For guidance identifying the default workspace types (products) created by SWB, please refer to the image below.
 
 ![SWB Service Catalog Product IDs](../../res/images/Guidance-ServiceCatalogProductsList.png)
 
@@ -79,3 +79,9 @@ Follow these instructions if you need to remove the project budget control polic
 When the budget control policy has been removed, any allowed user trying to create a new workspace in SWB will see the Available status message:
 
 ![SWB Workspace Creation Expected Success](../../res/images/Status-AllowSWBWorkspaceCreation.png)
+
+## Appendix
+
+For further customisations, additional notes can be found below.
+
+- [ ] AWS Budgets limits action types to applying IAM or SCP policies or stopping EC2 and RDS instances. For more flexibility, [Amazon SNS can be integrated with AWS Lambda](https://docs.aws.amazon.com/sns/latest/dg/sns-lambda-as-subscriber.html) functions to support custom actions when a budget notification is sent.
