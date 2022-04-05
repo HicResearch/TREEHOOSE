@@ -41,7 +41,8 @@ For guidance identifying the default products created by SWB, please refer to th
 
 |Parameter Name|Description|Default value|
 |:-----------------|:-----------|:-------------|
-|AnnualBudgetLimit|Estimated annual account spend in USD|*No default - must be specified*|
+|BudgetLimit|Estimated annual account spend in USD|*No default - must be specified*|
+|BudgetTimeWindow|Choose between an annually or monthly recurring budget|*ANNUALLY*|
 |NotificationThresholdActualCost1|Budget threshold percentage for receiving first notification based on actual costs|*80*|
 |NotificationThresholdActualCost2|Budget threshold percentage for receiving second notification based on actual costs|*99*|
 |NotificationThresholdForecastedCost|Budget threshold percentage for notification based on forecasted costs|*90*|

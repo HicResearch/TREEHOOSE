@@ -20,9 +20,17 @@ Parameters:
     Description: Leave blank if you want to restrict all SWB workspace types. Otherwise, specify the 4 default products ID (prod-<ID>) from the Service Catalog portfolio created by SWB
     Type: CommaDelimitedList
 
-  AnnualBudgetLimit:
+  BudgetLimit:
     Type: String
-    Description: Estimated annual account spend in USD
+    Description: Estimated account spend in USD
+
+  BudgetTimeWindow:
+    Type: String
+    Description: Choose between annually or monthly recurring budget
+    Default: ANNUALLY
+    AllowedValues:
+      - ANNUALLY
+      - MONTHLY
 
   NotificationThresholdActualCost1:
     Type: Number
@@ -144,10 +152,10 @@ Resources:
     Properties:
       Budget:
         BudgetLimit:
-          Amount: !Ref AnnualBudgetLimit
+          Amount: !Ref BudgetLimit
           Unit: USD
         BudgetType: COST
-        TimeUnit: ANNUALLY
+        TimeUnit: !Ref BudgetTimeWindow
       NotificationsWithSubscribers:
         - Notification:
             NotificationType: ACTUAL
