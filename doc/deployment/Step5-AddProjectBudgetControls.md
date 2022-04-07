@@ -50,7 +50,7 @@ For guidance identifying the default workspace types (products) created by SWB, 
 |BudgetNotifySNSTopicName|The name of the SNS topic whose subscribers (includes TREAdminEmailAddress) receive alerts regarding project budget|*No default - must be specified*|
 |TREAdminEmailAddress|The email address for the TRE admin who will receive alerts regarding project budget|*No default - must be specified*|
 |SWBStackID|Specify the ID of existing IAM role initial-stack-ID-xacc-env-mgmt|*No default - must be specified*|
-|ServiceCatalogProductsList|Leave blank if you want to restrict all SWB workspace types. Otherwise, specify the 4 default products ID (prod-<ID>) from the Service Catalog portfolio created by SWB|*No default - must be specified*|
+|ServiceCatalogProductsList|Leave blank if you want to restrict all SWB workspace types. Otherwise, specify the 4 default products ID (prod-<ID>) from the Service Catalog portfolio created by SWB|*""*|
 
 - [ ] Confirm the stack status is "CREATE_COMPLETE"
 

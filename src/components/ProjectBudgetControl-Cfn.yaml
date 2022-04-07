@@ -19,6 +19,7 @@ Parameters:
   ServiceCatalogProductsList:
     Description: Leave blank if you want to restrict all SWB workspace types. Otherwise, specify the 4 default products ID (prod-<ID>) from the Service Catalog portfolio created by SWB
     Type: CommaDelimitedList
+    Default: ""
 
   BudgetLimit:
     Type: String
