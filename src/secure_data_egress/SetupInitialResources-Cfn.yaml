@@ -67,7 +67,7 @@ Resources:
 
   TRESecureEgressAmplifyAppBranchName:
     Type: AWS::Amplify::Branch
-    Properties: 
+    Properties:
       AppId: !GetAtt TRESecureEgressAmplifyApp.AppId
       BranchName: !Ref AmplifyAppBranchName
 
