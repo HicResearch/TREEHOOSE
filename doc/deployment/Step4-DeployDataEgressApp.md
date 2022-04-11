@@ -4,8 +4,6 @@ If this add-on application is added, a researcher can use a GUI-based data egres
 
 ## Prerequisites
 
-**Time to configure**: Approximately ? minutes
-
 Apply these prerequisites only to accounts part of the **TRE Projects Prod** OU.
 
 Log in to the [AWS Management Console](https://console.aws.amazon.com/) using your **TRE Project 1 Prod** account and Admin privileges.
@@ -26,15 +24,15 @@ Apply these steps only to accounts part of the **TRE Projects Prod** OU.
 
 Log in to the [AWS Management Console](https://console.aws.amazon.com/) using your **TRE Project 1 Prod** account and Admin privileges.
 
-### Step 4A. Add source code to S3 bucket
+### Step 4A. Setup resources before deployment
 
-#### Create encrypted S3 bucket
+#### Create initial resources
 
 - [ ] Go to Service: [AWS CloudFormation](https://eu-west-2.console.aws.amazon.com/cloudformation/home?region=eu-west-2#/)
 - [ ] Select the [*Stacks*](https://eu-west-2.console.aws.amazon.com/cloudformation/home?region=eu-west-2#/stacks) menu option on the left side
 - [ ] Press button: [*Create Stack* with new resources](https://eu-west-2.console.aws.amazon.com/cloudformation/home?region=eu-west-2#/stacks/create/template)
-- [ ] Select option *Upload a template file* to upload CloudFormation template file: [source code bucket](../../src/secure_data_egress/SourceCodeBucket-Cfn.yaml) and press on button *Next*
-- [ ] Provide *Stack name*: "TRESecureEgressCode". Press on button *Next* twice and then press on button *Create stack*
+- [ ] Select option *Upload a template file* to upload CloudFormation template file: [source code bucket](../../src/secure_data_egress/SetupInitialResources-Cfn.yaml) and press on button *Next*
+- [ ] Provide *Stack name*: "TRESecureEgressAppResources". Press on button *Next* twice and then press on button *Create stack*
 
 #### Upload source code to S3 bucket
 
@@ -62,7 +60,12 @@ aws s3 cp s3://<bucket from Step 4A>/secure-egress-webapp secure-egress-webapp -
 
 ### Step 4C. Deploy backend infrastructure
 
-- [ ] Run the following commands to initialise an isolated Python environment and deploy the CDK backend stack:
+- [ ] Run the following commands to edit the parameters for the CDK backend stack:
+```
+... modify cdk.json file (note egress app URL is created in Step 4A)
+```
+
+- [ ] Run the following commands to create an isolated Python environment and deploy the CDK backend stack:
 ```
 cd ~/egress-addon/secure-egress-backend
 python3 -m venv .venv
@@ -74,12 +77,12 @@ cdk deploy
 
 ### Step 4D. Deploy web app
 
-- [ ] Run the following commands to edit the environment variables with the deployed backend resources:
+- [ ] Run the following commands to edit the environment variables to point to the deployed backend resources:
 ```
-...
+... modify .env.local file (based on resources created in Step 4C)
 ```
 
-- [ ] Run the following commands to build the React web application:
+- [ ] Run the following commands to build the React frontend code:
 ```
 cd ~/egress-addon/secure-egress-webapp
 npm install
@@ -87,7 +90,7 @@ npm audit fix
 npm run build
 ```
 
-- [ ] Run the following commands to copy the React web application to S3:
+- [ ] Run the following commands to copy the packaged React frontend to S3:
 ```
 cd ~/egress-addon/secure-egress-webapp/build
 zip -r ../build.zip ./
@@ -95,26 +98,7 @@ cd ..
 aws s3 cp build.zip s3://<bucket from Step 4A>
 ```
 
-- [ ] Run the following commands to create an Amplify environment to host the React web application:
+- [ ] Run the following commands to host the React frontend code in the Amplify app created in Step 4A:
 ```
 ...
-```
-
-- [ ] Run the following commands to deploy the web app:
-```
-...
-```
-
-### Step 4E. Update backend infrastructure
-
-- [ ] Run the following commands to update the application URL parameter with the one created in Step 4D:
-```
-...
-```
-
-- [ ] Run the following commands to update the CDK backend stack:
-```
-cd ~/egress-addon/secure-egress-backend
-source .venv/bin/activate
-cdk deploy
 ```

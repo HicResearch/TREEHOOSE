@@ -6,7 +6,13 @@
 ###############################################################################
 
 AWSTemplateFormatVersion: "2010-09-09"
-Description: Provision the source code S3 bucket for the TRE secure data egress add-on.
+Description: Provision initial resources for the TRE secure data egress add-on deployment process.
+
+Parameters:
+  AmplifyAppName:
+    Type: String
+    Description: Name of the Amplify application that will be created
+    MinLength: 1
 
 Resources:
   TRESecureEgressAppKMSKey:
@@ -23,12 +29,6 @@ Resources:
               AWS: !Sub 'arn:aws:iam::${AWS::AccountId}:root'
             Action: kms:*
             Resource: '*'
-
-  TRESecureEgressAppKMSAlias:
-    Type: AWS::KMS::Alias
-    Properties:
-      AliasName: alias/TRESecureEgressAppKey
-      TargetKeyId: !Ref TRESecureEgressAppKMSKey
 
   TRESecureEgressAppBucket:
     Type: AWS::S3::Bucket
@@ -54,6 +54,11 @@ Resources:
       VersioningConfiguration:
         Status: Enabled
 
+  TRESecureEgressAmplifyApp:
+    Type: AWS::Amplify::App
+    Properties:
+      Name: !Ref AmplifyAppName
+
 Outputs:
   TRESecureEgressAppBucketArn:
     Value: !GetAtt TRESecureEgressAppBucket.Arn
@@ -62,3 +67,15 @@ Outputs:
   TRESecureEgressAppKMSKeyArn:
     Value: !GetAtt TRESecureEgressAppKMSKey.Arn
     Description: "TRE Secure Data Egress App Code Buckets KMS Key"
+
+  TRESecureEgressAmplifyAppId:
+    Value: !GetAtt TRESecureEgressAmplifyApp.AppId
+    Description: "TRE Secure Data Egress Amplify App Id"
+
+  TRESecureEgressAmplifyAppArn:
+    Value: !GetAtt TRESecureEgressAmplifyApp.Arn
+    Description: "TRE Secure Data Egress Amplify App Arn"
+
+  TRESecureEgressAmplifyAppDomain:
+    Value: !GetAtt TRESecureEgressAmplifyApp.DefaultDomain
+    Description: "TRE Secure Data Egress Amplify App Domain"

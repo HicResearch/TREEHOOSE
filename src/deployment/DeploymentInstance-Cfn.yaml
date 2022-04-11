@@ -508,6 +508,14 @@ Resources:
               - Effect: Allow
                 Action: sts:AssumeRole
                 Resource: !Sub "arn:aws:iam::${AWS::AccountId}:role/cdk-*"
+        - PolicyName: AmplifyPolicy
+          PolicyDocument:
+            Statement:
+              - Effect: Allow
+                Action:
+                  - amplify:CreateApp
+                  - amplify:StartDeployment
+                Resource: !Sub "arn:aws:amplify:${AWS::Region}:${AWS::AccountId}:apps/*"
 
 Outputs:
   InstanceId:
