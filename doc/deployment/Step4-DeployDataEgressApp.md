@@ -71,3 +71,50 @@ pip3 install -r requirements.txt
 npm install -g aws-cdk@1.144.0
 cdk deploy
 ```
+
+### Step 4D. Deploy web app
+
+- [ ] Run the following commands to edit the environment variables with the deployed backend resources:
+```
+...
+```
+
+- [ ] Run the following commands to build the React web application:
+```
+cd ~/egress-addon/secure-egress-webapp
+npm install
+npm audit fix
+npm run build
+```
+
+- [ ] Run the following commands to copy the React web application to S3:
+```
+cd ~/egress-addon/secure-egress-webapp/build
+zip -r ../build.zip ./
+cd ..
+aws s3 cp build.zip s3://<bucket from Step 4A>
+```
+
+- [ ] Run the following commands to create an Amplify environment to host the React web application:
+```
+...
+```
+
+- [ ] Run the following commands to deploy the web app:
+```
+...
+```
+
+### Step 4E. Update backend infrastructure
+
+- [ ] Run the following commands to update the application URL parameter with the one created in Step 4D:
+```
+...
+```
+
+- [ ] Run the following commands to update the CDK backend stack:
+```
+cd ~/egress-addon/secure-egress-backend
+source .venv/bin/activate
+cdk deploy
+```
