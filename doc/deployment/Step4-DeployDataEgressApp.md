@@ -100,5 +100,5 @@ aws s3 cp build.zip s3://<bucket from Step 4A>
 
 - [ ] Run the following commands to host the React frontend code in the Amplify app created in Step 4A:
 ```
-...
+aws amplify start-deployment --app-id <app_id from Step 4A> --branch-name <branch_name from Step 4A> --source-url "s3://<bucket from Step 4A>/build.zip"
 ```

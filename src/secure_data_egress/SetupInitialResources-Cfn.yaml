@@ -14,6 +14,12 @@ Parameters:
     Description: Name of the Amplify application that will be created
     MinLength: 1
 
+  AmplifyAppBranchName:
+    Type: String
+    Description: Name of the Amplify application branch that will be created
+    MinLength: 1
+    Default: main
+
 Resources:
   TRESecureEgressAppKMSKey:
     Type: AWS::KMS::Key
@@ -59,6 +65,12 @@ Resources:
     Properties:
       Name: !Ref AmplifyAppName
 
+  TRESecureEgressAmplifyAppBranchName:
+    Type: AWS::Amplify::Branch
+    Properties: 
+      AppId: !GetAtt TRESecureEgressAmplifyApp.AppId
+      BranchName: !Ref AmplifyAppBranchName
+
 Outputs:
   TRESecureEgressAppBucketArn:
     Value: !GetAtt TRESecureEgressAppBucket.Arn
@@ -79,3 +91,7 @@ Outputs:
   TRESecureEgressAmplifyAppDomain:
     Value: !GetAtt TRESecureEgressAmplifyApp.DefaultDomain
     Description: "TRE Secure Data Egress Amplify App Domain"
+
+  TRESecureEgressAmplifyAppBranch:
+    Value: !Ref AmplifyAppBranchName
+    Description: "TRE Secure Data Egress Amplify App Branch Name"
