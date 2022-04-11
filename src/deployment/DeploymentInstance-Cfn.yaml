@@ -502,6 +502,12 @@ Resources:
                   - ec2:CreateDefaultVpc
                   - ec2:DescribeRegions
                 Resource: "*"
+        - PolicyName: CDKAccessPolicy
+          PolicyDocument:
+            Statement:
+              - Effect: Allow
+                Action: sts:AssumeRole
+                Resource: !Sub "arn:aws:iam::${AWS::AccountId}:role/cdk-*"
 
 Outputs:
   InstanceId:
