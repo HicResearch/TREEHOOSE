@@ -1,0 +1,64 @@
+# (c) 2022 Amazon Web Services, Inc. or its affiliates. All Rights Reserved.
+# This AWS Content is provided subject to the terms of the AWS Customer
+# Agreement available at https://aws.amazon.com/agreement or other written
+# agreement between Customer and Amazon Web Services, Inc.
+
+###############################################################################
+
+AWSTemplateFormatVersion: "2010-09-09"
+Description: Provision the source code S3 bucket for the TRE secure data egress add-on.
+
+Resources:
+  TRESecureEgressAppKMSKey:
+    Type: AWS::KMS::Key
+    Properties:
+      Description: Key for TRE secure egress app code bucket
+      EnableKeyRotation: true
+      KeyPolicy:
+        Version: 2012-10-17
+        Statement:
+          - Sid: Enable IAM Policies
+            Effect: Allow
+            Principal:
+              AWS: !Sub 'arn:aws:iam::${AWS::AccountId}:root'
+            Action: kms:*
+            Resource: '*'
+
+  TRESecureEgressAppKMSAlias:
+    Type: AWS::KMS::Alias
+    Properties:
+      AliasName: alias/TRESecureEgressAppKey
+      TargetKeyId: !Ref TRESecureEgressAppKMSKey
+
+  TRESecureEgressAppBucket:
+    Type: AWS::S3::Bucket
+    Metadata:
+      cfn_nag:
+        rules_to_suppress:
+          - id: W35
+            reason: S3 access logging not required
+          - id: W51
+            reason: Bucket policy not required
+    Properties:
+      BucketEncryption:
+        ServerSideEncryptionConfiguration:
+          - BucketKeyEnabled: true
+            ServerSideEncryptionByDefault:
+              SSEAlgorithm: aws:kms
+              KMSMasterKeyID: !GetAtt TRESecureEgressAppKMSKey.Arn
+      PublicAccessBlockConfiguration:
+        BlockPublicAcls: True
+        BlockPublicPolicy: True
+        IgnorePublicAcls: True
+        RestrictPublicBuckets: True
+      VersioningConfiguration:
+        Status: Enabled
+
+Outputs:
+  TRESecureEgressAppBucketArn:
+    Value: !GetAtt TRESecureEgressAppBucket.Arn
+    Description: "TRE Secure Data Egress App Code Bucket"
+
+  TRESecureEgressAppKMSKeyArn:
+    Value: !GetAtt TRESecureEgressAppKMSKey.Arn
+    Description: "TRE Secure Data Egress App Code Buckets KMS Key"
