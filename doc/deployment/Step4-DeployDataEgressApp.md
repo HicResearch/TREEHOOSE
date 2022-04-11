@@ -38,7 +38,7 @@ Log in to the [AWS Management Console](https://console.aws.amazon.com/) using yo
 
 - [ ] Go to Service: [Amazon S3](https://console.aws.amazon.com/s3/get-started?region=eu-west-2)
 - [ ] Select the [*Buckets*](https://console.aws.amazon.com/s3/buckets?region=eu-west-2) menu option on the left side
-- [ ] Select the S3 bucket created in Part 1 (check CloudFormation stack Outputs for the resource names)
+- [ ] Select the S3 bucket created in Part 1 (check CloudFormation stack Outputs for resource names)
 - [ ] Upload each of the 2 folders (**secure-egress-backend** and **secure-egress-webapp** from `TO ADD`) using button "Add folder".
 
 ### Step 4B. Log in to the EC2 instance

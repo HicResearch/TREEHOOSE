@@ -64,12 +64,48 @@ Resources:
     Type: AWS::Amplify::App
     Properties:
       Name: !Ref AmplifyAppName
+      IAMServiceRole: !GetAtt TRESecureEgressAmplifyAppRole.Arn
 
   TRESecureEgressAmplifyAppBranchName:
     Type: AWS::Amplify::Branch
     Properties:
       AppId: !GetAtt TRESecureEgressAmplifyApp.AppId
       BranchName: !Ref AmplifyAppBranchName
+
+  TRESecureEgressAmplifyAppRole:
+    Type: AWS::IAM::Role
+    Properties:
+      AssumeRolePolicyDocument:
+        Version: '2012-10-17'
+        Statement:
+          - Effect: Allow
+            Principal:
+              Service:
+                - amplify.amazonaws.com
+            Action:
+              - sts:AssumeRole
+      Policies:
+        - PolicyName: S3AccessPolicy
+          PolicyDocument:
+            Version: '2012-10-17'
+            Statement:
+              - Effect: Allow
+                Action:
+                  - s3:GetObject
+                  - s3:ListBucket
+                Resource:
+                  - !GetAtt TRESecureEgressAppBucket.Arn
+                  - !Sub "${TRESecureEgressAppBucket.Arn}/*"
+        - PolicyName: KMSAccessPolicy
+          PolicyDocument:
+            Version: '2012-10-17'
+            Statement:
+              - Effect: Allow
+                Action:
+                  - kms:Decrypt
+                  - kms:GenerateDataKey*
+                Resource:
+                  - !GetAtt TRESecureEgressAppKMSKey.Arn
 
 Outputs:
   TRESecureEgressAppBucketArn:
