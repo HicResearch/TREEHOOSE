@@ -59,3 +59,15 @@ cd ~/egress-addon
 aws s3 cp s3://<bucket from Step 4A>/secure-egress-backend secure-egress-backend --recursive
 aws s3 cp s3://<bucket from Step 4A>/secure-egress-webapp secure-egress-webapp --recursive
 ```
+
+### Step 4C. Deploy backend infrastructure
+
+- [ ] Run the following commands to initialise an isolated Python environment and deploy the CDK backend stack:
+```
+cd ~/egress-addon/secure-egress-backend
+python3 -m venv .venv
+source .venv/bin/activate
+pip3 install -r requirements.txt
+npm install -g aws-cdk@1.144.0
+cdk deploy
+```
