@@ -26,19 +26,19 @@ Log in to the [AWS Management Console](https://console.aws.amazon.com/) using yo
 
 ### Step 4A. Setup resources before deployment
 
-#### Create initial resources
+#### Part 1. Create initial resources
 
 - [ ] Go to Service: [AWS CloudFormation](https://eu-west-2.console.aws.amazon.com/cloudformation/home?region=eu-west-2#/)
 - [ ] Select the [*Stacks*](https://eu-west-2.console.aws.amazon.com/cloudformation/home?region=eu-west-2#/stacks) menu option on the left side
 - [ ] Press button: [*Create Stack* with new resources](https://eu-west-2.console.aws.amazon.com/cloudformation/home?region=eu-west-2#/stacks/create/template)
-- [ ] Select option *Upload a template file* to upload CloudFormation template file: [source code bucket](../../src/secure_data_egress/SetupInitialResources-Cfn.yaml) and press on button *Next*
+- [ ] Select option *Upload a template file* to upload CloudFormation template file: [setup initial resources](../../src/secure_data_egress/SetupInitialResources-Cfn.yaml) and press on button *Next*
 - [ ] Provide *Stack name*: "TRESecureEgressAppResources". Press on button *Next* twice and then press on button *Create stack*
 
-#### Upload source code to S3 bucket
+#### Part 2. Upload source code to S3 bucket
 
 - [ ] Go to Service: [Amazon S3](https://console.aws.amazon.com/s3/get-started?region=eu-west-2)
 - [ ] Select the [*Buckets*](https://console.aws.amazon.com/s3/buckets?region=eu-west-2) menu option on the left side
-- [ ] Select the S3 bucket created above
+- [ ] Select the S3 bucket created in Part 1 (check CloudFormation stack Outputs for the resource names)
 - [ ] Upload each of the 2 folders (**secure-egress-backend** and **secure-egress-webapp** from `TO ADD`) using button "Add folder".
 
 ### Step 4B. Log in to the EC2 instance
