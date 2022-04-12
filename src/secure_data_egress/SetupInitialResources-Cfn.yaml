@@ -21,21 +21,6 @@ Parameters:
     Default: main
 
 Resources:
-  TRESecureEgressAppKMSKey:
-    Type: AWS::KMS::Key
-    Properties:
-      Description: Key for TRE secure egress app code bucket
-      EnableKeyRotation: true
-      KeyPolicy:
-        Version: 2012-10-17
-        Statement:
-          - Sid: Enable IAM Policies
-            Effect: Allow
-            Principal:
-              AWS: !Sub 'arn:aws:iam::${AWS::AccountId}:root'
-            Action: kms:*
-            Resource: '*'
-
   TRESecureEgressAppBucket:
     Type: AWS::S3::Bucket
     Metadata:
@@ -50,8 +35,7 @@ Resources:
         ServerSideEncryptionConfiguration:
           - BucketKeyEnabled: true
             ServerSideEncryptionByDefault:
-              SSEAlgorithm: aws:kms
-              KMSMasterKeyID: !GetAtt TRESecureEgressAppKMSKey.Arn
+              SSEAlgorithm: AES256
       PublicAccessBlockConfiguration:
         BlockPublicAcls: True
         BlockPublicPolicy: True
@@ -96,33 +80,15 @@ Resources:
                 Resource:
                   - !GetAtt TRESecureEgressAppBucket.Arn
                   - !Sub "${TRESecureEgressAppBucket.Arn}/*"
-        - PolicyName: KMSAccessPolicy
-          PolicyDocument:
-            Version: '2012-10-17'
-            Statement:
-              - Effect: Allow
-                Action:
-                  - kms:Decrypt
-                  - kms:GenerateDataKey*
-                Resource:
-                  - !GetAtt TRESecureEgressAppKMSKey.Arn
 
 Outputs:
   TRESecureEgressAppBucketArn:
     Value: !GetAtt TRESecureEgressAppBucket.Arn
     Description: "TRE Secure Data Egress App Code Bucket"
 
-  TRESecureEgressAppKMSKeyArn:
-    Value: !GetAtt TRESecureEgressAppKMSKey.Arn
-    Description: "TRE Secure Data Egress App Code Buckets KMS Key"
-
   TRESecureEgressAmplifyAppId:
     Value: !GetAtt TRESecureEgressAmplifyApp.AppId
     Description: "TRE Secure Data Egress Amplify App Id"
-
-  TRESecureEgressAmplifyAppArn:
-    Value: !GetAtt TRESecureEgressAmplifyApp.Arn
-    Description: "TRE Secure Data Egress Amplify App Arn"
 
   TRESecureEgressAmplifyAppDomain:
     Value: !GetAtt TRESecureEgressAmplifyApp.DefaultDomain
