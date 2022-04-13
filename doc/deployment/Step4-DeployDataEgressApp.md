@@ -65,15 +65,10 @@ aws s3 cp s3://<bucket from Step 4A>/secure-egress-webapp secure-egress-webapp -
 ... modify cdk.json file (note egress app URL is created in Step 4A)
 ```
 
-- [ ] Run the following commands to ensure the app can later use CDK version 1:
-```
-cd ~/
-alias cdkv1="npx aws-cdk@1.144"
-```
-
 - [ ] Run the following commands to create an isolated Python environment and deploy the CDK backend stack:
 ```
 cd ~/egress-addon/secure-egress-backend
+alias cdkv1="npx aws-cdk@1.144"
 python3 -m venv .venv
 source .venv/bin/activate
 pip3 install -r requirements.txt
