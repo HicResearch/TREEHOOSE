@@ -90,15 +90,18 @@ npm audit fix
 npm run build
 ```
 
-- [ ] Run the following commands to copy the packaged React frontend to S3:
+- [ ] Run the following commands to copy the packaged React app to S3 and trigger an automatic deployment to Amplify:
 ```
 cd ~/egress-addon/secure-egress-webapp/build
 zip -r ../build.zip ./
-cd ..
+cd ~/egress-addon/secure-egress-webapp
 aws s3 cp build.zip s3://<bucket from Step 4A>
 ```
 
-- [ ] Run the following commands to host the React frontend code in the Amplify app created in Step 4A:
-```
-aws amplify start-deployment --app-id <app_id from Step 4A> --branch-name <branch_name from Step 4A> --source-url "s3://<bucket from Step 4A>/build.zip"
-```
+Verify the Amplify app has been updated automatically and the website is reachable:
+- [ ] Go to Service: [AWS Amplify](https://eu-west-2.console.aws.amazon.com/amplify/home?region=eu-west-2#/)
+- [ ] Select the app and branch created in Step 4A
+- [ ] Confirm the status in the app branch is: *Deployment successfully completed.*
+- [ ] Open the URL from *Domain* and confirm a login prompt appears like in the image below
+
+![Egress App Website](../../res/images/Status-EgressAppDeployed.png)
