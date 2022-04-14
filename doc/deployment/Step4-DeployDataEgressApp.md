@@ -95,11 +95,11 @@ cdkv1 deploy
 
 |Parameter Name|Description|Location|AWS Account|
 |:-----------------|:-----------|:-------------|:------------|
-|REACT_APP_APPSYNC_API|Provide resource created in Step 4C -  || **TRE Project 1 Prod** account |
-|REACT_APP_USER_POOL_CLIENT_ID|Provide resource created in Step 4C -  || **TRE Project 1 Prod** account |
-|REACT_APP_USER_POOL_ID|Provide resource created in Step 4C -  || **TRE Project 1 Prod** account |
-|REACT_APP_USER_POOL_DOMAIN|Provide resource created in Step 4C -  || **TRE Project 1 Prod** account |
-|REACT_APP_REGION|Provide resource created in Step 4C -  || **TRE Project 1 Prod** account |
+|REACT_APP_APPSYNC_API|Provide resource created in Step 4C - Egress API URL (e.g. "https://.../graphql) |Check [AWS CloudFormation](https://eu-west-2.console.aws.amazon.com/cloudformation/home?region=eu-west-2#/) *Resources* tab for *Stack* "EgressAppBackend" or go to [AWS AppSync APIs](https://eu-west-2.console.aws.amazon.com/appsync/home?region=eu-west-2#/apis) -> Select the API created -> *Settings* -> *API URL* | **TRE Project 1 Prod** account |
+|REACT_APP_USER_POOL_CLIENT_ID|Provide resource created in Step 4C - App Client Id |Check [AWS CloudFormation](https://eu-west-2.console.aws.amazon.com/cloudformation/home?region=eu-west-2#/) *Resources* tab for *Stack* "EgressAppBackend" or go to [Amazon Cognito Pools](https://eu-west-2.console.aws.amazon.com/cognito/users/?region=eu-west-2#) -> Select the User Pool created -> Under *General settings* -> *App clients* -> *App client id* | **TRE Project 1 Prod** account |
+|REACT_APP_USER_POOL_ID|Provide resource created in Step 4C - User Pool Id |Check [AWS CloudFormation](https://eu-west-2.console.aws.amazon.com/cloudformation/home?region=eu-west-2#/) *Resources* tab for *Stack* "EgressAppBackend" or go to [Amazon Cognito Pools](https://eu-west-2.console.aws.amazon.com/cognito/users/?region=eu-west-2#) -> *General settings* -> *Pool Id* | **TRE Project 1 Prod** account |
+|REACT_APP_USER_POOL_DOMAIN|Provide resource created in Step 4C - User Pool Domain Name (e.g. <cognito_userpool_domain>.auth.eu-west-2.amazoncognito.com) |Check [AWS CloudFormation](https://eu-west-2.console.aws.amazon.com/cloudformation/home?region=eu-west-2#/) *Resources* tab for *Stack* "EgressAppBackend" or go to [Amazon Cognito Pools](https://eu-west-2.console.aws.amazon.com/cognito/users/?region=eu-west-2#) -> Under *App integration* -> *Domain name* | **TRE Project 1 Prod** account |
+|REACT_APP_REGION|Provide current AWS Region (i.e. eu-west-2)|NA| **TRE Project 1 Prod** account |
 |REACT_APP_EGRESS_IG_ROLE|Provide same value as in cdk.json file edited in Step 4C for parameter *egress_reviewer_roles* - value 1|NA| **TRE Project 1 Prod** account |
 |REACT_APP_EGRESS_RIT_ROLE|Provide same value as in cdk.json file edited in Step 4C for parameter *egress_reviewer_roles* - value 2|NA| **TRE Project 1 Prod** account |
 |REACT_APP_MAX_DOWNLOADS_ALLOWED|Provide same value as in cdk.json file edited in Step 4C for parameter *max_downloads_allowed* |NA| **TRE Project 1 Prod** account |
