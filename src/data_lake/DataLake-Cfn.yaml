@@ -18,7 +18,7 @@ Parameters:
 
   EgressAppDomainName:
     Type: String
-    Description: Egress app domain name (provide value from Prerequisites Step 5)
+    Description: Egress app domain name (provide value from Prerequisites Step 5, e.g. https://<branch>.<app_id>.amplifyapp.com)
 
   EgressAppStackName:
     Type: String
