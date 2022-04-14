@@ -70,7 +70,7 @@ aws s3 cp s3://<bucket from Step 4A>/secure-egress-webapp secure-egress-webapp -
 |egress_app_branch|Provide resource created in Prerequisites Step 5 - Amplify app branch name (not the full Arn, just the branch name given as input parameter) |Check [AWS CloudFormation](https://eu-west-2.console.aws.amazon.com/cloudformation/home?region=eu-west-2#/) *Resources* tab for *Stack* "Prerequisite-AmplifyApp" or go to [AWS Amplify](https://eu-west-2.console.aws.amazon.com/amplify/home?region=eu-west-2#/home)| **TRE Project 1 Prod** account |
 |egress_app_url|Provide resource created in Prerequisites Step 5 - Amplify app URL, e.g. "https://<branch_name>.<app_id>.amplifyapp.com |Check [AWS CloudFormation](https://eu-west-2.console.aws.amazon.com/cloudformation/home?region=eu-west-2#/) *Resources* tab for *Stack* "Prerequisite-AmplifyApp" or go to [AWS Amplify](https://eu-west-2.console.aws.amazon.com/amplify/home?region=eu-west-2#/home)| **TRE Project 1 Prod** account |
 |swb_egress_store_arn|Provide resource created in Step 2 - S3 Bucket: Egress Store Bucket Arn |Check [AWS CloudFormation](https://eu-west-2.console.aws.amazon.com/cloudformation/home?region=eu-west-2#/) *Resources* tab for *Stack* "treprod-ldn-pj1-backend" or go to [Amazon S3 Buckets](https://s3.console.aws.amazon.com/s3/buckets?region=eu-west-2)| **TRE Project 1 Prod** account |
-|swb_egress_notification_topic|Provide resource created in Step 2 - SNS Topic: Egress Notification Topic |Check [AWS CloudFormation](https://eu-west-2.console.aws.amazon.com/cloudformation/home?region=eu-west-2#/) *Resources* tab for *Stack* "treprod-ldn-pj1-backend" or go to [Amazon SNS Topics](https://eu-west-2.console.aws.amazon.com/sns/v3/home?region=eu-west-2#/topics)| **TRE Project 1 Prod** account |
+|swb_egress_notification_topic|Provide resource created in Step 2 - SNS Topic: Egress Notification Topic Arn |Check [AWS CloudFormation](https://eu-west-2.console.aws.amazon.com/cloudformation/home?region=eu-west-2#/) *Resources* tab for *Stack* "treprod-ldn-pj1-backend" or go to [Amazon SNS Topics](https://eu-west-2.console.aws.amazon.com/sns/v3/home?region=eu-west-2#/topics)| **TRE Project 1 Prod** account |
 |swb_egress_notification_bucket_arn|Provide resource created in Step 2 - S3 Bucket: Egress Notification Bucket Arn |Check [AWS CloudFormation](https://eu-west-2.console.aws.amazon.com/cloudformation/home?region=eu-west-2#/) *Resources* tab for *Stack* "treprod-ldn-pj1-backend" or go to [Amazon S3 Buckets](https://s3.console.aws.amazon.com/s3/buckets?region=eu-west-2)| **TRE Project 1 Prod** account |
 |swb_egress_notification_bucket_kms_arn|Provide resource created in Step 2 - KMS Key: Egress Store Encryption Key Arn |Check [AWS CloudFormation](https://eu-west-2.console.aws.amazon.com/cloudformation/home?region=eu-west-2#/) *Resources* tab for *Stack* "treprod-ldn-pj1-backend" or go to [AWS KMS Keys](https://eu-west-2.console.aws.amazon.com/kms/home?region=eu-west-2#/kms/keys)| **TRE Project 1 Prod** account |
 |swb_egress_store_db_table|Provide resource created in Step 2 - DynamoDB Table: Egress Store Table Arn |Check [AWS CloudFormation](https://eu-west-2.console.aws.amazon.com/cloudformation/home?region=eu-west-2#/) *Resources* tab for *Stack* "treprod-ldn-pj1-backend" or go to [Amazon DynamoDB Tables](https://eu-west-2.console.aws.amazon.com/dynamodbv2/home?region=eu-west-2#tables)| **TRE Project 1 Prod** account |
@@ -91,10 +91,18 @@ cdkv1 deploy
 
 ### Step 4D. Deploy web app
 
-- [ ] Run the following commands to edit the environment variables to point to the deployed backend resources:
-```
-... modify .env.local file (based on resources created in Step 4C)
-```
+- [ ] Edit file *.env.local* in the **secure-egress-webapp** directory. Change the following required parameters for the web application:
+
+|Parameter Name|Description|Location|AWS Account|
+|:-----------------|:-----------|:-------------|:------------|
+|REACT_APP_APPSYNC_API|Provide resource created in Step 4C -  || **TRE Project 1 Prod** account |
+|REACT_APP_USER_POOL_CLIENT_ID|Provide resource created in Step 4C -  || **TRE Project 1 Prod** account |
+|REACT_APP_USER_POOL_ID|Provide resource created in Step 4C -  || **TRE Project 1 Prod** account |
+|REACT_APP_USER_POOL_DOMAIN|Provide resource created in Step 4C -  || **TRE Project 1 Prod** account |
+|REACT_APP_REGION|Provide resource created in Step 4C -  || **TRE Project 1 Prod** account |
+|REACT_APP_EGRESS_IG_ROLE|Provide same value as in cdk.json file edited in Step 4C for parameter *egress_reviewer_roles* - value 1|NA| **TRE Project 1 Prod** account |
+|REACT_APP_EGRESS_RIT_ROLE|Provide same value as in cdk.json file edited in Step 4C for parameter *egress_reviewer_roles* - value 2|NA| **TRE Project 1 Prod** account |
+|REACT_APP_MAX_DOWNLOADS_ALLOWED|Provide same value as in cdk.json file edited in Step 4C for parameter *max_downloads_allowed* |NA| **TRE Project 1 Prod** account |
 
 - [ ] Run the following commands to build the React frontend code:
 ```
