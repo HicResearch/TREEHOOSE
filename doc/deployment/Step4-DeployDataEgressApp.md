@@ -62,23 +62,20 @@ aws s3 cp s3://<bucket from Step 4A>/secure-egress-webapp secure-egress-webapp -
 
 ### Step 4C. Deploy backend infrastructure
 
-- [ ] Edit file *cdk.json* by changing the required parameters for the CDK backend stack:
+- [ ] Edit file *cdk.json* in the **secure-egress-backend** directory. Change the following required parameters for the CDK backend stack:
 
 |Parameter Name|Description|Location|
 |:-----------------|:-----------|:-------------|
 |egress_app_id|Provide resource created in Prerequisites Step 5 - Amplify app ID (not the full Arn, just the ID) |Check [AWS CloudFormation](https://eu-west-2.console.aws.amazon.com/cloudformation/home?region=eu-west-2#/) *Resources* tab for *Stack* "Prerequisite-AmplifyApp" or go to [AWS Amplify](https://eu-west-2.console.aws.amazon.com/amplify/home?region=eu-west-2#/home)|
 |egress_app_branch|Provide resource created in Prerequisites Step 5 - Amplify app branch name (not the full Arn, just the branch name given as input parameter) |Check [AWS CloudFormation](https://eu-west-2.console.aws.amazon.com/cloudformation/home?region=eu-west-2#/) *Resources* tab for *Stack* "Prerequisite-AmplifyApp" or go to [AWS Amplify](https://eu-west-2.console.aws.amazon.com/amplify/home?region=eu-west-2#/home)|
-|egress_app_url|Provide resource created in Prerequisites Step 5 - Amplify app URL, e.g. "https://<branch>.<app_id>.amplifyapp.com |Check [AWS CloudFormation](https://eu-west-2.console.aws.amazon.com/cloudformation/home?region=eu-west-2#/) *Resources* tab for *Stack* "Prerequisite-AmplifyApp" or go to [AWS Amplify](https://eu-west-2.console.aws.amazon.com/amplify/home?region=eu-west-2#/home)|
-
+|egress_app_url|Provide resource created in Prerequisites Step 5 - Amplify app URL, e.g. "https://<branch_name>.<app_id>.amplifyapp.com |Check [AWS CloudFormation](https://eu-west-2.console.aws.amazon.com/cloudformation/home?region=eu-west-2#/) *Resources* tab for *Stack* "Prerequisite-AmplifyApp" or go to [AWS Amplify](https://eu-west-2.console.aws.amazon.com/amplify/home?region=eu-west-2#/home)|
 |swb_egress_store_arn|Provide resource created in Step 2|To Do|
 |swb_egress_notification_topic|Provide resource created in Step 2|To Do|
 |swb_egress_notification_bucket_arn|Provide resource created in Step 2|To Do|
 |swb_egress_notification_bucket_kms_arn|Provide resource created in Step 2|To Do|
 |swb_egress_store_db_table|Provide resource created in Step 2|To Do|
-
 |datalake_target_bucket_arn|Provide resource created in Step 3|To Do|
 |datalake_target_bucket_kms_arn|Provide resource created in Step 3|To Do|
-
 |cognito_userpool_domain|Provide name so that a new Cognito domain will be created|NA|
 |tre_admin_email_address|Provide a TRE admin email address that will need to be verified after deployment|NA|
 
