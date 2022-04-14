@@ -18,7 +18,7 @@ Parameters:
 
   EgressAppDomainName:
     Type: String
-    Description: Domain name used for the Egress App
+    Description: Egress app domain name (provide value from Prerequisites Step 5)
 
   EgressAppStackName:
     Type: String

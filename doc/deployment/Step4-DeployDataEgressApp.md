@@ -26,13 +26,15 @@ Log in to the [AWS Management Console](https://console.aws.amazon.com/) using yo
 
 ### Step 4A. Setup resources before deployment
 
-#### Part 1. Create initial resources
+This step can be removed when we can download the code from the public repository later.
+
+#### Part 1. Create temporary resources
 
 - [ ] Go to Service: [AWS CloudFormation](https://eu-west-2.console.aws.amazon.com/cloudformation/home?region=eu-west-2#/)
 - [ ] Select the [*Stacks*](https://eu-west-2.console.aws.amazon.com/cloudformation/home?region=eu-west-2#/stacks) menu option on the left side
 - [ ] Press button: [*Create Stack* with new resources](https://eu-west-2.console.aws.amazon.com/cloudformation/home?region=eu-west-2#/stacks/create/template)
-- [ ] Select option *Upload a template file* to upload CloudFormation template file: [setup initial resources](../../src/secure_data_egress/SetupInitialResources-Cfn.yaml) and press on button *Next*
-- [ ] Provide *Stack name*: "TRESecureEgressAppResources". Press on button *Next* twice and then press on button *Create stack*
+- [ ] Select option *Upload a template file* to upload CloudFormation template file: [setup initial resources](../../src/secure_data_egress/ToBeRemoved-SetupTemporaryResources-Cfn.yaml) and press on button *Next*
+- [ ] Provide *Stack name*: "TRESecureEgressAppTempResources". Press on button *Next* twice and then press on button *Create stack*
 
 #### Part 2. Upload source code to S3 bucket
 
@@ -50,7 +52,7 @@ sudo su ec2-user
 source ~/.bash_profile
 ```
 
-- [ ] Run the following commands to download the source code:
+- [ ] Run the following commands to download the source code (temporarily using S3):
 ```
 mkdir ~/egress-addon
 cd ~/egress-addon
@@ -60,10 +62,25 @@ aws s3 cp s3://<bucket from Step 4A>/secure-egress-webapp secure-egress-webapp -
 
 ### Step 4C. Deploy backend infrastructure
 
-- [ ] Run the following commands to edit the parameters for the CDK backend stack:
-```
-... modify cdk.json file (note egress app URL is created in Step 4A)
-```
+- [ ] Edit file *cdk.json* by changing the required parameters for the CDK backend stack:
+
+|Parameter Name|Description|Location|
+|:-----------------|:-----------|:-------------|
+|egress_app_id|Provide resource created in Prerequisites Step 5 - Amplify app ID (not the full Arn, just the ID) |Check [AWS CloudFormation](https://eu-west-2.console.aws.amazon.com/cloudformation/home?region=eu-west-2#/) *Resources* tab for *Stack* "Prerequisite-AmplifyApp" or go to [AWS Amplify](https://eu-west-2.console.aws.amazon.com/amplify/home?region=eu-west-2#/home)|
+|egress_app_branch|Provide resource created in Prerequisites Step 5 - Amplify app branch name (not the full Arn, just the branch name given as input parameter) |Check [AWS CloudFormation](https://eu-west-2.console.aws.amazon.com/cloudformation/home?region=eu-west-2#/) *Resources* tab for *Stack* "Prerequisite-AmplifyApp" or go to [AWS Amplify](https://eu-west-2.console.aws.amazon.com/amplify/home?region=eu-west-2#/home)|
+|egress_app_url|Provide resource created in Prerequisites Step 5 - Amplify app URL, e.g. "https://<branch>.<app_id>.amplifyapp.com |Check [AWS CloudFormation](https://eu-west-2.console.aws.amazon.com/cloudformation/home?region=eu-west-2#/) *Resources* tab for *Stack* "Prerequisite-AmplifyApp" or go to [AWS Amplify](https://eu-west-2.console.aws.amazon.com/amplify/home?region=eu-west-2#/home)|
+
+|swb_egress_store_arn|Provide resource created in Step 2|To Do|
+|swb_egress_notification_topic|Provide resource created in Step 2|To Do|
+|swb_egress_notification_bucket_arn|Provide resource created in Step 2|To Do|
+|swb_egress_notification_bucket_kms_arn|Provide resource created in Step 2|To Do|
+|swb_egress_store_db_table|Provide resource created in Step 2|To Do|
+
+|datalake_target_bucket_arn|Provide resource created in Step 3|To Do|
+|datalake_target_bucket_kms_arn|Provide resource created in Step 3|To Do|
+
+|cognito_userpool_domain|Provide name so that a new Cognito domain will be created|NA|
+|tre_admin_email_address|Provide a TRE admin email address that will need to be verified after deployment|NA|
 
 - [ ] Run the following commands to create an isolated Python environment and deploy the CDK backend stack:
 ```
@@ -95,7 +112,7 @@ npm run build
 cd ~/egress-addon/secure-egress-webapp/build
 zip -r ../build.zip ./
 cd ~/egress-addon/secure-egress-webapp
-aws s3 cp build.zip s3://<bucket from Step 4A>
+aws s3 cp build.zip s3://<bucket from Step 4C>
 ```
 
 Verify the Amplify app has been updated automatically and the website is reachable:

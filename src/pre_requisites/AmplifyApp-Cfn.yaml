@@ -1,0 +1,52 @@
+# (c) 2022 Amazon Web Services, Inc. or its affiliates. All Rights Reserved.
+# This AWS Content is provided subject to the terms of the AWS Customer
+# Agreement available at https://aws.amazon.com/agreement or other written
+# agreement between Customer and Amazon Web Services, Inc.
+
+###############################################################################
+
+AWSTemplateFormatVersion: "2010-09-09"
+Description: Provision Amplify app to be used for TRE components.
+
+Parameters:
+  AmplifyAppName:
+    Type: String
+    Description: Name of the Amplify application that will be created
+    MinLength: 1
+
+  AmplifyAppBranchName:
+    Type: String
+    Description: Name of the Amplify application branch that will be created
+    MinLength: 1
+    Default: Prod
+
+Resources:
+  TRESecureEgressAmplifyApp:
+    Type: AWS::Amplify::App
+    Properties:
+      Name: !Ref AmplifyAppName
+
+  TRESecureEgressAmplifyAppBranchName:
+    Type: AWS::Amplify::Branch
+    Properties:
+      AppId: !GetAtt TRESecureEgressAmplifyApp.AppId
+      BranchName: !Ref AmplifyAppBranchName
+
+Outputs:
+  TRESecureEgressAmplifyAppId:
+    Value: !GetAtt TRESecureEgressAmplifyApp.AppId
+    Description: "TRE Secure Data Egress Amplify App Id"
+    Export:
+      Name: TRESecureEgressAmplifyAppId
+
+  TRESecureEgressAmplifyAppDomain:
+    Value: !GetAtt TRESecureEgressAmplifyApp.DefaultDomain
+    Description: "TRE Secure Data Egress Amplify App Domain"
+    Export:
+      Name: TRESecureEgressAmplifyAppDomain
+
+  TRESecureEgressAmplifyAppBranch:
+    Value: !Ref AmplifyAppBranchName
+    Description: "TRE Secure Data Egress Amplify App Branch Name"
+    Export:
+      Name: TRESecureEgressAmplifyAppBranch

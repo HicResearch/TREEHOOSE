@@ -1,0 +1,38 @@
+# (c) 2022 Amazon Web Services, Inc. or its affiliates. All Rights Reserved.
+# This AWS Content is provided subject to the terms of the AWS Customer
+# Agreement available at https://aws.amazon.com/agreement or other written
+# agreement between Customer and Amazon Web Services, Inc.
+
+###############################################################################
+
+AWSTemplateFormatVersion: "2010-09-09"
+Description: To be removed. Provision temporary resources for the TRE secure data egress add-on deployment process.
+
+Resources:
+  TRESecureEgressAppBucket:
+    Type: AWS::S3::Bucket
+    Metadata:
+      cfn_nag:
+        rules_to_suppress:
+          - id: W35
+            reason: S3 access logging not required
+          - id: W51
+            reason: Bucket policy not required
+    Properties:
+      BucketEncryption:
+        ServerSideEncryptionConfiguration:
+          - BucketKeyEnabled: true
+            ServerSideEncryptionByDefault:
+              SSEAlgorithm: AES256
+      PublicAccessBlockConfiguration:
+        BlockPublicAcls: True
+        BlockPublicPolicy: True
+        IgnorePublicAcls: True
+        RestrictPublicBuckets: True
+      VersioningConfiguration:
+        Status: Enabled
+
+Outputs:
+  TRESecureEgressAppBucketArn:
+    Value: !GetAtt TRESecureEgressAppBucket.Arn
+    Description: "TRE Secure Data Egress App Code Bucket"

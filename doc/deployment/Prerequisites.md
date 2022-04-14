@@ -2,7 +2,7 @@
 
 > Required before deploying the TREEHOOSE TRE solution
 
-**Total time to configure**: Approximately 100 minutes
+**Total time to configure**: Approximately 105 minutes
 
 Ensure all steps below are executed in AWS region: [London (eu-west-2)](https://eu-west-2.console.aws.amazon.com/).
 
@@ -153,6 +153,23 @@ Log in to the [AWS Management Console](https://console.aws.amazon.com/) using yo
 
 - [ ] Go to Service: [Amazon AppStream 2.0](https://eu-west-2.console.aws.amazon.com/appstream2/home?region=eu-west-2#/)
 - [ ] Press on button *Get Started*, then *Skip*. This will create a role in the background which will be used later in the deployment process.
+
+### Step 5. Create placeholder Amplify App
+
+**Time to configure**: Approximately 5 minutes
+
+Required for all accounts created under the **TRE Projects Prod** OU.
+
+Log in to the [AWS Management Console](https://console.aws.amazon.com/) using your **TRE Project 1 Prod** account and Admin privileges.
+
+- [ ] Go to Service: [AWS CloudFormation](https://eu-west-2.console.aws.amazon.com/cloudformation/home?region=eu-west-2#/)
+- [ ] Select the [*Stacks*](https://eu-west-2.console.aws.amazon.com/cloudformation/home?region=eu-west-2#/stacks) menu option on the left side
+- [ ] Press button: [*Create Stack* with new resources](https://eu-west-2.console.aws.amazon.com/cloudformation/home?region=eu-west-2#/stacks/create/template)
+- [ ] Select option *Upload a template file* to upload CloudFormation template file: [amplify app](../../src/pre_requisites/AmplifyApp-Cfn.yaml) and press on button *Next*
+- [ ] Provide *Stack name*: "Prerequisite-AmplifyApp". Provide new names for parameters *AmplifyAppName* and *AmplifyAppBranchName*. Press on button *Next* twice and then press on button *Create stack*
+- [ ] Confirm the stack status is "CREATE_COMPLETE"
+
+The details for the empty Amplify app created here are required later in Steps 3 and 4.
 
 ## Appendix
 
