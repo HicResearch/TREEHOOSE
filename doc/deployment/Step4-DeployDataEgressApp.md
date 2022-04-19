@@ -127,15 +127,3 @@ Verify the Amplify app has been updated automatically and the website is reachab
 - [ ] Open the URL from *Domain* and confirm a login prompt appears like in the image below
 
 ![Egress App Website](../../res/images/Status-EgressAppDeployed.png)
-
-### Step 4D. Setup Cognito Users to Log In
-
-To Do
-
-### Step 4E. Setup SNS Subscribers for Notifications
-
-To Do
-
-### Step 4F. Setup Egress Workflow
-
-To Do (attach egress staging area bucket to SWB)
