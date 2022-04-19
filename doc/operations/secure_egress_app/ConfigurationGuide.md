@@ -66,4 +66,9 @@ Select topic *ResearchIT-Notifications*:
 
 ## Step 2. Setup Access for Information Governance Leads
 
-To Do
+In SWB:
+- [ ] Log in to SWB using an admin account
+- [ ] Select menu option *Data Sources* and use button *Register Studies*, press *Next*
+- [ ] To Do
+
+![Successfully attached the staging area for egress requests](../../../res/images/Status-SetupDataStudy-ReviewEgressRequests.png)
