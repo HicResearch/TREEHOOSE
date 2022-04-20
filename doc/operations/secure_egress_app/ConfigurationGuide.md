@@ -71,4 +71,8 @@ In SWB:
 - [ ] Select menu option *Data Sources* and use button *Register Studies*, press *Next*
 - [ ] To Do
 
+Limitations (SWB):
+- The *Admin* permissions for a registered data study should always have at least one user listed
+- Do not add the same user under both *Admin* and *Read Only* permissions for a registered data study as it leads to permission errors when viewing the study
+
 ![Successfully attached the staging area for egress requests](../../../res/images/Status-SetupDataStudy-ReviewEgressRequests.png)
