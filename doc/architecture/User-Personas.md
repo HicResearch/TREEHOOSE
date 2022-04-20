@@ -36,6 +36,6 @@ They may also be responsible for adding new users or disabling old users, for se
 ## Data Egress Manager
 
 A Data Egress Manager checks all research outputs before they are removed from a TRE, to ensure confidential data is not taken out.
-This role may be combined with the Data Lake Manager.
+This role requires an understanding the data governance, and may be combined with the Data Lake Manager.
 
 They are expected to understand the types of output that researchers wish to take out of a TRE, and seek advice where outputs are in a format that can not be validated.
