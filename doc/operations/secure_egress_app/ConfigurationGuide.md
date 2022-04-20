@@ -1,14 +1,14 @@
 Ensure all steps below are executed in AWS region: [London (eu-west-2)](https://eu-west-2.console.aws.amazon.com/).
 
-To use the secure egress application add-on after deployment, a TRE admin must additionally configure user accounts and enable the information governance leads to review the data in the egress requests triggered by researchers.
+To use the Egress Application add-on after deployment, a TRE admin must additionally configure user accounts and enable the information governance leads to review the data in the egress requests triggered by researchers from .
 
-There are 2 types of users involved in the egress app workflow:
+There are 2 types of users involved in the Egress App workflow:
 1) Information Governance Leads
 - uses a SWB user account of type researcher to create a new workspace to view the contents of the data egress request
-- uses an egress app user account to provide the 1st approval for a data egress request
+- uses an Egress App user account to provide the 1st approval for a data egress request
 2) Research IT Admins
 - uses a SWB user account of type admin to validate that an information governance lead is authorised to grant their approval
-- uses an egress app user account to provide the 2nd approval for data egress requests, only after the 1st approval has been granted
+- uses an Egress App user account to provide the 2nd approval for data egress requests, only after the 1st approval has been granted
 
 ## Step 1. Setup Users
 
@@ -73,9 +73,9 @@ In SWB:
 |:-----------------|:-----------|
 |AWS Account ID|Provide the ID for the **TRE Project 1 Prod** account|
 |Account Name|Provide e.g. **TRE Project 1 Prod**|
-|Region|Provide the AWS Region where the TRE project was deployed (e.g. *eu-west-2* for London) |
-|Bucket Name|Provide the name of the S3 bucket used by the Egress App as staging area for egress requests|
-|Bucket Region|Provide the AWS Region where the TRE project was deployed (e.g. *eu-west-2* for London) |
+|Region|Provide the AWS Region where the TRE project was deployed, e.g. *eu-west-2* for London |
+|Bucket Name|Provide the name of the S3 bucket created by the Egress App as staging area for egress requests, e.g. EgressStagingArea...|
+|Bucket Region|Provide the AWS Region where the TRE project was deployed, e.g. *eu-west-2* for London |
 |Bucket Default Encryption|Select *SSE-KMS* and provide the KMS Arn used for the Egress App staging area S3 Bucket's encryption key|
 
 - [ ] Press on button "Add Study":
@@ -90,7 +90,9 @@ In SWB:
 |Study KMS Arn|Provide the KMS Arn used for the Egress App staging area S3 Bucket's encryption key|
 |Admin|Select the existing SWB user account for the Information Governance Lead|
 
-![Successfully attached the staging area for egress requests](../../../res/images/Status-RegisterStudyReviewEgressRequests.png)
+A message like this should appear after registering the study:
+
+![Successfully registered the staging area for egress requests](../../../res/images/Status-RegisterStudyReviewEgressRequests.png)
 
 Limitations (SWB):
 - The *Admin* permissions for a registered data study should always have at least one SWB user (of type Information Governance Lead) listed
