@@ -68,6 +68,13 @@ Select topic *ResearchIT-Notifications*:
 
 **Time to configure**: Approximately 15 minutes
 
+Before proceeding with the steps below, please be aware of the following limitations in SWB:
+- The *Admin* permissions for a registered data study should always have at least one SWB user (of type Information Governance Lead) listed
+- Do not add the same SWB user under both *Admin* and *Read Only* permissions for a registered data study as it leads to permission errors when viewing the study
+- Once an external S3 bucket is registered as data study, it cannot be updated nor deleted. You can't register the same location again without manually deleting the DynamoDB table entries for SWB for the existing study and creating a new registration
+
+Follow the instructions below to provide SWB users of type Information Governance Lead with access to view the egress requests made by researchers in SWB.
+
 In SWB:
 - [ ] Log in to SWB using an admin account
 - [ ] Select menu option *Data Sources* and use button *Register Studies*, press *Next*
@@ -78,9 +85,9 @@ In SWB:
 |AWS Account ID|Provide the ID for the **TRE Project 1 Prod** account|
 |Account Name|Provide e.g. **TRE Project 1 Prod**|
 |Region|Provide the AWS Region where the TRE project was deployed, e.g. *eu-west-2* for London |
-|Bucket Name|Provide the name of the S3 bucket created by the Egress App as staging area for egress requests, e.g. EgressStagingArea...|
+|Bucket Name|Provide the name of the S3 bucket created by the Egress App as staging area for egress requests, e.g. EgressStagingArea... ; Check [AWS CloudFormation](https://eu-west-2.console.aws.amazon.com/cloudformation/home?region=eu-west-2#/) *Resources* tab for *Stack* "EgressAppBackend" to locate the S3 bucket|
 |Bucket Region|Provide the AWS Region where the TRE project was deployed, e.g. *eu-west-2* for London |
-|Bucket Default Encryption|Select *SSE-KMS* and provide the KMS Arn used for the Egress App staging area S3 Bucket's encryption key|
+|Bucket Default Encryption|Select *SSE-KMS* and provide the KMS Arn used for the Egress App staging area S3 Bucket's encryption key, e.g. EgressS3Key...; Check [AWS CloudFormation](https://eu-west-2.console.aws.amazon.com/cloudformation/home?region=eu-west-2#/) *Resources* tab for *Stack* "EgressAppBackend" to locate the KMS key|
 
 - [ ] Press on button "Add Study":
 
@@ -91,16 +98,13 @@ In SWB:
 |Project|Provide the associated SWB project e.g. *TREProject1Prod*|
 |Type|Select *Organization Study*|
 |Access|Select *Read Only*|
-|Study KMS Arn|Provide the KMS Arn used for the Egress App staging area S3 Bucket's encryption key|
-|Admin|Select the existing SWB user account for the Information Governance Lead|
+|Study KMS Arn|Provide the KMS Arn used for the Egress App staging area S3 Bucket's encryption key, e.g. EgressS3Key...; Check [AWS CloudFormation](https://eu-west-2.console.aws.amazon.com/cloudformation/home?region=eu-west-2#/) *Resources* tab for *Stack* "EgressAppBackend" to locate the KMS key|
+|Admin|Select an existing SWB user account for the Information Governance Lead, as created in Step 1 - Part 1|
 
 A message like this should appear after registering the study:
 
 ![Successfully registered the staging area for egress requests](../../../res/images/Status-RegisterStudyReviewEgressRequests.png)
 
-Limitations (SWB):
-- The *Admin* permissions for a registered data study should always have at least one SWB user (of type Information Governance Lead) listed
-- Do not add the same SWB user under both *Admin* and *Read Only* permissions for a registered data study as it leads to permission errors when viewing the study
-- Once an external S3 bucket is registered as data study, it cannot be updated nor deleted. You can't register the same location again without manually deleting the DynamoDB table entries for SWB for the existing study and creating a new registration
+A message like this should appear after successfully attaching the study:
 
 ![Successfully attached the staging area for egress requests](../../../res/images/Status-SetupDataStudy-ReviewEgressRequests.png)
