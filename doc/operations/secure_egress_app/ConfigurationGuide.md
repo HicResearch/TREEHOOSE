@@ -1,5 +1,3 @@
-Syl's Note: I'd like a SA to validate this is the expected configuration
-
 Ensure all steps below are executed in AWS region: [London (eu-west-2)](https://eu-west-2.console.aws.amazon.com/).
 
 To use the secure egress application add-on after deployment, a TRE admin must additionally configure user accounts and enable the information governance leads to review the data in the egress requests triggered by researchers.
@@ -69,10 +67,34 @@ Select topic *ResearchIT-Notifications*:
 In SWB:
 - [ ] Log in to SWB using an admin account
 - [ ] Select menu option *Data Sources* and use button *Register Studies*, press *Next*
-- [ ] To Do
+- [ ] Provide the following details:
+
+|Parameter Name|Description|
+|:-----------------|:-----------|
+|AWS Account ID|Provide the ID for the **TRE Project 1 Prod** account|
+|Account Name|Provide e.g. **TRE Project 1 Prod**|
+|Region|Provide the AWS Region where the TRE project was deployed (e.g. *eu-west-2* for London) |
+|Bucket Name|Provide the name of the S3 bucket used by the Egress App as staging area for egress requests|
+|Bucket Region|Provide the AWS Region where the TRE project was deployed (e.g. *eu-west-2* for London) |
+|Bucket Default Encryption|Select *SSE-KMS* and provide the KMS Arn used for the Egress App staging area S3 Bucket's encryption key|
+
+- [ ] Press on button "Add Study":
+
+|Parameter Name|Description|
+|:-----------------|:-----------|
+|Study Id & Study Name|Provide a name for the directory that will be mounted to a workspace, e.g. ReviewEgressRequests|
+|Study Folder|Provide just the forward slash character */* . This will allow the Information Governance Lead to view all of the TRE project's egress requests for all workspaces|
+|Project|Provide the associated SWB project e.g. *TREProject1Prod*|
+|Type|Select *Organization Study*|
+|Access|Select *Read Only*|
+|Study KMS Arn|Provide the KMS Arn used for the Egress App staging area S3 Bucket's encryption key|
+|Admin|Select the existing SWB user account for the Information Governance Lead|
+
+![Successfully attached the staging area for egress requests](../../../res/images/Status-RegisterStudyReviewEgressRequests.png)
 
 Limitations (SWB):
-- The *Admin* permissions for a registered data study should always have at least one user listed
-- Do not add the same user under both *Admin* and *Read Only* permissions for a registered data study as it leads to permission errors when viewing the study
+- The *Admin* permissions for a registered data study should always have at least one SWB user (of type Information Governance Lead) listed
+- Do not add the same SWB user under both *Admin* and *Read Only* permissions for a registered data study as it leads to permission errors when viewing the study
+- Once an external S3 bucket is registered as data study, it cannot be updated nor deleted. You can't register the same location again without manually deleting the DynamoDB table entries for SWB for the existing study and creating a new registration
 
 ![Successfully attached the staging area for egress requests](../../../res/images/Status-SetupDataStudy-ReviewEgressRequests.png)
