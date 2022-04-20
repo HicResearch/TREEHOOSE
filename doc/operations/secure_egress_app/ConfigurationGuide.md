@@ -108,3 +108,5 @@ A message like this should appear after registering the study:
 A message like this should appear after successfully attaching the study:
 
 ![Successfully attached the staging area for egress requests](../../../res/images/Status-SetupDataStudy-ReviewEgressRequests.png)
+
+To view data egress requests, a SWB user of type Information Governance Lead needs to launch a SWB Workspace with this Study attached to it.
