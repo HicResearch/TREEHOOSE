@@ -1,5 +1,7 @@
 Ensure all steps below are executed in AWS region: [London (eu-west-2)](https://eu-west-2.console.aws.amazon.com/).
 
+**Total time to configure**: Approximately 30 minutes
+
 To use the Egress Application add-on after deployment, a TRE admin must additionally configure user accounts and enable the information governance leads to review the data in the egress requests triggered by researchers from .
 
 There are 2 types of users involved in the Egress App workflow:
@@ -63,6 +65,8 @@ Select topic *ResearchIT-Notifications*:
 - [ ] For each user of type Research IT Admin created in Part 2, use button *Create subscription* and select *Protocol*: Email. In *Endpoint* provide the email address of the user
 
 ## Step 2. Setup Access for Information Governance Leads
+
+**Time to configure**: Approximately 15 minutes
 
 In SWB:
 - [ ] Log in to SWB using an admin account
