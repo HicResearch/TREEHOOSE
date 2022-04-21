@@ -17,6 +17,14 @@ repos:
     hooks:
       - id: git-secrets
         verbose: true
+        entry: 'git-secrets --register-aws'
+        language: script
+        name: git-secrets-register-aws-provider
+      - id: git-secrets
+        verbose: true
+        entry: 'git-secrets --scan'
+        language: script
+        name: git-secrets-scan
   - repo: https://github.com/markdownlint/markdownlint
     rev: v0.11.0
     hooks:
