@@ -2,7 +2,7 @@ Ensure all steps below are executed in AWS region: [London (eu-west-2)](https://
 
 **Total time to configure**: Approximately 30 minutes
 
-To use the Egress Application add-on after deployment, a TRE admin must additionally configure user accounts and enable the information governance leads to review the data in the egress requests triggered by researchers from .
+To use the Egress Application add-on after deployment, a TRE admin must additionally configure user accounts and enable the information governance leads to review the data in the egress requests triggered by researchers.
 
 There are 2 types of users involved in the Egress App workflow:
 1) Information Governance Leads
@@ -71,7 +71,7 @@ Select topic *ResearchIT-Notifications*:
 Before proceeding with the steps below, please be aware of the following limitations in SWB:
 - The *Admin* permissions for a registered data study should always have at least one SWB user (of type Information Governance Lead) listed
 - Do not add the same SWB user under both *Admin* and *Read Only* permissions for a registered data study as it leads to permission errors when viewing the study
-- Once an external S3 bucket is registered as data study, it cannot be updated nor deleted. You can't register the same location again without manually deleting the DynamoDB table entries for SWB for the existing study and creating a new registration
+- Once an external S3 bucket is registered as data study, it cannot be updated nor deleted. Please view the troubleshooting guide (`TO DO`) for instructions on handling this situation
 
 Follow the instructions below to provide SWB users of type Information Governance Lead with access to view the egress requests made by researchers in SWB.
 
