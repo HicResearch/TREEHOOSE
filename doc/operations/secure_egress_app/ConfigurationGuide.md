@@ -59,10 +59,10 @@ Ensure Egress App users receive notifications when egress requests are triggered
 - [ ] Select [*Topics*](https://eu-west-2.console.aws.amazon.com/sns/v3/home?region=eu-west-2#/topics)
 
 Select topic *Information-Governance-Notifications*:
-- [ ] For each user of type Information Governance Lead created in Part 2, use button *Create subscription* and select *Protocol*: Email. In *Endpoint* provide the email address of the user
+- [ ] For each user of type Information Governance Lead created in Part 2, use button *Create subscription* and select *Protocol*: Email. In *Endpoint* provide the user's email address. Submit and the user will receive an email to confirm the subscription
 
 Select topic *ResearchIT-Notifications*:
-- [ ] For each user of type Research IT Admin created in Part 2, use button *Create subscription* and select *Protocol*: Email. In *Endpoint* provide the email address of the user
+- [ ] For each user of type Research IT Admin created in Part 2, use button *Create subscription* and select *Protocol*: Email. In *Endpoint* provide the user's email address. Submit and the user will receive an email to confirm the subscription
 
 ## Step 2. Setup Access for Information Governance Leads
 
