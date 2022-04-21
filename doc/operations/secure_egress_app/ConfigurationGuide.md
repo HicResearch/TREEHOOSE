@@ -93,7 +93,7 @@ In SWB:
 
 |Parameter Name|Description|
 |:-----------------|:-----------|
-|Study Id & Study Name|Provide a name for the directory that will be mounted to a workspace, e.g. ReviewEgressRequests|
+|Study Id & Study Name|Provide a name for the directory that will be mounted to a workspace, e.g. EgressRequests|
 |Study Folder|Provide just the forward slash character */* . This will allow the Information Governance Lead to view all of the TRE project's egress requests for all workspaces|
 |Project|Provide the associated SWB project e.g. *TREProject1Prod*|
 |Type|Select *Organization Study*|
@@ -103,10 +103,10 @@ In SWB:
 
 A message like this should appear after registering the study:
 
-![Successfully registered the staging area for egress requests](../../../res/images/Status-RegisterStudyReviewEgressRequests.png)
+![Successfully registered the staging area for egress requests](../../../res/images/Status-RegisterStudy-EgressRequests.png)
 
 A message like this should appear after successfully attaching the study:
 
-![Successfully attached the staging area for egress requests](../../../res/images/Status-SetupDataStudy-ReviewEgressRequests.png)
+![Successfully attached the staging area for egress requests](../../../res/images/Status-SetupDataStudy-EgressRequests.png)
 
 To view data egress requests, a SWB user of type Information Governance Lead needs to launch a SWB Workspace with this Study attached to it.
