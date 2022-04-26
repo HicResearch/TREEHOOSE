@@ -20,7 +20,7 @@ To skip the need to manually add and verify each email address in Amazon SES, yo
 
 **Time to deploy**: Approximately ? minutes
 
-Apply these steps only to accounts part of the **TRE Projects Prod** OU.
+Apply these steps only to accounts that are part of the **TRE Projects Prod** OU.
 
 Log in to the [AWS Management Console](https://console.aws.amazon.com/) using your **TRE Project 1 Prod** account and Admin privileges.
 
