@@ -4,7 +4,7 @@ If this add-on application is added, a researcher can use a GUI-based data egres
 
 ## Prerequisites
 
-Apply these prerequisites only to accounts part of the **TRE Projects Prod** OU.
+Apply these prerequisites only to accounts that are part of the **TRE Projects Prod** OU.
 
 Log in to the [AWS Management Console](https://console.aws.amazon.com/) using your **TRE Project 1 Prod** account and Admin privileges.
 
