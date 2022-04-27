@@ -16,7 +16,7 @@ There are 2 types of users involved in the Egress App workflow:
 
 **Time to configure**: Approximately 15 minutes
 
-Apply these steps only to accounts part of the **TRE Projects Prod** OU.
+Apply these steps only to accounts that are part of the **TRE Projects Prod** OU.
 
 Log in to the [AWS Management Console](https://console.aws.amazon.com/) using your **TRE Project 1 Prod** account and Admin privileges.
 
