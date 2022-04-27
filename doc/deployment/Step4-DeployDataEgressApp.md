@@ -46,10 +46,9 @@ This step can be removed when we can download the code from the public repositor
 ### Step 4B. Log in to the EC2 instance
 
 - [ ] Follow these [instructions](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/session-manager.html) to learn how to connect via SSM to the EC2 instance created in Step 1.
-- [ ] Run the following commands to initialise your environment:
+- [ ] Run the following command to log in and initialise your environment:
 ```
-sudo su ec2-user
-source ~/.bash_profile
+sudo -iu ec2-user
 ```
 
 - [ ] Run the following commands to download the source code (temporarily using S3):
