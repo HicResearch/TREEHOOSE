@@ -69,6 +69,8 @@ EBS by replacing it on the Workspace.
 
 1. Navigate to `Storage` tab and note `Volume ID`, `Device name`, and `Volume size (GiB)`
 
+1. Click through on the `Volume ID` and note the `Volume Type`
+
 1. Click on the `Volume ID` which should take you to `volumes` page, select
    the volume, click on `Action`->`Detach volume`, confirm `Detach`
 
@@ -94,11 +96,10 @@ EBS by replacing it on the Workspace.
       |Parameter|Value|
       |----|----|
       |Resource Type| Specify EBS volume.|
-      |Volume type| Select General Purpose SSD (gp2).|
+      |Volume type| Select either the original volume type as noted earlier or a more appropriate type based on cost and performance requirements|
       |Size| Select equivalent size of the backed up EBS volume as noted earlier.|
       |IOS| 300/3000 - Baseline of 3 iops per GiB with a minimum of 100 IOPS, burstable to 3000 IOPS.|
-      |Availability Zone| Select the Availability Zone
-      for the EC2 instance as noted in previous step|
+      |Availability Zone| Select the Availability Zone for the EC2 instance as noted in previous step|
       |Restore role| Select Default role|
 
 1. This will take you to restored jobs screen.
