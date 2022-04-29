@@ -26,28 +26,50 @@ There are 2 types of users involved in the Egress App workflow:
 
 5) In the Egress Web App, the Information Governance Lead views the egress request searching for the ID from the email notification.
 
+![Egress App Workflow - 5](../../../res/images/secure_egress_app/UserGuide-Workflow-5.png)
+
 5) In the SWB Web App, the Information Governance Lead creates/uses a workspace with the study created in the [Configuration Guide](./ConfigurationGuide.md)
+
+![Egress App Workflow - 6](../../../res/images/secure_egress_app/UserGuide-Workflow-6.png)
+
+![Egress App Workflow - 7](../../../res/images/secure_egress_app/UserGuide-Workflow-7.png)
 
 6) In the SWB Web App, the Information Governance Lead connects to the workspace to view the egress request contents searching for the ID from the email notification.
 
+![Egress App Workflow - 8](../../../res/images/secure_egress_app/UserGuide-Workflow-8.png)
+
 7) In the Egress Web App, the Information Governance Lead approves or rejects the egress request with the ID from the email notification.
+
+![Egress App Workflow - 9](../../../res/images/secure_egress_app/UserGuide-Workflow-9.png)
 
 8) If the egress request was rejected by the Information Governance Lead, the Researcher and Information Governance Lead will be notified by email.
 
 **The steps below happen only if the egress request was approved by the Information Governance Lead.**
 
+![Egress App Workflow - 10](../../../res/images/secure_egress_app/UserGuide-Workflow-10.png)
+
 9) If the egress request was approved by the Information Governance Lead, a Research IT Admin will be notified by email.
+
+![Egress App Workflow - 11](../../../res/images/secure_egress_app/UserGuide-Workflow-11.png)
 
 10) The Research IT Admin needs to check that the Information Governance Lead approval was granted by a person with the required clearance.
 
 11) In the Egress Web App, the Research IT Admin approves or rejects the egress request with the ID from the email notification.
 
+![Egress App Workflow - 12](../../../res/images/secure_egress_app/UserGuide-Workflow-12.png)
+
 12) If the egress request was rejected by the Research IT Admin, the Researcher and Information Governance Lead will be notified by email.
 
 **The steps below happen only if the egress request was approved by the Research IT Admin.**
 
+![Egress App Workflow - 13](../../../res/images/secure_egress_app/UserGuide-Workflow-13.png)
+
 13) If the egress request was approved by the Research IT Admin, the Researcher and Information Governance Lead will be notified by email.
 
+![Egress App Workflow - 14](../../../res/images/secure_egress_app/UserGuide-Workflow-14.png)
+
 14) In the Egress Web App, the Information Governance Lead can download the egress request file contents. The number of times a download is allowed is constrained by a parameter set during the Egress App deployment stage.
+
+![Egress App Workflow - 15](../../../res/images/secure_egress_app/UserGuide-Workflow-15.png)
 
 15) The Information Governance Lead is responsible for sending the egress request file contents to the Researcher via an approved manual method such as email.
