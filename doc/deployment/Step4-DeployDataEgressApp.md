@@ -78,6 +78,12 @@ aws s3 cp s3://<bucket from Step 4A>/secure-egress-webapp secure-egress-webapp -
 |cognito_userpool_domain|Provide name for a new Amazon Cognito domain to be created|To view resources created after deployment of this CDK stack, go to service [Amazon Cognito](https://eu-west-2.console.aws.amazon.com/cognito/home?region=eu-west-2)| **TRE Project 1 Prod** account |
 |tre_admin_email_address|Provide a TRE admin email address that will need to be verified after deployment|To view verified identities after deployment of this CDK stack, go to service [Amazon SES](https://eu-west-2.console.aws.amazon.com/ses/home?region=eu-west-2#/verified-identities)| **TRE Project 1 Prod** account |
 
+- [ ] Edit file *app.py* in the **secure-egress-backend** directory. Change the following required variables:
+```
+account="<<AWS_ACCOUNT_ID>>" # TRE Project 1 Prod account ID
+region="<<AWS_REGION>>" # eu-west-2
+```
+
 - [ ] Run the following commands to create an isolated Python environment and deploy the CDK backend stack:
 ```
 cd ~/egress-addon/secure-egress-backend
