@@ -20,23 +20,23 @@ Follow these [instructions](./Step1-SetupDeploymentInstance.md) to deploy the re
 
 ### Step 2. Deploy ServiceWorkbench
 
-Follow these [instructions] (./Step2-DeployServiceWorkbench.md) to install the ServiceWorkbench software.
+Follow these [instructions](./Step2-DeployServiceWorkbench.md) to install the ServiceWorkbench software.
 
 ### Step 3. Create Data Lake
 
-Follow these [instructions] (././Step3-CreateDataLake.md) to create a data lake environment.
+Follow these [instructions](././Step3-CreateDataLake.md) to create a data lake environment.
 
 ### Step 4. Deploy Data Egress App
 
-Follow these [instructions] (./Step4-DeployDataEgressApp.md) to install the secure data egress software.
+Follow these [instructions](./Step4-DeployDataEgressApp.md) to install the secure data egress software.
 
 ### Step 5. Add Project Budget Controls
 
-Follow these [instructions] (./Step5-AddProjectBudgetControls.md) to add budget controls to the TRE project.
+Follow these [instructions](./Step5-AddProjectBudgetControls.md) to add budget controls to the TRE project.
 
 ### Step 6. Enable Workspace Backups
 
-Follow these [instructions] (./Step6-DeployBackupComponent.md) to add the capability to backup and restore ServiceWorkbench workspaces.
+Follow these [instructions](./Step6-DeployBackupComponent.md) to add the capability to backup and restore ServiceWorkbench workspaces.
 
 ---
 
