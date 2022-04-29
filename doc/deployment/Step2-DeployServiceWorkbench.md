@@ -136,8 +136,11 @@ AppStreamIdleDisconnectTimeoutSeconds: 3600
 AppStreamMaxUserDurationSeconds: 3600
 AppStreamImageName: <The image built in step 2F - Part 2>
 AppStreamInstanceType: stream.standard.small
-AppStreamFleetType: ON_DEMAND
+AppStreamFleetType: ELASTIC (currently untested)
 ```
+
+Note there are 3 options you can select for the AppStream Fleet Type: ELASTIC, ON-DEMAND and ALWAYS-ON. To learn more about them, follow this [guide](https://docs.aws.amazon.com/appstream2/latest/developerguide/fleet-type.html).
+
 - [ ] Press on button *Onboard AWS Account* and follow all remaining instructions on the web page
 - [ ] Confirm the account status matches the image below
 
