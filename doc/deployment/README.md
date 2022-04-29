@@ -12,19 +12,19 @@ Please note that most of the deployment instructions will mention the AWS region
 
 The TREEHOOSE TRE uses the **ServiceWorkbench** open-source software as the core component and deploys additional add-ons to enable other features.
 
-1) Ensure all the [prerequisites](./Prerequisites.md) have been added and configured.
+1) The prerequisites will cover the setup for an AWS Control Tower environment with a multi-account structure.
 
-2) The solution deployment will be done from an EC2 instance. Follow the instructions in [Step 1 - Setup Deployment Instance](./Step1-SetupDeploymentInstance.md) to deploy the required resources.
+2) The solution deployment will be done from a pre-configured EC2 instance.
 
-3) Deploy all of the TREEHOOSE TRE solution components in sequential order as specified in the table below:
+3) The following components are part of the TRE solution:
 
-| Component | Type    | Name                     | Purpose                            | Deployment     |
-|:---------:|:--------|:-------------------------|:-----------------------------------|:----------------------------|
-| 1         | Core    | [ServiceWorkbench](https://aws.amazon.com/government-education/research-and-technical-computing/service-workbench/)  | Core engine for TRE. It provides a simple GUI interface for Researchers to provision secure cloud compute resources with data analytics tools. | Follow the instructions in [Step 2 - Deploy ServiceWorkbench](./Step2-DeployServiceWorkbench.md) |
-| 2         | Add-on  | [Data Lake](https://aws.amazon.com/lake-formation) | A pre-configured data lake to store and manage sensitive datasets. | Follow the instructions in [Step 3 - Create Data Lake](./Step3-CreateDataLake.md)|
-| 3         | Add-on  | Data Egress Application | Provides a GUI-based data egress approval workflow for researchers to take out data from the TRE with the permission of an Information Governance Lead and Research IT Admin | Follow the instructions in [Step 4 - Deploy Data Egress App](./Step4-DeployDataEgressApp.md) |
-| 4         | Add-on  | Project Budget Controls | Allows TRE administrators to set policies to stop new ServiceWorkbench workspace creation when the provided budget limit is reached | Follow the instructions in [Step 5 - Add Project Budget Controls](./Step5-AddProjectBudgetControls.md) |
-| 5         | Add-on  | Workspace Backup | Allows TRE administrators to backup and restore ServiceWorkbench workspaces | Follow the instructions in [Step 6 - Enable Workspace Backups](./Step6-DeployBackupComponent.md) |
+| Component | Type    | Name                     | Purpose                            |
+|:---------:|:--------|:-------------------------|:-----------------------------------|
+| 1         | Core    | [ServiceWorkbench](https://aws.amazon.com/government-education/research-and-technical-computing/service-workbench/)  | Core engine for TRE. It provides a simple GUI interface for Researchers to provision secure cloud compute resources with data analytics tools. |
+| 2         | Add-on  | [Data Lake](https://aws.amazon.com/lake-formation) | A pre-configured data lake to store and manage sensitive datasets. |
+| 3         | Add-on  | Data Egress Application | Provides a GUI-based data egress approval workflow for researchers to take out data from the TRE with the permission of an Information Governance Lead and Research IT Admin |
+| 4         | Add-on  | Project Budget Controls | Allows TRE administrators to set policies to stop new ServiceWorkbench workspace creation when the provided budget limit is reached |
+| 5         | Add-on  | Workspace Backup | Allows TRE administrators to backup and restore ServiceWorkbench workspaces |
 
 ## Tools and Dependencies
 
