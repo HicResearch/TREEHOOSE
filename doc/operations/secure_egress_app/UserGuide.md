@@ -12,9 +12,17 @@ There are 2 types of users involved in the Egress App workflow:
 
 2) In the SWB Web App, the Researcher creates and uses a workspace to carry out research activities.
 
+![Egress App Workflow - 1](../../res/images/secure_egress_app/UserGuide-Workflow-1.png)
+
 3) In the SWB Web App, the Researcher adds data to the egress store and submits an egress request from the SWB website.
 
+![Egress App Workflow - 2](../../res/images/secure_egress_app/UserGuide-Workflow-2.png)
+
+![Egress App Workflow - 3](../../res/images/secure_egress_app/UserGuide-Workflow-3.png)
+
 4) The Information Governance Lead receives an email notification about the egress request triggered by the Researcher.
+
+![Egress App Workflow - 4](../../res/images/secure_egress_app/UserGuide-Workflow-4.png)
 
 5) In the Egress Web App, the Information Governance Lead views the egress request searching for the ID from the email notification.
 
