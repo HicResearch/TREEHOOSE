@@ -26,7 +26,7 @@ There are 2 types of users involved in the Egress App workflow:
 
 8) If the egress request was rejected by the Information Governance Lead, the Researcher and Information Governance Lead will be notified by email.
 
-The steps below happen only if the egress request was approved by the Information Governance Lead.
+**The steps below happen only if the egress request was approved by the Information Governance Lead.**
 
 9) If the egress request was approved by the Information Governance Lead, a Research IT Admin will be notified by email.
 
@@ -36,7 +36,7 @@ The steps below happen only if the egress request was approved by the Informatio
 
 12) If the egress request was rejected by the Research IT Admin, the Researcher and Information Governance Lead will be notified by email.
 
-The steps below happen only if the egress request was approved by the Research IT Admin.
+**The steps below happen only if the egress request was approved by the Research IT Admin.**
 
 13) If the egress request was approved by the Research IT Admin, the Researcher and Information Governance Lead will be notified by email.
 
