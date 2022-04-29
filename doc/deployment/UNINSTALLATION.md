@@ -20,7 +20,7 @@ Locate the CloudFormation stack deployed in Prerequisites (Step 5. Create placeh
 
 Locate the CloudFormation stack deployed in Step 4 (Step 4C. Deploy backend infrastructure) and delete it by following these [instructions](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/cfn-console-delete-stack.html).
 
-### Delete data lake resources
+### Delete Data Lake resources
 
 Locate the CloudFormation stack deployed in Step 3 and delete it by following these [instructions](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/cfn-console-delete-stack.html).
 
