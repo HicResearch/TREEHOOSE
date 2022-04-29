@@ -24,22 +24,22 @@ There are 2 types of users involved in the Egress App workflow:
 
 7) In the Egress Web App, the Information Governance Lead approves or rejects the egress request with the ID from the email notification.
 
-8A) If the egress request was rejected by the Information Governance Lead, the Researcher and Information Governance Lead will be notified by email.
+8) If the egress request was rejected by the Information Governance Lead, the Researcher and Information Governance Lead will be notified by email.
 
 The steps below happen only if the egress request was approved by the Information Governance Lead.
 
-8b) If the egress request was approved by the Information Governance Lead, a Research IT Admin will be notified by email.
+9) If the egress request was approved by the Information Governance Lead, a Research IT Admin will be notified by email.
 
-9) The Research IT Admin needs to check that the Information Governance Lead approval was granted by a person with the required clearance.
+10) The Research IT Admin needs to check that the Information Governance Lead approval was granted by a person with the required clearance.
 
-10) In the Egress Web App, the Research IT Admin approves or rejects the egress request with the ID from the email notification.
+11) In the Egress Web App, the Research IT Admin approves or rejects the egress request with the ID from the email notification.
 
-11A) If the egress request was rejected by the Research IT Admin, the Researcher and Information Governance Lead will be notified by email.
+12) If the egress request was rejected by the Research IT Admin, the Researcher and Information Governance Lead will be notified by email.
 
 The steps below happen only if the egress request was approved by the Research IT Admin.
 
-11B) If the egress request was approved by the Research IT Admin, the Researcher and Information Governance Lead will be notified by email.
+13) If the egress request was approved by the Research IT Admin, the Researcher and Information Governance Lead will be notified by email.
 
-12) In the Egress Web App, the Information Governance Lead can download the egress request file contents. The number of times a download is allowed is constrained by a parameter set during the Egress App deployment stage.
+14) In the Egress Web App, the Information Governance Lead can download the egress request file contents. The number of times a download is allowed is constrained by a parameter set during the Egress App deployment stage.
 
-13) The Information Governance Lead is responsible for sending the egress request file contents to the Researcher via an approved manual method such as email.
+15) The Information Governance Lead is responsible for sending the egress request file contents to the Researcher via an approved manual method such as email.
