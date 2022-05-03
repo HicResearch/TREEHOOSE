@@ -20,20 +20,6 @@ Parameters:
     Type: String
     Description: Domain name used for the Egress App
 
-  EgressAppStackName:
-    Type: String
-    Description: Stack name used for the Egress-Backend
-
-  EgressAppCopyLambdaPrefix:
-    Type: String
-    Description: Prefix for the lambda function which copies approved egress data to the data lake
-    Default: copyegresscandidatestodatalake
-
-  EgressAppDownloadLambdaPrefix:
-    Type: String
-    Description: Prefix for the lambda function which downloads approved egress data from the data lake
-    Default: EgressApiLambdaServiceRole
-
   LFDatabaseName:
     Type: String
     Description: Lake Formation database name to store a governed table
@@ -46,9 +32,6 @@ Metadata:
         Parameters:
           - EgressAppDomainName
           - EgressAppAccount
-          - EgressAppCopyLambdaPrefix
-          - EgressAppDownloadLambdaPrefix
-          - EgressAppStackName
       - Label:
           default: Data Lake Configuration
         Parameters:
