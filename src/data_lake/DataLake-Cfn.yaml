@@ -1,0 +1,878 @@
+# (c) 2022 Amazon Web Services, Inc. or its affiliates. All Rights Reserved.
+# This AWS Content is provided subject to the terms of the AWS Customer
+# Agreement available at https://aws.amazon.com/agreement or other written
+# agreement between Customer and Amazon Web Services, Inc.
+
+###############################################################################
+
+AWSTemplateFormatVersion: "2010-09-09"
+Description: Provision a data lake setup for TRE projects.
+
+Parameters:
+  EgressAppAccount:
+    Type: String
+    Description: Account number which is hosting the Egress Add-On Application
+    MinLength: 12
+    MaxLength: 12
+    AllowedPattern: "[0-9]+"
+
+  EgressAppDomainName:
+    Type: String
+    Description: Domain name used for the Egress App
+
+  EgressAppStackName:
+    Type: String
+    Description: Stack name used for the Egress-Backend
+
+  EgressAppCopyLambdaPrefix:
+    Type: String
+    Description: Prefix for the lambda function which copies approved egress data to the data lake
+    Default: copyegresscandidatestodatalake
+
+  EgressAppDownloadLambdaPrefix:
+    Type: String
+    Description: Prefix for the lambda function which downloads approved egress data from the data lake
+    Default: EgressApiLambdaServiceRole
+
+  LFDatabaseName:
+    Type: String
+    Description: Lake Formation database name to store a governed table
+
+Metadata:
+  AWS::CloudFormation::Interface:
+    ParameterGroups:
+      - Label:
+          default: Egress App Integration Configuration
+        Parameters:
+          - EgressAppDomainName
+          - EgressAppAccount
+          - EgressAppCopyLambdaPrefix
+          - EgressAppDownloadLambdaPrefix
+          - EgressAppStackName
+      - Label:
+          default: Data Lake Configuration
+        Parameters:
+          - LFDatabaseName
+
+Resources:
+  TRETargetBucketKMSKey:
+    Type: AWS::KMS::Key
+    Properties:
+      Description: Key for TRE data lake target bucket
+      EnableKeyRotation: true
+      KeyPolicy:
+        Version: 2012-10-17
+        Statement:
+          - Sid: Enable IAM Policies
+            Effect: Allow
+            Principal:
+              AWS: !Sub 'arn:aws:iam::${AWS::AccountId}:root'
+            Action: kms:*
+            Resource: '*'
+
+          - Sid: Enable Access From Egress App Account
+            Effect: Allow
+            Principal:
+              AWS:
+                - !Sub 'arn:aws:iam::${EgressAppAccount}:root'
+            Action:
+              - kms:Encrypt
+              - kms:Decrypt
+              - kms:ReEncrypt
+              - kms:GenerateDataKey
+              - kms:DescribeKey
+            Resource: '*'
+
+  TRESourceBucketKMSKey:
+    Type: AWS::KMS::Key
+    Properties:
+      Description: Key for TRE data lake source bucket
+      EnableKeyRotation: true
+      KeyPolicy:
+        Version: 2012-10-17
+        Statement:
+          - Sid: Enable IAM Policies
+            Effect: Allow
+            Principal:
+              AWS: !Sub 'arn:aws:iam::${AWS::AccountId}:root'
+            Action: kms:*
+            Resource: '*'
+
+  TRESourceBucketKMSAlias:
+    Type: AWS::KMS::Alias
+    Properties:
+      AliasName: alias/TRESourceBucketKey
+      TargetKeyId: !Ref TRESourceBucketKMSKey
+
+  TREAnalystBucketKMSKey:
+    Type: AWS::KMS::Key
+    Properties:
+      Description: Key for TRE data lake analyst results bucket
+      EnableKeyRotation: true
+      KeyPolicy:
+        Version: 2012-10-17
+        Statement:
+          - Sid: Enable IAM Policies
+            Effect: Allow
+            Principal:
+              AWS: !Sub 'arn:aws:iam::${AWS::AccountId}:root'
+            Action: kms:*
+            Resource: '*'
+
+  TREAnalystBucketKMSAlias:
+    Type: AWS::KMS::Alias
+    Properties:
+      AliasName: alias/TREAnalystBucketKey
+      TargetKeyId: !Ref TREAnalystBucketKMSKey
+
+  TRELakeAdminBucketKMSKey:
+    Type: AWS::KMS::Key
+    Properties:
+      Description: Key for TRE data lake admin results bucket
+      EnableKeyRotation: true
+      KeyPolicy:
+        Version: 2012-10-17
+        Statement:
+          - Sid: Enable IAM Policies
+            Effect: Allow
+            Principal:
+              AWS: !Sub 'arn:aws:iam::${AWS::AccountId}:root'
+            Action: kms:*
+            Resource: '*'
+
+  TREAccessLogsBucketKMSKey:
+    Type: AWS::KMS::Key
+    Properties:
+      Description: Key for TRE access logs bucket
+      EnableKeyRotation: true
+      KeyPolicy:
+        Version: 2012-10-17
+        Statement:
+          - Sid: Enable IAM Policies
+            Effect: Allow
+            Principal:
+              AWS: !Sub 'arn:aws:iam::${AWS::AccountId}:root'
+            Action: kms:*
+            Resource: '*'
+
+  TREAccessLogsBucket:
+    Type: AWS::S3::Bucket
+    Metadata:
+      cfn_nag:
+        rules_to_suppress:
+          - id: W35
+            reason: S3 bucket hosting access logs shouldn't have access logging configured
+    Properties:
+      BucketName: tre-access-logs-bucket
+      BucketEncryption:
+        ServerSideEncryptionConfiguration:
+          - BucketKeyEnabled: true
+            ServerSideEncryptionByDefault:
+              SSEAlgorithm: aws:kms
+              KMSMasterKeyID: !GetAtt TREAccessLogsBucketKMSKey.Arn
+      PublicAccessBlockConfiguration:
+        BlockPublicAcls: True
+        BlockPublicPolicy: True
+        IgnorePublicAcls: True
+        RestrictPublicBuckets: True
+      VersioningConfiguration:
+        Status: Enabled
+
+  TREAccessLogsBucketPolicy:
+    Type: AWS::S3::BucketPolicy
+    Properties:
+      Bucket: !Ref TREAccessLogsBucket
+      PolicyDocument:
+        Version: 2012-10-17
+        Statement:
+          - Sid: S3ServerAccessLogsPolicy-TRETargetBucket
+            Action:
+              - 's3:PutObject'
+            Effect: Allow
+            Resource: "arn:aws:s3:::tre-access-logs-bucket/logs-tre-target-bucket*"
+            Principal:
+              Service: logging.s3.amazonaws.com
+            Condition:
+              ArnLike:
+                'aws:SourceArn':
+                  - !GetAtt TRETargetBucket.Arn
+              StringEquals:
+                'aws:SourceAccount':
+                  -  !Sub "${AWS::AccountId}"
+          - Sid: S3ServerAccessLogsPolicy-TRESourceBucket
+            Action:
+              - 's3:PutObject'
+            Effect: Allow
+            Resource: "arn:aws:s3:::tre-access-logs-bucket/logs-tre-source-bucket*"
+            Principal:
+              Service: logging.s3.amazonaws.com
+            Condition:
+              ArnLike:
+                'aws:SourceArn':
+                  - !GetAtt TRESourceBucket.Arn
+              StringEquals:
+                'aws:SourceAccount':
+                  -  !Sub "${AWS::AccountId}"
+          - Sid: S3ServerAccessLogsPolicy-TREAnalystResultsBucket
+            Action:
+              - 's3:PutObject'
+            Effect: Allow
+            Resource: "arn:aws:s3:::tre-access-logs-bucket/logs-tre-analyst-results-bucket*"
+            Principal:
+              Service: logging.s3.amazonaws.com
+            Condition:
+              ArnLike:
+                'aws:SourceArn':
+                  - !GetAtt TREAnalystResultsBucket.Arn
+              StringEquals:
+                'aws:SourceAccount':
+                  -  !Sub "${AWS::AccountId}"
+          - Sid: S3ServerAccessLogsPolicy-TRELakeAdminResultsBucket
+            Action:
+              - 's3:PutObject'
+            Effect: Allow
+            Resource: "arn:aws:s3:::tre-access-logs-bucket/logs-tre-lake-admin-results-bucket*"
+            Principal:
+              Service: logging.s3.amazonaws.com
+            Condition:
+              ArnLike:
+                'aws:SourceArn':
+                  - !GetAtt TRELakeAdminResultsBucket.Arn
+              StringEquals:
+                'aws:SourceAccount':
+                  -  !Sub "${AWS::AccountId}"
+
+  TRETargetBucket:
+    Type: AWS::S3::Bucket
+    Properties:
+      LoggingConfiguration:
+        DestinationBucketName: !Ref TREAccessLogsBucket
+        LogFilePrefix: logs-tre-target-bucket
+      BucketEncryption:
+        ServerSideEncryptionConfiguration:
+          - BucketKeyEnabled: true
+            ServerSideEncryptionByDefault:
+              SSEAlgorithm: aws:kms
+              KMSMasterKeyID: !GetAtt TRETargetBucketKMSKey.Arn
+      PublicAccessBlockConfiguration:
+        BlockPublicAcls: True
+        BlockPublicPolicy: True
+        IgnorePublicAcls: True
+        RestrictPublicBuckets: True
+      VersioningConfiguration:
+        Status: Enabled
+      CorsConfiguration:
+        CorsRules:
+          - AllowedMethods:
+            - 'GET'
+            AllowedOrigins:
+            - !Ref EgressAppDomainName
+            AllowedHeaders:
+            - '*'
+
+  TRESourceBucket:
+    Type: AWS::S3::Bucket
+    Properties:
+      LoggingConfiguration:
+        DestinationBucketName: !Ref TREAccessLogsBucket
+        LogFilePrefix: logs-tre-source-bucket
+      BucketEncryption:
+        ServerSideEncryptionConfiguration:
+          - BucketKeyEnabled: true
+            ServerSideEncryptionByDefault:
+              SSEAlgorithm: aws:kms
+              KMSMasterKeyID: !GetAtt TRESourceBucketKMSKey.Arn
+      PublicAccessBlockConfiguration:
+        BlockPublicAcls: True
+        BlockPublicPolicy: True
+        IgnorePublicAcls: True
+        RestrictPublicBuckets: True
+      VersioningConfiguration:
+        Status: Enabled
+
+  TREAnalystResultsBucket:
+    Type: AWS::S3::Bucket
+    Properties:
+      LoggingConfiguration:
+        DestinationBucketName: !Ref TREAccessLogsBucket
+        LogFilePrefix: logs-tre-analyst-results-bucket
+      BucketEncryption:
+        ServerSideEncryptionConfiguration:
+          - BucketKeyEnabled: true
+            ServerSideEncryptionByDefault:
+              SSEAlgorithm: aws:kms
+              KMSMasterKeyID: !GetAtt TREAnalystBucketKMSKey.Arn
+      PublicAccessBlockConfiguration:
+        BlockPublicAcls: True
+        BlockPublicPolicy: True
+        IgnorePublicAcls: True
+        RestrictPublicBuckets: True
+      VersioningConfiguration:
+        Status: Enabled
+
+  TRELakeAdminResultsBucket:
+    Type: AWS::S3::Bucket
+    Properties:
+      LoggingConfiguration:
+        DestinationBucketName: !Ref TREAccessLogsBucket
+        LogFilePrefix: logs-tre-lake-admin-results-bucket
+      BucketEncryption:
+        ServerSideEncryptionConfiguration:
+          - BucketKeyEnabled: true
+            ServerSideEncryptionByDefault:
+              SSEAlgorithm: aws:kms
+              KMSMasterKeyID: !GetAtt TRELakeAdminBucketKMSKey.Arn
+      PublicAccessBlockConfiguration:
+        BlockPublicAcls: True
+        BlockPublicPolicy: True
+        IgnorePublicAcls: True
+        RestrictPublicBuckets: True
+      VersioningConfiguration:
+        Status: Enabled
+
+  TRETargetBucketPolicy:
+    Type: AWS::S3::BucketPolicy
+    Properties:
+      Bucket: !Ref TRETargetBucket
+      PolicyDocument:
+        Version: 2012-10-17
+        Statement:
+          - Sid: DenyIncorrectEncryption
+            Action:
+              - s3:PutObject
+            Effect: Deny
+            Resource: !Sub '${TRETargetBucket.Arn}/*'
+            Principal: '*'
+            Condition:
+              StringNotEquals:
+                "s3:x-amz-server-side-encryption": "aws:kms"
+          - Sid: DenyUnencrypted
+            Action:
+              - s3:PutObject
+            Effect: Deny
+            Resource: !Sub '${TRETargetBucket.Arn}/*'
+            Principal: '*'
+            Condition:
+              "Null":
+                "s3:x-amz-server-side-encryption": true
+          - Sid: AllowReadFromEgressAppAccount
+            Action:
+              - s3:GetObject*
+              - s3:GetBucket*
+              - s3:List*
+            Effect: Allow
+            Resource:
+              - !Sub '${TRETargetBucket.Arn}/*'
+              - !Sub '${TRETargetBucket.Arn}'
+            Principal:
+              AWS:
+                - !Sub 'arn:aws:iam::${EgressAppAccount}:root'
+          - Sid: AllowWriteFromEgressAppAccount
+            Action:
+              - s3:PutObject
+              - s3:Abort*
+            Effect: Allow
+            Resource:
+              - !Sub '${TRETargetBucket.Arn}/*'
+            Principal:
+              AWS:
+                - !Sub 'arn:aws:iam::${EgressAppAccount}:root'
+
+  TRESourceBucketPolicy:
+    Type: AWS::S3::BucketPolicy
+    Properties:
+      Bucket: !Ref TRESourceBucket
+      PolicyDocument:
+        Version: 2012-10-17
+        Statement:
+          - Sid: DenyIncorrectEncryption
+            Action:
+              - s3:PutObject
+            Effect: Deny
+            Resource: !Sub '${TRESourceBucket.Arn}/*'
+            Principal: '*'
+            Condition:
+              StringNotEquals:
+                "s3:x-amz-server-side-encryption": "aws:kms"
+          - Sid: DenyUnencrypted
+            Action:
+              - s3:PutObject
+            Effect: Deny
+            Resource: !Sub '${TRESourceBucket.Arn}/*'
+            Principal: '*'
+            Condition:
+              "Null":
+                "s3:x-amz-server-side-encryption": true
+
+  TREAnalystBucketPolicy:
+    Type: AWS::S3::BucketPolicy
+    Properties:
+      Bucket: !Ref TREAnalystResultsBucket
+      PolicyDocument:
+        Version: 2012-10-17
+        Statement:
+          - Sid: DenyIncorrectEncryption
+            Action:
+              - s3:PutObject
+            Effect: Deny
+            Resource: !Sub '${TREAnalystResultsBucket.Arn}/*'
+            Principal: '*'
+            Condition:
+              StringNotEquals:
+                "s3:x-amz-server-side-encryption": "aws:kms"
+          - Sid: DenyUnencrypted
+            Action:
+              - s3:PutObject
+            Effect: Deny
+            Resource: !Sub '${TREAnalystResultsBucket.Arn}/*'
+            Principal: '*'
+            Condition:
+              "Null":
+                "s3:x-amz-server-side-encryption": true
+
+  TRELakeAdminBucketPolicy:
+    Type: AWS::S3::BucketPolicy
+    Properties:
+      Bucket: !Ref TRELakeAdminResultsBucket
+      PolicyDocument:
+        Version: 2012-10-17
+        Statement:
+          - Sid: DenyIncorrectEncryption
+            Action:
+              - s3:PutObject
+            Effect: Deny
+            Resource: !Sub '${TRELakeAdminResultsBucket.Arn}/*'
+            Principal: '*'
+            Condition:
+              StringNotEquals:
+                "s3:x-amz-server-side-encryption": "aws:kms"
+          - Sid: DenyUnencrypted
+            Action:
+              - s3:PutObject
+            Effect: Deny
+            Resource: !Sub '${TRELakeAdminResultsBucket.Arn}/*'
+            Principal: '*'
+            Condition:
+              "Null":
+                "s3:x-amz-server-side-encryption": true
+
+  TREDataLakeKMSManagementPolicy:
+    Type: AWS::IAM::ManagedPolicy
+    Properties:
+      PolicyDocument:
+        Version: '2012-10-17'
+        Statement:
+          - Sid: AllowKeyAdministration
+            Effect: Allow
+            Action:
+              - kms:Create*
+              - kms:Describe*
+              - kms:Enable*
+              - kms:List*
+              - kms:Put*
+              - kms:Update*
+              - kms:Revoke*
+              - kms:Disable*
+              - kms:Get*
+              - kms:Delete*
+              - kms:TagResource
+              - kms:UntagResource
+              - kms:ScheduleKeyDeletion
+              - kms:CancelKeyDeletion
+            Resource:
+              - !GetAtt TRESourceBucketKMSKey.Arn
+              - !GetAtt TRETargetBucketKMSKey.Arn
+
+  TREDataLakeKMSUsagePolicy:
+    Type: AWS::IAM::ManagedPolicy
+    Properties:
+      PolicyDocument:
+        Version: '2012-10-17'
+        Statement:
+          - Sid: AllowKeyUsage
+            Effect: Allow
+            Action:
+              - kms:Encrypt
+              - kms:Decrypt
+              - kms:ReEncrypt
+              - kms:GenerateDataKey
+              - kms:DescribeKey
+            Resource:
+              - !GetAtt TRESourceBucketKMSKey.Arn
+              - !GetAtt TRETargetBucketKMSKey.Arn
+
+  TREGlueRolePolicy:
+    Type: AWS::IAM::ManagedPolicy
+    Properties:
+      PolicyDocument:
+        Version: '2012-10-17'
+        Statement:
+          - Sid: AllowGlueUsage
+            Effect: Allow
+            Action:
+              - iam:GetRole
+              - iam:PassRole
+            Resource: !GetAtt 'TREGlueRole.Arn'
+
+  TREDataAnalystRole:
+    Type: AWS::IAM::Role
+    Properties:
+      ManagedPolicyArns:
+        - arn:aws:iam::aws:policy/AmazonAthenaFullAccess
+        - !Ref 'TRELFQueryPolicy'
+        - !Ref 'TRES3DataAnalystPolicy'
+      AssumeRolePolicyDocument:
+        Version: 2012-10-17
+        Statement:
+          - Effect: Allow
+            Principal:
+              AWS:
+                - !Sub ${AWS::AccountId}
+            Action:
+              - 'sts:AssumeRole'
+
+  TREDataLakeAdminRole:
+    Type: AWS::IAM::Role
+    Properties:
+      ManagedPolicyArns:
+        - arn:aws:iam::aws:policy/AWSLakeFormationDataAdmin
+        - arn:aws:iam::aws:policy/AmazonAthenaFullAccess
+        - arn:aws:iam::aws:policy/IAMReadOnlyAccess
+        - arn:aws:iam::aws:policy/AmazonS3FullAccess
+        - arn:aws:iam::aws:policy/AWSGlueConsoleFullAccess
+        - !Ref 'TRELFQueryPolicy'
+        - !Ref 'TRES3DataAnalystPolicy'
+        - !Ref 'TREDataLakeKMSUsagePolicy'
+        - !Ref 'TREGlueRolePolicy'
+      AssumeRolePolicyDocument:
+        Version: 2012-10-17
+        Statement:
+          - Effect: Allow
+            Principal:
+              AWS:
+                - !Sub ${AWS::AccountId}
+            Action:
+              - 'sts:AssumeRole'
+
+  TREAdminRole:
+    Type: AWS::IAM::Role
+    Metadata:
+      cfn_nag:
+        rules_to_suppress:
+          - id: W44
+            reason: TRE Admin should have elevated privileges
+    Properties:
+      ManagedPolicyArns:
+        - arn:aws:iam::aws:policy/PowerUserAccess
+        - !Ref TREDataLakeKMSManagementPolicy
+        - !Ref TREGlueRolePolicy
+      AssumeRolePolicyDocument:
+        Version: '2012-10-17'
+        Statement:
+          - Effect: Allow
+            Principal:
+              AWS:
+                - !Ref AWS::AccountId
+            Action:
+              - 'sts:AssumeRole'
+
+  TRELFRegisterLocationServiceRole:
+    Type: AWS::IAM::Role
+    Properties:
+      AssumeRolePolicyDocument:
+        Version: '2012-10-17'
+        Statement:
+          - Effect: Allow
+            Principal:
+              Service:
+                - lakeformation.amazonaws.com
+            Action:
+              - sts:AssumeRole
+
+  TREGlueRole:
+    Type: AWS::IAM::Role
+    Metadata:
+      cfn_nag:
+        rules_to_suppress:
+          - id: W11
+            reason: Lake Formation does not support resource ARNs
+    Properties:
+      AssumeRolePolicyDocument:
+        Version: '2012-10-17'
+        Statement:
+          - Effect: Allow
+            Principal:
+              Service:
+                - glue.amazonaws.com
+            Action:
+              - sts:AssumeRole
+      ManagedPolicyArns:
+        - arn:aws:iam::aws:policy/service-role/AWSGlueServiceRole
+      Policies:
+        - PolicyName: glue-tre-policy
+          PolicyDocument:
+            Version: '2012-10-17'
+            Statement:
+              - Effect: Allow
+                Action:
+                  - s3:GetObject
+                  - s3:PutObject
+                  - s3:DeleteObject
+                  - s3:ListBucket
+                Resource:
+                  - !GetAtt 'TRESourceBucket.Arn'
+                  - !GetAtt 'TRETargetBucket.Arn'
+                  - !Sub '${TRESourceBucket.Arn}/*'
+                  - !Sub '${TRETargetBucket.Arn}/*'
+              - Effect: Allow
+                Action:
+                  - kms:Encrypt
+                  - kms:Decrypt
+                  - kms:GenerateDataKey
+                Resource:
+                  - !GetAtt TRESourceBucketKMSKey.Arn
+                  - !GetAtt TRETargetBucketKMSKey.Arn
+              - Effect: Allow
+                Action:
+                  - lakeformation:GetDataAccess
+                  - lakeformation:GrantPermissions
+                Resource: '*'
+      Path: /
+
+  TRES3DataLakePolicy:
+    Type: AWS::IAM::ManagedPolicy
+    Properties:
+      PolicyDocument:
+        Version: '2012-10-17'
+        Statement:
+          - Effect: Allow
+            Action:
+              - s3:GetObject
+              - s3:PutObject
+            Resource:
+              - !Sub 'arn:aws:s3:::${TRETargetBucket}/*'
+              - !Sub 'arn:aws:s3:::${TRESourceBucket}/*'
+          - Effect: Allow
+            Action:
+              - s3:ListBucket
+            Resource:
+              - !GetAtt 'TRETargetBucket.Arn'
+              - !GetAtt 'TRESourceBucket.Arn'
+          - Effect: Allow
+            Action:
+              - kms:Decrypt
+              - kms:Encrypt
+              - kms:GenerateDataKey
+            Resource:
+              - !GetAtt TRESourceBucketKMSKey.Arn
+              - !GetAtt TRETargetBucketKMSKey.Arn
+      Roles:
+        - !Ref 'TRELFRegisterLocationServiceRole'
+
+  TRES3DataAnalystPolicy:
+    Type: AWS::IAM::ManagedPolicy
+    Metadata:
+      cfn_nag:
+        rules_to_suppress:
+          - id: W13
+            reason: KMS ListAliases does not support resource ARNs
+    Properties:
+      PolicyDocument:
+        Version: '2012-10-17'
+        Statement:
+          - Effect: Allow
+            Action:
+              - s3:ListBucket
+            Resource:
+              - !Sub 'arn:aws:s3:::${TREAnalystResultsBucket}'
+              - !Sub 'arn:aws:s3:::${TRESourceBucket}'
+          - Effect: Allow
+            Action:
+              - s3:GetObject
+            Resource:
+              - !Sub 'arn:aws:s3:::${TREAnalystResultsBucket}/*'
+              - !Sub 'arn:aws:s3:::${TRESourceBucket}/*'
+          - Effect: Allow
+            Action:
+              - s3:PutObject
+            Resource:
+              - !Sub 'arn:aws:s3:::${TREAnalystResultsBucket}/*'
+          - Effect: Allow
+            Action: kms:Decrypt
+            Resource:
+              - !GetAtt TRESourceBucketKMSKey.Arn
+              - !GetAtt TREAnalystBucketKMSKey.Arn
+          - Effect: Allow
+            Action:
+              - kms:Encrypt
+              - kms:GenerateDataKey
+            Resource: !GetAtt TREAnalystBucketKMSKey.Arn
+          - Effect: Allow
+            Action:
+              - kms:ListAliases
+            Resource: '*'
+
+  TRELFQueryPolicy:
+    Type: AWS::IAM::ManagedPolicy
+    Metadata:
+      cfn_nag:
+        rules_to_suppress:
+          - id: W13
+            reason: Lake Formation does not support resource ARNs
+    Properties:
+      PolicyDocument:
+        Version: '2012-10-17'
+        Statement:
+          - Effect: Allow
+            Action:
+              - lakeformation:BeginTransaction
+              - lakeformation:CommitTransaction
+              - lakeformation:AbortTransaction
+              - lakeformation:ExtendTransaction
+              - lakeformation:PlanQuery
+              - lakeformation:GetTableObjects
+              - lakeformation:GetQueryState
+              - lakeformation:GetWorkUnits
+              - lakeformation:Execute
+            Resource: '*'
+
+  TRELFLocationPolicy:
+    Type: AWS::IAM::Policy
+    Metadata:
+      cfn_nag:
+        rules_to_suppress:
+          - id: W12
+            reason: Lake Formation does not support resource ARNs
+    Properties:
+      PolicyName: !Sub 'TRELFLocationPolicy-${AWS::StackName}'
+      PolicyDocument:
+        Version: '2012-10-17'
+        Statement:
+          - Effect: Allow
+            Action:
+              - lakeformation:BeginTransaction
+              - lakeformation:CommitTransaction
+              - lakeformation:AbortTransaction
+              - lakeformation:GetTableObjects
+              - lakeformation:UpdateTableObjects
+            Resource: '*'
+      Roles:
+        - !Ref 'TRELFRegisterLocationServiceRole'
+
+  TRELFDataLakeSettings:
+    Type: AWS::LakeFormation::DataLakeSettings
+    Properties:
+      Admins:
+        - DataLakePrincipalIdentifier: !GetAtt 'TREDataLakeAdminRole.Arn'
+        - DataLakePrincipalIdentifier: !GetAtt 'TREAdminRole.Arn'
+
+  TRELFDataLakeLocation1:
+    Type: AWS::LakeFormation::Resource
+    Properties:
+      ResourceArn: !Sub 'arn:aws:s3:::${TRETargetBucket}'
+      RoleArn: !GetAtt 'TRELFRegisterLocationServiceRole.Arn'
+      UseServiceLinkedRole: false
+
+  TRELFDataLakeLocation2:
+    Type: AWS::LakeFormation::Resource
+    Properties:
+      ResourceArn: !Sub 'arn:aws:s3:::${TRESourceBucket}'
+      RoleArn: !GetAtt 'TRELFRegisterLocationServiceRole.Arn'
+      UseServiceLinkedRole: false
+
+  TRELFDatabasePermissionForLFRegisterLocationServiceRole:
+    Type: AWS::LakeFormation::Permissions
+    Properties:
+      DataLakePrincipal:
+        DataLakePrincipalIdentifier: !GetAtt 'TRELFRegisterLocationServiceRole.Arn'
+      Permissions:
+        - ALTER
+        - CREATE_TABLE
+        - DESCRIBE
+        - DROP
+      Resource:
+        DatabaseResource:
+          Name: !Ref 'TRELakeFormationDatabase'
+
+  TRELFDatabasePermissionForAdminRole:
+    Type: AWS::LakeFormation::Permissions
+    Properties:
+      DataLakePrincipal:
+        DataLakePrincipalIdentifier: !GetAtt 'TREAdminRole.Arn'
+      Permissions:
+        - ALL
+      PermissionsWithGrantOption:
+        - ALL
+      Resource:
+        DatabaseResource:
+          Name: !Ref 'TRELakeFormationDatabase'
+
+  TRELFDatabasePermissionForDataLakeAdminRole:
+    Type: AWS::LakeFormation::Permissions
+    Properties:
+      DataLakePrincipal:
+        DataLakePrincipalIdentifier: !GetAtt 'TREDataLakeAdminRole.Arn'
+      Permissions:
+        - ALL
+      PermissionsWithGrantOption:
+        - ALL
+      Resource:
+        DatabaseResource:
+          Name: !Ref 'TRELakeFormationDatabase'
+
+  TRELFDatabasePermissionForGlueRole:
+    Type: AWS::LakeFormation::Permissions
+    Properties:
+      DataLakePrincipal:
+        DataLakePrincipalIdentifier: !GetAtt 'TREGlueRole.Arn'
+      Permissions:
+        - ALL
+      PermissionsWithGrantOption:
+        - ALL
+      Resource:
+        DatabaseResource:
+          Name: !Ref 'TRELakeFormationDatabase'
+
+  TRELFDataPermissionForGlueRole:
+    Type: AWS::LakeFormation::Permissions
+    Properties:
+      DataLakePrincipal:
+        DataLakePrincipalIdentifier: !GetAtt 'TREGlueRole.Arn'
+      Permissions:
+        - CREATE_TABLE_READ_WRITE
+      Resource:
+        DataLocationResource:
+          S3Resource: !Sub '${TRESourceBucket.Arn}/'
+
+  TRELakeFormationDatabase:
+    Type: AWS::Glue::Database
+    Properties:
+      CatalogId: !Ref 'AWS::AccountId'
+      DatabaseInput:
+        Name: !Ref 'LFDatabaseName'
+
+  TREGlueSecurityConfiguration:
+    Type: AWS::Glue::SecurityConfiguration
+    Properties:
+      Name: TargetBucketSecurityConfiguration
+      EncryptionConfiguration:
+        S3Encryptions:
+          - S3EncryptionMode: SSE-KMS
+            KmsKeyArn: !GetAtt TRETargetBucketKMSKey.Arn
+
+Outputs:
+  TRETargetBucketArn:
+    Value: !GetAtt TRETargetBucket.Arn
+    Description: "TRE Data Lake Target Bucket"
+
+  TRETargetBucketKMSKeyArn:
+    Value: !GetAtt TRETargetBucketKMSKey.Arn
+    Description: "TRE Data Lake Target Bucket KMS Key"
+
+  TRESourceBucketArn:
+    Value: !GetAtt TRESourceBucket.Arn
+    Description: "TRE Data Lake Source Bucket"
+
+  TRESourceBucketKMSKeyArn:
+    Value: !GetAtt TRESourceBucketKMSKey.Arn
+    Description: "TRE Data Lake Source Bucket KMS Key"

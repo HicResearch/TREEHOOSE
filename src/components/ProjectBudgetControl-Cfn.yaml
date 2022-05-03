@@ -1,0 +1,201 @@
+# (c) 2022 Amazon Web Services, Inc. or its affiliates. All Rights Reserved.
+# This AWS Content is provided subject to the terms of the AWS Customer
+# Agreement available at https://aws.amazon.com/agreement or other written
+# agreement between Customer and Amazon Web Services, Inc.
+
+###############################################################################
+
+AWSTemplateFormatVersion: "2010-09-09"
+Description: Provision an annual TRE project budget with notifications and action to stop SWB workspace creation.
+
+Parameters:
+  SWBStackID:
+    Description: Specify the ID of existing IAM role initial-stack-<ID>-xacc-env-mgmt
+    Type: String
+    MinLength: 1
+    AllowedPattern : "[0-9]+"
+    ConstraintDescription: Ensure only the ID part of the IAM role name is provided
+
+  ServiceCatalogProductsList:
+    Description: Leave blank if you want to restrict all SWB workspace types. Otherwise, specify the 4 default products ID (prod-<ID>) from the Service Catalog portfolio created by SWB
+    Type: CommaDelimitedList
+    Default: ""
+
+  BudgetLimit:
+    Type: String
+    Description: Estimated account spend in USD
+
+  BudgetTimeWindow:
+    Type: String
+    Description: Choose between annually or monthly recurring budget
+    Default: ANNUALLY
+    AllowedValues:
+      - ANNUALLY
+      - MONTHLY
+
+  NotificationThresholdActualCost1:
+    Type: Number
+    Description: Budget threshold percentage for first notification based on actual costs
+    Default: 80
+    MinValue: 1
+    MaxValue: 100
+
+  NotificationThresholdActualCost2:
+    Type: Number
+    Description: Budget threshold percentage for second notification based on actual costs
+    Default: 99
+    MinValue: 1
+    MaxValue: 100
+
+  NotificationThresholdForecastedCost:
+    Type: Number
+    Description: Budget threshold percentage for notification based on forecasted costs
+    Default: 90
+    MinValue: 1
+    MaxValue: 100
+
+  ActionThreshold:
+    Type: Number
+    Description: Budget threshold percentage for preventing workspace creation based on actual costs
+    Default: 99
+    MinValue: 1
+    MaxValue: 100
+
+  TREAdminEmailAddress:
+    Type: String
+    Description: TRE admin email address who will receive budget alerts
+    MinLength: 1
+    AllowedPattern: '^[^\s@]+@[^\s@]+\.[^\s@]+$'
+
+  BudgetNotifySNSTopicName:
+    Type: String
+    Description: SNS topic whose subscribers receive budget alerts
+    MinLength: 1
+    Default: "TREProject1Prod-BudgetNotifications"
+
+Conditions:
+  ApplyToAllSCProducts: !Equals
+    - !Join [ "", !Ref ServiceCatalogProductsList ]
+    - ""
+
+Resources:
+  BudgetNotifySNS:
+    Type: AWS::SNS::Topic
+    Properties:
+      DisplayName: !Ref BudgetNotifySNSTopicName
+      KmsMasterKeyId: !ImportValue LandingZoneKeyARN
+      Subscription:
+        - Endpoint: !Ref TREAdminEmailAddress
+          Protocol: email
+
+  BudgetNotifySNSPolicy:
+    Type: AWS::SNS::TopicPolicy
+    Properties:
+      PolicyDocument:
+        Id: BudgetNotifySNSPolicy
+        Version: '2012-10-17'
+        Statement:
+        - Sid: BudgetNotifySNSPolicyId1
+          Effect: Allow
+          Principal:
+            Service: budgets.amazonaws.com
+          Action: SNS:Publish
+          Resource: !Ref BudgetNotifySNS
+      Topics:
+      - !Ref BudgetNotifySNS
+
+  AWSBudgetsExecutionRole:
+    Type: AWS::IAM::Role
+    Properties:
+      AssumeRolePolicyDocument:
+        Version: "2012-10-17"
+        Statement:
+          - Effect: Allow
+            Principal:
+              Service:
+                - budgets.amazonaws.com
+            Action:
+              - 'sts:AssumeRole'
+      ManagedPolicyArns:
+        - arn:aws:iam::aws:policy/AWSBudgetsActionsWithAWSResourceControlAccess
+      Policies:
+        - PolicyName: AllowIAMRolePolicyUpdates
+          PolicyDocument:
+            Statement:
+              - Action:
+                  - iam:DetachRolePolicy
+                  - iam:DeleteRolePolicy
+                  - iam:AttachRolePolicy
+                  - iam:PutRolePolicy
+                  - iam:GetRolePolicy
+                Effect: Allow
+                Resource: !Sub "arn:aws:iam::${AWS::AccountId}:role/initial-stack-${SWBStackID}-xacc-env-mgmt"
+
+  DenyCreateWorkSpacePolicy:
+    Type: AWS::IAM::ManagedPolicy
+    Properties:
+      PolicyDocument:
+        Version: '2012-10-17'
+        Statement:
+          - Effect: Deny
+            Action:
+              - servicecatalog:ProvisionProduct
+            Resource: !If
+              - ApplyToAllSCProducts
+              - "*"
+              - - !Join [ "", [ "arn:aws:catalog:", !Ref AWS::Region, ":", !Ref AWS::AccountId, ":product/prod-", !Select [ 0, !Ref ServiceCatalogProductsList ] ] ]
+                - !Join [ "", [ "arn:aws:catalog:", !Ref AWS::Region, ":", !Ref AWS::AccountId, ":product/prod-", !Select [ 1, !Ref ServiceCatalogProductsList ] ] ]
+                - !Join [ "", [ "arn:aws:catalog:", !Ref AWS::Region, ":", !Ref AWS::AccountId, ":product/prod-", !Select [ 2, !Ref ServiceCatalogProductsList ] ] ]
+                - !Join [ "", [ "arn:aws:catalog:", !Ref AWS::Region, ":", !Ref AWS::AccountId, ":product/prod-", !Select [ 3, !Ref ServiceCatalogProductsList ] ] ]
+
+  TREProjectBudget:
+    Type: AWS::Budgets::Budget
+    Properties:
+      Budget:
+        BudgetLimit:
+          Amount: !Ref BudgetLimit
+          Unit: USD
+        BudgetType: COST
+        TimeUnit: !Ref BudgetTimeWindow
+      NotificationsWithSubscribers:
+        - Notification:
+            NotificationType: ACTUAL
+            ComparisonOperator: GREATER_THAN
+            Threshold: !Ref NotificationThresholdActualCost1
+          Subscribers:
+            - SubscriptionType: SNS
+              Address: !Ref BudgetNotifySNS
+        - Notification:
+            NotificationType: ACTUAL
+            ComparisonOperator: GREATER_THAN
+            Threshold: !Ref NotificationThresholdActualCost2
+          Subscribers:
+            - SubscriptionType: SNS
+              Address: !Ref BudgetNotifySNS
+        - Notification:
+            NotificationType: FORECASTED
+            ComparisonOperator: GREATER_THAN
+            Threshold: !Ref NotificationThresholdForecastedCost
+          Subscribers:
+            - SubscriptionType: SNS
+              Address: !Ref BudgetNotifySNS
+
+  TREProjectBudgetAction:
+    Type: AWS::Budgets::BudgetsAction
+    Properties: 
+      ActionThreshold:
+        Type: PERCENTAGE
+        Value: !Ref ActionThreshold
+      ActionType: APPLY_IAM_POLICY
+      ApprovalModel: AUTOMATIC
+      BudgetName: !Ref TREProjectBudget
+      Definition: 
+        IamActionDefinition: 
+          PolicyArn: !Ref 'DenyCreateWorkSpacePolicy'
+          Roles:
+            - !Sub "initial-stack-${SWBStackID}-xacc-env-mgmt"
+      ExecutionRoleArn: !GetAtt AWSBudgetsExecutionRole.Arn
+      NotificationType: ACTUAL
+      Subscribers: 
+        - Type: SNS
+          Address: !Ref BudgetNotifySNS

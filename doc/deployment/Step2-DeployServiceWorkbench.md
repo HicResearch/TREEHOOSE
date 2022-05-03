@@ -7,10 +7,9 @@ Ensure all steps below are executed in AWS region: [London (eu-west-2)](https://
 ### Step 2A. Log in to the EC2 instance
 
 - [ ] Follow these [instructions](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/session-manager.html) to learn how to connect via SSM to the EC2 instance created in Step 1.
-- [ ] Run the following command to initialise your environment:
+- [ ] Run the following command to log in and initialise your environment:
 ```
-sudo su ec2-user
-source ~/.bash_profile
+sudo -iu ec2-user
 ```
 
 ### Step 2B. Download ServiceWorkbench
