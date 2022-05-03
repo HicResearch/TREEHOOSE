@@ -90,6 +90,15 @@ This add-on uses [AWS Backup](https://aws.amazon.com/backup/) for backing up blo
 [Amazon EC2](https://aws.amazon.com/ec2/) based compute workspaces while it uses a be-spoke
 implementation to backup [Amazon SageMaker Notebook Instances](https://docs.aws.amazon.com/sagemaker/latest/dg/nbi.html)
 
+Below diagrams explain how the backup solution works
+for
+
+1. EC2 based workspaces.
+![EC2 backed workspaces](../../res/images/ec2-based-backup-design.png)
+
+1. SageMaker notebook based workspaces
+![SageMaker notebook backed workspaces](../../res/images/sagemaker-notebook-backup-design.png)
+
 ### *Budget controls*
 
 Budget controls is an optional
