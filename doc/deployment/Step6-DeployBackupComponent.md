@@ -57,13 +57,15 @@ alias cdk2="npx aws-cdk@2.x"
 
 - [ ] Change directory to root folder of the backup component code.
 
-- [ ] Run the following commands to create an isolated Python environment and deploy the CDK stack:
+- [ ] Run the following commands to create an isolated Python environment, bootstrap and deploy the CDK stack.
+      Update DEPLOYMENT_ACCOUNT with the account number where you want to deploy the backup component:
 
 ```console
 python3 -m venv .venv
 source .venv/bin/activate
 pip3 install -r requirements.txt
 pip3 install -r ./src/lambda_layer/requirements.txt --target ./src/lambda_layer/python
+cdk2 bootstrap aws://DEPLOYMENT_ACCOUNT/eu-west-2
 cdk2 deploy
 ```
 
