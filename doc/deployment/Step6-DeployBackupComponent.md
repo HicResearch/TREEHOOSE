@@ -101,8 +101,6 @@ this functionality.
    of the TRE account using Admin privileges.
    Navigate to [EC2 console](https://eu-west-2.console.aws.amazon.com/ec2/v2/home?region=eu-west-2#Instances:).
 
-1. Go to instances and search using instance id.
-
 1. Click on the instance id, navigate to storage tab and click on
    the volume-id attached to the EC2 instance.
 
@@ -110,8 +108,8 @@ this functionality.
    Click on the volume-id again, navigate to Tags and confirm that a tag
    with Key `backupVolume` and Value `true` is present.
 
-1. Now navigate to [AWS Backup](https://eu-west-2.console.aws.amazon.com/backup/home?region=eu-west-2#/) console. Click on `Protected resources`
-   and confirm that the volume-id noted earlier appears there.
+1. Now navigate to [AWS Backup](https://eu-west-2.console.aws.amazon.com/backup/home?region=eu-west-2#/resources) console
+   and confirm that the volume-id noted earlier appears under `Protected resources`.
 
 ### Validating SageMaker Notebook backups
 

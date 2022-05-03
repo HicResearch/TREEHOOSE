@@ -59,7 +59,8 @@ EBS by replacing it on the Workspace.
 1. Log in to the [AWS Management Console](https://console.aws.amazon.com/)
    of the TRE account using Admin privileges.
 
-1. Navigate to the EC2 console, filter Instances with the instance id
+1. Navigate to the [EC2 console](https://eu-west-2.console.aws.amazon.com/ec2/v2/home?region=eu-west-2#Instances:),
+   filter Instances with the instance id
    for which the restore needs to be carried out and click the
    instance id
 
@@ -76,8 +77,8 @@ EBS by replacing it on the Workspace.
 
       *Note : At this point if the detached volume is no longer required it should be deleted.*
 
-1. Navigate to [AWS Backup](https://eu-west-2.console.aws.amazon.com/backup/home?region=eu-west-2#/) console, navigate to `Backup vaults`
-   , click on the vault name.
+1. Navigate to [AWS Backup](https://eu-west-2.console.aws.amazon.com/backup/home?region=eu-west-2#/backupvaults) console,
+   navigate to `Backup vaults`, click on the vault name.
 
 1. Use the `Volume ID` to search backups. Based on the backup frequency
    there
@@ -104,7 +105,7 @@ EBS by replacing it on the Workspace.
 
 1. This will take you to restored jobs screen.
    The restored backup job will appear under Restore jobs in the the
-   [AWS Backup](https://eu-west-2.console.aws.amazon.com/backup/home?region=eu-west-2#/) console.
+   [AWS Backup](https://eu-west-2.console.aws.amazon.com/backup/home?region=eu-west-2#/jobs/restore)) console.
    Once the job status appears as completed, note the
    volume id of the restored volume.
    ![Restore Job Status](./../../res/images/restore-jobs.png)
@@ -183,8 +184,7 @@ files the restoration work needs to be undertaken by the TRE Admin.
    of your **TRE Account** with Administrative privileges.
 
 1. Navigate to
-   [Amazon SageMaker console](https://eu-west-2.console.aws.amazon.com/sagemaker/home?region=eu-west-2#/landing).
-   Click on Notebook -> Notebook instances.
+   [Amazon SageMaker console](https://eu-west-2.console.aws.amazon.com/sagemaker/home?region=eu-west-2#/notebook-instances).
    Click on Notebook name on which files need to be restored.
 
 1. Under Permissions and encryption click on the IAM role ARN.
@@ -225,7 +225,7 @@ files the restoration work needs to be undertaken by the TRE Admin.
       }
    ```
 
-. Click on Review Policy. Provide policy name as `sagemaker-restore-policy-for-NOTEBOOK_NAME`
+1. Click on Review Policy. Provide policy name as `sagemaker-restore-policy-for-NOTEBOOK_NAME`
    after replacing NOTEBOOK_NAME with actual value.
    Click on Create Policy.
 
