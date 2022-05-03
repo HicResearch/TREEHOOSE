@@ -47,30 +47,6 @@ process for securely egressing from the TRE environment
 while keeping the TRE admins and Data auditors complete
 control of the process.
 
-### *Centralised Logging*
-
-The TREEHOOSE implementation is built to help
-manage TRE projects at scale. As the number of
-TRE projects scale it becomes difficult to manage
-the logs at scale. Centralized logging provides a
-single point of access to all salient logs generated
-across accounts and regions, and is critical for
-auditing, security and compliance.
-
-This optional add-on based on the princples
-outlined in
-[this](https://aws.amazon.com/blogs/architecture/stream-amazon-cloudwatch-logs-to-a-centralized-account-for-audit-and-analysis/)
-blog post and
-[this](https://github.com/CloudSnorkel/CloudWatch2S3) opensource
-solution helps to centralise the logging
-from all TRE environments.
-
-The solution aligns with centralised logging setup
-by AWS Control Tower and reuses the Log Archive
-account created under the Security Organisational Unit.
-The key aspect of this add-on to aggregate the application
-logs from all TRE projects to a central S3 bucket.
-
 ### *Workspace backup*
 
 This add-on provides capability to periodically
