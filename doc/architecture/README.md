@@ -114,32 +114,6 @@ each TRE project and allows to
 The add-on uses [AWS Budgets](https://aws.amazon.com/aws-cost-management/aws-budgets/)
  to plan and set expectations around TRE project costs.
 
-### *Secure external access*
-
-By default all research workspaces are deployed
-in a private network with no internet access from
-within the workspace environment.
-Although sometimes researchers do require capability
-to download certain packages from the internet to
-use within the workspace.
-
-This add-on provides capability to the admins
-to enable secure internet access for selected workspace
-and uses [AWS Network Firewall](https://aws.amazon.com/network-firewall/)
-for this purpose.
-Administrator can also control which external websites
-are accessible from within the workspace.
-
-The add-on is intended to work in both centralised and de-centralised mode.
-Although for the current release the more cost effective
-centralised mode of deployment is available.
-The key constraint of centralised mode of deployment is that you
-cannot have fine-grained control of rules that apply
-to each project. All the rules in the central
-AWS Network Firewall apply to all the TRE projects
-and its workspace that have been approved for
-external access.
-
 ## Design considerations
 
 ---
