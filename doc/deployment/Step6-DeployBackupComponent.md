@@ -7,17 +7,6 @@ backups for both EC2 based and SageMaker notebook based workspaces.
 The infrastructure for this component is implemented using [AWS CDK v2](https://docs.aws.amazon.com/cdk/v2/guide/home.html).
 Ensure all steps below are executed in AWS region: [London (eu-west-2)](https://eu-west-2.console.aws.amazon.com/).
 
-## Design
-
-Below diagrams explain how the backup solution works
-for
-
-1. EC2 based workspaces.
-![EC2 backed workspaces](../../res/images/ec2-based-backup-design.png)
-
-1. SageMaker notebook based workspaces
-![SageMaker notebook backed workspaces](../../res/images/sagemaker-notebook-backup-design.png)
-
 ## Step 6. Deploying Workspace Backup Component
 
 ---
