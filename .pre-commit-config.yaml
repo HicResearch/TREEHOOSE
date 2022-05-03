@@ -7,7 +7,6 @@ repos:
       -   id: check-docstring-first
       -   id: check-json
       -   id: check-added-large-files
-      -   id: check-yaml
       -   id: debug-statements
       -   id: name-tests-test
       -   id: double-quote-string-fixer
@@ -17,6 +16,15 @@ repos:
     hooks:
       - id: git-secrets
         verbose: true
+        entry: 'git-secrets --register-aws'
+        language: script
+        name: git-secrets-register-aws-provider
+      - id: git-secrets
+        verbose: true
+        entry: 'git-secrets --scan'
+        language: script
+        name: git-secrets-scan
+
   - repo: https://github.com/markdownlint/markdownlint
     rev: v0.11.0
     hooks:
@@ -30,3 +38,8 @@ repos:
         args:
           - "-s"
           - "mdl_style.rb"
+  - repo: https://github.com/aws-cloudformation/cfn-python-lint
+    rev: v0.59.1
+    hooks:
+      - id: cfn-python-lint
+        files: src.*\.(json|yml|yaml)$
