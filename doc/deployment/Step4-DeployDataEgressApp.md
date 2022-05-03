@@ -87,10 +87,11 @@ region="<<AWS_REGION>>" # eu-west-2
 - [ ] Run the following commands to create an isolated Python environment and deploy the CDK backend stack:
 ```
 cd ~/egress-addon/secure-egress-backend
-alias cdkv1="npx aws-cdk@1.144"
+alias cdkv1="npx aws-cdk@1.154"
 python3 -m venv .venv
 source .venv/bin/activate
 pip3 install -r requirements.txt
+cdkv1 bootstrap aws://<<AWS_ACCOUNT_ID>>/<<AWS_REGION>> # TRE Project 1 Prod account ID / eu-west-2
 cdkv1 deploy
 ```
 
