@@ -127,7 +127,7 @@ this functionality.
    after files have been created in it.*
 
 1. Log in to the [AWS Management Console](https://console.aws.amazon.com/)
-   of the TRE account using Admin privileges. Navigate to S3 console.
+   of the TRE account using Admin privileges. Navigate to Amazon S3 console.
 
 1. Click on the S3 bucket that has name similar to
    `sagemaker-backup-bucket-ACCOUNTNUMBER-eu-west-2`
