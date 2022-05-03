@@ -2,10 +2,6 @@
 
 ---
 
-## AWS Control Tower
-
----
-
 ## TREEHOOSE (TRE)
 
 ---
@@ -25,6 +21,8 @@ The TREEHOOSE solution is formed of
 [Service Workbench on AWS](https://aws.amazon.com/government-education/research-and-technical-computing/service-workbench/)
 and a data lake that together provides the building blocks
 for the Trusted Research Environment (TRE) capability.
+[AWS Control Tower](https://aws.amazon.com/controltower/) provides the scalable
+multi-account setup for managing TRE implementations at scale in AWS Cloud.
 
 In addition to the basic building blocks TREEHOOSE solution
 provides optional add-on components to enable
@@ -36,6 +34,24 @@ provides optional add-on components to enable
 ### Solution Overview
 
 ---
+
+#### *AWS Control Tower*
+
+---
+
+Using TREEHOOSE implemenation a user should be able to run multiple
+isolated projects and trusted research environment in parallel
+and scale according the organisation's research needs.
+
+To enable TREEHOOSE implementation to support scalable research workloads
+, meet the organization’s security and auditing requirements, and evolve with business requirements
+it uses AWS Control Tower to set up and govern a secure,
+multi-account AWS environment, called a landing zone.
+
+Below is the high-level Organization Unit and Account Structure
+that will be setup by using the TREEHOOSE solution.
+
+![Multi-account structure](../../res/images/multi-account-setup.png)
 
 #### *Service Workbench on AWS Solution*
 
@@ -126,3 +142,12 @@ each TRE project and allows to
 
 The add-on uses [AWS Budgets](https://aws.amazon.com/aws-cost-management/aws-budgets/)
  to plan and set expectations around TRE project costs.
+
+## References
+
+---
+
+- <https://docs.aws.amazon.com/organizations/latest/userguide/orgs_getting-started_concepts.html>
+- <https://docs.aws.amazon.com/prescriptive-guidance/latest/designing-control-tower-landing-zone/account-structure-ous.html>
+- <https://aws.amazon.com/government-education/research-and-technical-computing/service-workbench/>
+- <https://docs.aws.amazon.com/aws-backup/latest/devguide/how-it-works.html>
