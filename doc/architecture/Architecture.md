@@ -2,12 +2,22 @@
 
 ---
 
-Deploying this solution with the **default parameters**
+## AWS Control Tower
+
+---
+
+## TREEHOOSE (TRE)
+
+---
+
+TREEHOOSE is the Trusted Research Environment (TRE) implementation
+that will be deployed for each research project.
+Deploying the solution with the **default parameters**
 builds the following environment in the AWS Cloud.
 
 ![TREEHOOSE Architecture](../../res/images/TREEHOOSE-architecture.png)
 
-## Overview
+### Overview
 
 ---
 
@@ -23,18 +33,22 @@ provides optional add-on components to enable
 - Workspace backups
 - Budget controls
 
-## Solution Overview
+### Solution Overview
 
 ---
 
-### *Service Workbench on AWS Solution*
+#### *Service Workbench on AWS Solution*
+
+---
 
 Service Workbench on AWS is a cloud solution that enables
 IT teams to provide secure, repeatable, and federated control of
 access to data, tooling, and compute power that researchers need.
 Find more details [here](https://aws.amazon.com/government-education/research-and-technical-computing/service-workbench/).
 
-### *Datalake*
+#### *Datalake*
+
+---
 
 TREEHOOSE uses a data lake setup that
 uses [AWS Lake Formation](https://aws.amazon.com/lake-formation/)
@@ -45,7 +59,9 @@ both in its original form and prepared for analysis.
 It creates a pre-configured data lake to be used for TRE data pipelines.
 This is a mandatory add-on.
 
-### *Data Egress Application*
+#### *Data Egress Application*
+
+---
 
 This add-on provides a data egress approval workflow
 for researchers to take out data from TRE with the permission of multiple parties
@@ -64,7 +80,9 @@ are recorded for Audit.
 
 ![Egress App Workflow](../../res/images/egress-app-workflow.png)
 
-### *Workspace backup*
+#### *Workspace backup*
+
+---
 
 This add-on provides capability to periodically
 backup researcher workspace to ensure that persistent
@@ -92,7 +110,9 @@ for
 1. SageMaker notebook based workspaces
 ![SageMaker notebook backed workspaces](../../res/images/sagemaker-notebook-backup-design.png)
 
-### *Budget controls*
+#### *Budget controls*
+
+---
 
 Budget controls is an optional
 add-on that allows administrators and finance stakeholders
