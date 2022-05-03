@@ -24,7 +24,6 @@ repos:
         entry: 'git-secrets --scan'
         language: script
         name: git-secrets-scan
-
   - repo: https://github.com/markdownlint/markdownlint
     rev: v0.11.0
     hooks:
