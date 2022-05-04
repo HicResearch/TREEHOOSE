@@ -138,6 +138,9 @@ AppStreamImageName: <The image built in step 2F - Part 2>
 AppStreamInstanceType: stream.standard.small
 AppStreamFleetType: ON_DEMAND
 ```
+
+Note there are 3 options you can select for the AppStream Fleet Type: ON_DEMAND, ALWAYS_ON and ELASTIC. SWB only supports ON_DEMAND and ALWAYS_ON. ALWAYS_ON will reduce the waiting time to establish an AppStream connection, but it will cost more. To learn more about AppStream fleet types, follow this [guide](https://docs.aws.amazon.com/appstream2/latest/developerguide/fleet-type.html).
+
 - [ ] Press on button *Onboard AWS Account* and follow all remaining instructions on the web page
 - [ ] Confirm the account status matches the image below
 
