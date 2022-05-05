@@ -24,7 +24,7 @@ There are 2 types of reviewer personas involved in the Egress App workflow:
 
 ![Egress App Workflow - 4](../../../res/images/secure_egress_app/UserGuide-Workflow-4.png)
 
-5) In the Egress Web App, the Information Governance Lead views the egress request searching for the ID from the email notification.
+5) In the Egress Web App, the Information Governance Lead views the egress request searching for the ID from the email notification. Search box is present at the bottom left of the data table.
 
 ![Egress App Workflow - 5](../../../res/images/secure_egress_app/UserGuide-Workflow-5.png)
 
