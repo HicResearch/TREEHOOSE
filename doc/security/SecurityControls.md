@@ -15,7 +15,7 @@ Data classification is determined by a number of participants, including, but no
 - Under-classification can lead to legal and financial sanction and the loss of the social license to operate in the research community.
 - Over-classification can result in lost researcher productivity, a loss of scientific engagement and increases data risk by encouraging workaround breach.
 
-The TREEHOOSE TRE solution is designed to be flexible and does not enforce any tagging mechanism or workflows specific to data classification tiers. It is the responsability of the TRE administrator and the Data managers to configure the TRE environment and datasets to meet their data classification requirements.
+The TREEHOOSE TRE solution is designed to be flexible and does not enforce any tagging mechanism or workflows specific to data classification tiers. It is the responsibility of the TRE administrator and the Data managers to configure the TRE environment and datasets to meet their data classification requirements.
 
 ## Data Ingress
 
