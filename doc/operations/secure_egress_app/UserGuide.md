@@ -1,4 +1,4 @@
-There are 2 types of users involved in the Egress App workflow:
+There are 2 types of reviewer personas involved in the Egress App workflow:
 1) Information Governance Leads
 - uses a SWB user account of type researcher to create a new workspace to view the contents of the data egress request
 - uses an Egress App user account to provide the 1st approval for a data egress request
