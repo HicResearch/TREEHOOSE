@@ -66,6 +66,14 @@ Log in to the [AWS Management Console](https://console.aws.amazon.com/) using yo
 
 You can now try registering the data study again in SWB.
 
+### Workspace Launch Times
+
+If a researcher notices that the SWB workspace creation takes a long time, they should contact their TRE administrator to investigate.
+
+### S3 File Mounts
+
+SWB workspaces use S3 file mounts which come with some limitations.
+
 ## Egress Add-On Application
 
 ### Egress Workflow
