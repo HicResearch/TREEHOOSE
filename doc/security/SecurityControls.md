@@ -43,7 +43,7 @@ The compute workspaces used by researchers are network-isolated and do not have 
 
 The TRE administrators will use AWS SSO to access the AWS console.
 
-The 2 web applications part of the TREEHOOSE TRE solution use Amazon Cognito as an identity provider and have a set of predefined roles that are assigned to users by a TRE administrator. Some permissions can also be assigned to control user access to compute workspaces and datasets.
+The 2 web applications part of the TREEHOOSE TRE solution use [Amazon Cognito](https://aws.amazon.com/cognito/) as an identity provider and have a set of predefined roles that are assigned to users by a TRE administrator. Some permissions can also be assigned to control user access to compute workspaces and datasets.
 
 The SWB web application allows a new user to sign-up, but they will need to contact a TRE administrator who will activate their account in SWB and assign an appropriate role. The Egress Addon web application does not support user sign-up and requires a TRE administrator to manage user accounts in Amazon Cognito.
 
