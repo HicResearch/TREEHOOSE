@@ -1,0 +1,55 @@
+{
+  "app": "python3 app.py",
+  "context": {
+    "Prod": {
+      "resource_tags":{
+        "ProjectName": "TREProject",
+        "ProjectCode":"NA",
+        "Owner":"NA"
+      },
+      "dataset":{
+        "InformationClassification":"NA",
+        "IGLead":"NA",
+        "DataSource":"NA",
+        "OriginDate":"NA",
+        "ReviewDate":"NA"
+      },
+      "__powertools_comment": "We are using the AWS managed lambda layer as described in https://awslabs.github.io/aws-lambda-powertools-python/latest/#install",
+      "powertools_lambda_layer_arn": "arn:aws:lambda:eu-west-2:017000801446:layer:AWSLambdaPowertoolsPython:15",
+      "egress_reviewer_roles": [
+        "InformationGovernance",
+        "TREAdmin"
+      ],
+      "swb_egress_store_arn":"<<SWB_STACK_EGRESS_STORE_S3_BUCKET_ARN>>",
+      "swb_egress_notification_topic":"<<SWB_STACK_EGRESS_STORE_NOTIFICATION_SNS_TOPIC_ARN>>",
+      "swb_egress_notification_bucket_arn":"<<SWB_STACK_EGRESS_STORE_NOTIFICATION_S3_BUCKET_ARN>>",
+      "swb_egress_notification_bucket_kms_arn":"<<SWB_STACK_EGRESS_STORE_NOTIFICATION_S3_BUCKET_KMS_KEY_ARN>>",
+      "swb_egress_store_db_table":"<<SWB_STACK_EGRESS_STORE_DYNAMODB_TABLE>>",
+      "datalake_target_bucket_arn":"<<DATALAKE_STACK_TARGET_S3_BUCKET_ARN>>",
+      "datalake_target_bucket_kms_arn":"<<DATALAKE_STACK_TARGET_S3_BUCKET_KMS_KEY_ARN>>",
+      "efs_mount_path": "/mnt/egress",
+      "cognito_userpool_domain": "<<COGNITO_DOMAIN_TO_BE_CREATED>>",
+      "max_downloads_allowed": "1",
+      "tre_admin_email_address": "<<TRE_ADMIN_EMAIL_TO_BE_VERIFIED>>",
+      "egress_app_url": "<<AMPLIFY_APP_URL>>",
+      "egress_app_id": "<<AMPLIFY_APP_ID>>",
+      "egress_app_branch": "<<AMPLIFY_APP_BRANCH>>"
+    },
+    "base": {
+      "ses_configuration_set_name": "egress_app_configuration_set_"
+    },
+    "@aws-cdk/aws-apigateway:usagePlanKeyOrderInsensitiveId": true,
+    "@aws-cdk/core:enableStackNameDuplicates": "true",
+    "aws-cdk:enableDiffNoFail": "true",
+    "@aws-cdk/core:stackRelativeExports": "true",
+    "@aws-cdk/aws-ecr-assets:dockerIgnoreSupport": true,
+    "@aws-cdk/aws-secretsmanager:parseOwnedSecretName": true,
+    "@aws-cdk/aws-kms:defaultKeyPolicies": true,
+    "@aws-cdk/aws-s3:grantWriteWithoutAcl": true,
+    "@aws-cdk/aws-ecs-patterns:removeDefaultDesiredCount": true,
+    "@aws-cdk/aws-rds:lowercaseDbIdentifier": true,
+    "@aws-cdk/aws-efs:defaultEncryptionAtRest": true,
+    "@aws-cdk/aws-lambda:recognizeVersionProps": true,
+    "@aws-cdk/core:newStyleStackSynthesis": true
+  }
+}
