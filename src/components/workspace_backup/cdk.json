@@ -1,0 +1,47 @@
+{
+  "app": "python3 app.py",
+  "watch": {
+    "include": ["**"],
+    "exclude": [
+      "README.md",
+      "cdk*.json",
+      "requirements*.txt",
+      "source.bat",
+      "**/__init__.py",
+      "python/__pycache__",
+      "tests"
+    ]
+  },
+  "context": {
+    "@aws-cdk/aws-apigateway:usagePlanKeyOrderInsensitiveId": true,
+    "@aws-cdk/core:stackRelativeExports": true,
+    "@aws-cdk/aws-rds:lowercaseDbIdentifier": true,
+    "@aws-cdk/aws-lambda:recognizeVersionProps": true,
+    "@aws-cdk/aws-cloudfront:defaultSecurityPolicyTLSv1.2_2021": true,
+    "@aws-cdk-containers/ecs-service-extensions:enableDefaultLogDriver": true,
+    "@aws-cdk/aws-ec2:uniqueImdsv2TemplateName": true,
+    "@aws-cdk/core:target-partitions": ["aws", "aws-cn"],
+    "powertools_layer_version": "16",
+    "backup_settings": {
+      "frequency": "daily",
+      "backup_tag": {
+        "check": { "Key": "backup", "Value": "true" },
+        "add": { "Key": "backupVolume", "Value": "true" }
+      },
+      "backup_schedule": {
+        "cloudwatch_cron": { "hourly": "0 * ? * * *", "daily": "0 0 ? * * *" },
+        "unix_crontab": {
+          "hourly": "0 * * * *",
+          "daily": "0 0 * * *"
+        }
+      },
+      "retention_period": {
+        "days": 180
+      },
+      "move_to_cold_storage_after": {
+        "days": 90
+      },
+      "sagemaker_enable_selfservice_restore" : "true"
+    }
+  }
+}

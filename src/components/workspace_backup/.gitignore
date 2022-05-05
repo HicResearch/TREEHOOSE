@@ -1,0 +1,17 @@
+*.swp
+__pycache__
+.pytest_cache
+.venv
+*.egg-info
+.coverage
+.markdownlint*
+# CDK asset staging directory
+.cdk.staging
+cdk.out
+cdk.context.json
+sagemaker_event_sample.json
+test_template_final.yaml
+test_template.yaml
+test_yaml.py
+text_base64.py
+*python*
