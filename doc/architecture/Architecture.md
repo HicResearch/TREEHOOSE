@@ -62,6 +62,17 @@ IT teams to provide secure, repeatable, and federated control of
 access to data, tooling, and compute power that researchers need.
 Find more details [here](https://aws.amazon.com/government-education/research-and-technical-computing/service-workbench/).
 
+Key Components :
+
+- For the UI: AWS Lambda, AWS Lambda@Edge, Amazon CloudFront,
+  Amazon S3. AWS SSO can be used for Single Sign-On (optional).
+- For the backend: Amazon API Gateway, AWS Lambda,
+  AWS Step Functions, AWS Service Catalog, Amazon DynamoDB, Amazon Cognito, Amazon S3.
+- For research environments: AWS Service Catalog and AWS CloudFormation
+  for deploying the environments; Amazon EC2, Amazon SageMaker, Amazon EMR, Amazon S3, ...
+  (more services as desired; this is customisable by providing Service Catalog templates).
+- For the secure access environment: AWS AppStream 2.0
+
 #### *Datalake*
 
 ---
@@ -74,6 +85,10 @@ A data lake is a centralized, curated, and secured repository that stores all yo
 both in its original form and prepared for analysis.
 It creates a pre-configured data lake to be used for TRE data pipelines.
 This is a mandatory add-on.
+
+Key Components :
+
+- AWS Lake Formation
 
 #### *Data Egress Application*
 
@@ -95,6 +110,12 @@ All data egress requests and any actions performed on those
 are recorded for Audit.
 
 ![Egress App Workflow](../../res/images/egress-app-workflow.png)
+
+Key Components :
+
+- For the UI: AWS Amplify
+- For the backend: AWS Step Functions, Amazon EFS,
+  AWS Lambda, Amazon DynamoDB, Amazon SES, Amazon S3, Amazon SNS, Amazon Cognito
 
 #### *Workspace backup*
 
@@ -126,6 +147,11 @@ for
 1. SageMaker notebook based workspaces
 ![SageMaker notebook backed workspaces](../../res/images/sagemaker-notebook-backup-design.png)
 
+Key Components:
+
+- For the backend: AWS Step Functions,
+  AWS Lambda, Amazon CloudWatch Events, AWS CloudForamtion, AWS Backup, Amazon S3
+
 #### *Budget controls*
 
 ---
@@ -142,6 +168,10 @@ each TRE project and allows to
 
 The add-on uses [AWS Budgets](https://aws.amazon.com/aws-cost-management/aws-budgets/)
  to plan and set expectations around TRE project costs.
+
+Key Components:
+
+- For the backend: AWS Budgets, Amazon SNS, AWS IAM
 
 ## References
 
