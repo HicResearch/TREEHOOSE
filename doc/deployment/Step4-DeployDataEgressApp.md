@@ -10,7 +10,7 @@ Log in to the [AWS Management Console](https://console.aws.amazon.com/) using yo
 
 ### Remove email restrictions
 
-By default, a new AWS account will be placed in the [Amazon SES](https://aws.amazon.com/ses/) sandbox which enforces a set of restrictions.
+By default, a new AWS account will be placed in the [Amazon SES](https://aws.amazon.com/ses/) sandbox which enforces a set of [restrictions](https://docs.aws.amazon.com/ses/latest/dg/request-production-access.html).
 
 To enable the app to send emails to the relevant already-approved parties (information governance leads, IT admins and researchers), an admin must also manually add each email as a verified entity in SES. Following that, the person with the email address must then confirm the registration using a link received in an email.
 
