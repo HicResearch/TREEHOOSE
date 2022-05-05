@@ -107,10 +107,7 @@ cdkv1 deploy
 - [ ] Run the following commands to build the React frontend code:
 ```
 cd ~/egress-addon/secure-egress-webapp
-nvm install v16.15.0
-nvm use v16.15.0
 npm install
-npm audit fix
 npm run build
 ```
 
