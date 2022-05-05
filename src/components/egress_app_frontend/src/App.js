@@ -53,8 +53,8 @@ function App() {
                   className='sign-in-button'
                   fullWidth
                   onClick={() => Auth.federatedSignIn({customProvider: "AWSSSO"})}
-                  >Sign In with College Credentials</Button> 
-          
+                  >Sign In with College Credentials</Button>
+
         </div> */}
             </AmplifySignIn>
         </AmplifyAuthenticator>
