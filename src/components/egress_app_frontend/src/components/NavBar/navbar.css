@@ -1,0 +1,49 @@
+.topbar {
+    width: 100%;
+    height: 50px;
+    background-color: white;
+    position: sticky;
+    top: 0;
+    z-index: 999;
+}
+
+.topBarWrapper {
+    height: 100%;
+    padding: 0px 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.topBarIconContainer {
+    position: relative;
+    cursor: pointer;
+    margin-right: 10px;
+}
+
+.topBarLogoContainer {
+    position: relative;
+    cursor: pointer;
+    margin-right: 10px;
+    margin-bottom: 6px;
+    margin-top: 6px;
+    width: 5%;
+}
+
+.topMiddle {
+    position: relative;
+    margin-right: 5px;
+    width: 80%;
+    padding: 0px 5px;
+}
+
+.topHeader {
+    background-color: #ffffff;
+    min-height: 100px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    font-size: calc(10px + 2vmin);
+    color: #333;
+}
