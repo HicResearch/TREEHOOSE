@@ -17,15 +17,15 @@ sudo -iu ec2-user
 - [ ] Run the following commands to get a copy of the open-source software called ServiceWorkbench (SWB):
 ```
 cd /home/ec2-user/tmp
-wget https://github.com/awslabs/service-workbench-on-aws/archive/refs/tags/v5.1.0.tar.gz
-tar -xzf v5.1.0.tar.gz
+wget https://github.com/awslabs/service-workbench-on-aws/archive/refs/tags/v5.1.1.tar.gz
+tar -xzf v5.1.1.tar.gz
 ```
 
 ### Step 2C. Create configuration file
 
 - [ ] Run the following commands to create a configuration file for SWB:
 ```
-cd /home/ec2-user/tmp/service-workbench-on-aws-5.1.0/main/config/settings
+cd /home/ec2-user/tmp/service-workbench-on-aws-5.1.1/main/config/settings
 cp .defaults.yml treprod.yml
 nano treprod.yml
 ```
@@ -46,8 +46,8 @@ isAppStreamEnabled: true
 
 - [ ] Remove:
 ```
-versionNumber: '5.1.0'
-versionDate: '2022-03-22'
+versionNumber: '5.1.1'
+versionDate: '2022-04-08'
 ```
 
 Note: Remove the versionNumber and versionDate in the configuration file every time you need to run Step 2E. This is a fix for an issue in SWB in which a script fails when these 2 parameters are set.
@@ -58,7 +58,7 @@ Note: Remove the versionNumber and versionDate in the configuration file every t
 
 - [ ] Run the following commands to install SWB:
 ```
-cd /home/ec2-user/tmp/service-workbench-on-aws-5.1.0
+cd /home/ec2-user/tmp/service-workbench-on-aws-5.1.1
 ./scripts/environment-deploy.sh treprod
 ```
 
@@ -75,7 +75,7 @@ sudo yum -y install packer
 
 - [ ] Run the following commands to build the default SWB workspace images:
 ```
-cd /home/ec2-user/tmp/service-workbench-on-aws-5.1.0/main/solution/machine-images
+cd /home/ec2-user/tmp/service-workbench-on-aws-5.1.1/main/solution/machine-images
 pnpx sls build-image -s treprod
 ```
 
@@ -88,7 +88,7 @@ pnpx sls build-image -s treprod
 #### Part 1
 - [ ] Run the following commands to create an image builder in AppStream:
 ```
-cd /home/ec2-user/tmp/service-workbench-on-aws-5.1.0/scripts/app-stream
+cd /home/ec2-user/tmp/service-workbench-on-aws-5.1.1/scripts/app-stream
 npm install
 npm audit fix
 npm run start-image-builder -- default eu-west-2 default default
@@ -106,7 +106,7 @@ Log in to the [AWS Management Console](https://console.aws.amazon.com/) using yo
 - [ ] Run the following commands in Windows Powershell to create an AppStream image:
 ```
 cd ~\Documents
-Invoke-WebRequest -Uri https://raw.githubusercontent.com/awslabs/service-workbench-on-aws/v5.1.0/scripts/app-stream/buildImage.ps1 -OutFile buildImage.ps1
+Invoke-WebRequest -Uri https://raw.githubusercontent.com/awslabs/service-workbench-on-aws/v5.1.1/scripts/app-stream/buildImage.ps1 -OutFile buildImage.ps1
 .\buildImage.ps1
 ```
 
@@ -118,7 +118,7 @@ You can view the image created in AppStream's menu option: [*Image registry*](ht
 
 - [ ] Run the following commands to get the web link for SWB:
 ```
-cd /home/ec2-user/tmp/service-workbench-on-aws-5.1.0
+cd /home/ec2-user/tmp/service-workbench-on-aws-5.1.1
 ./scripts/get-info.sh treprod
 ```
 - [ ] Copy the value for *Website URL* and open the browser to access the page
