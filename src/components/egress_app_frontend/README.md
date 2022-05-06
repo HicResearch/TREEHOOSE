@@ -103,11 +103,13 @@ You will also see any lint errors in the console.
 
 Format of the __'.env.local'__ file:
 
+```
 REACT_APP_APPSYNC_API=
 REACT_APP_REGION=
 REACT_APP_USER_POOL_CLIENT_ID=
 REACT_APP_USER_POOL_ID=
 REACT_APP_USER_POOL_DOMAIN=
+```
 
 ### `yarn test`
 
@@ -116,11 +118,10 @@ See the section about [running tests](https://facebook.github.io/create-react-ap
 
 ### `yarn build`
 
-Builds the app for production to the `build` folder.\
+Builds the app for production to the `build` folder.
 It bundles React in production mode and optimizes the build for the best performance.
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+The build is minified and the filenames include the hashes. Your app is ready to be deployed!
 
 See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
 
@@ -167,4 +168,4 @@ To learn about deployments, view this [guidance](https://facebook.github.io/crea
 
 ### yarn build fails to minify
 
-To troubleshoot issues with *yarn build fails to minify*, view this [guidance](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+To troubleshoot issues when yarn build fails to minify, view this [guidance](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
