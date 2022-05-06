@@ -15,17 +15,21 @@ The pre-configured data lake is created with the CloudFormation template provide
 There are 5 S3 buckets created:
 
 1. TRE Source Bucket
-    * Stores the input datasets for research activities
-    * Attached to SWB as a registered data study made available in
-    compute workspaces for research activities
+    * Can store input datasets for research activities
+    * Can be attached to SWB as a registered data study
+    * Can be used in data transformation pipelines to manage e.g. sensitive datasets
 
 1. TRE Target Bucket
     * Stores the approved egressed data from research activities
-    * Accessed by the Egress Addon web application
+    * Used by the Egress Addon web application
 
 1. TRE Analyst Bucket
+    * A data analyst can run queries using Amazon Athena on the data and
+    store query results here
 
 1. TRE Lake Admin Bucket
+    * A data lake administrator can run queries using Amazon Athena on the data and
+    store query results here
 
 1. TRE Access Logs Bucket
     * S3 access logging destination for the other buckets
@@ -48,6 +52,26 @@ Some resources in this template have IAM policies attached to control access or 
  constraints. For example, the S3 buckets will deny attempts to upload data in unencrypted form
  and expect the use of KMS keys for server-side encryption.
 
+The following IAM roles are created:
+
+- TREAdminRole: 
+    - Has PowerUser access
+    - Can manage KMS keys but cannot use the keys
+
+- TREDataAnalystRole:
+    - Can read data in the TRE Source Bucket and execute Amazon Athena queries
+    - Can put query results in the TRE Analyst Bucket
+
+- TREDataLakeAdminRole:
+    - The designated Lake Formation administrator with full access to the Data Lake
+    - Can use KMS keys but cannot manage or perform administrative tasks on KMS keys
+
+- TRELFRegisterLocationServiceRole:
+    - Needed to register TRE Source Bucket and TRE Target Bucket with AWS Lake Formation
+
+- TREGlueRole:
+    - Role used by AWS Glue for Glue jobs and crawlers
+
 ### AWS Key Management Service (KMS)
 
 [AWS KMS](https://aws.amazon.com/kms/) is a place to create and manage cryptographic keys.
@@ -58,7 +82,9 @@ Each of the S3 buckets is encrypted server-side with its dedicated KMS encryptio
 
 [AWS Glue](https://aws.amazon.com/glue/) makes data discovery and preparation easy to simplify data integration.
 
-The data in the S3 buckets can be optionally scanned and processed using Glue.
+An AWS Glue database is created which will be used to catalog metadata about data sources. This is the initial phase
+ of the long-term vision of exposing a catalog of datasets available within the data lake so that researchers can
+ request access to datasets that are of interest to them.
 
 ### AWS Lake Formation
 
@@ -66,6 +92,6 @@ The data in the S3 buckets can be optionally scanned and processed using Glue.
  provided and applies access and security policies. It builds on the capabilities provided by Amazon S3 and
  AWS Glue.
 
- The TRE Source and TRE Target S3 buckets are registered as data lake locations.
-
- A predefined set of permissions is added to the Data lake permissions table.
+ The TRE Source and TRE Target S3 buckets are registered as data lake locations. Once S3 buckets
+ (or any other supported data sources) are registered with AWS Lake Formation, the service can be used to
+ provide fine-grained access to both the data catalogs and the underlying data being described by the catalog.
