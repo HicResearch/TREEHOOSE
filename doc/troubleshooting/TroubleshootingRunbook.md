@@ -28,7 +28,12 @@ Due to limitations from the EC2 service, there is a 60 seconds time window to co
  you cannot connect to the workspace from the AppStream instance if the countdown has expired, so make sure
  to return to the SWB website and repeat the *Use this SSH Key* procedure as many times as needed.
 
-![Troubleshooting SWB - 1](../../res/images/troubleshooting_runbook/Troubleshooting-SWB-1.png)
+![Troubleshooting SWB - 1A](../../res/images/troubleshooting_runbook/Troubleshooting-SWB-1A.png)
+
+For example, when attempting to log in to a workspace of type EC2 Linux, if the connection countdown has expired,
+you will receive this error when opening a SSH connection using Putty:
+
+![Troubleshooting SWB - 1B](../../res/images/troubleshooting_runbook/Troubleshooting-SWB-1B.png)
 
 ### Project Budget Controls
 
@@ -72,7 +77,7 @@ If a researcher notices that the SWB workspace creation takes a long time, they 
 
 ### S3 File Mounts
 
-SWB workspaces use S3 file mounts which come with some limitations.
+SWB workspaces use S3 file mounts which come with some limitations. `TODO`
 
 ## Egress Add-On Application
 
