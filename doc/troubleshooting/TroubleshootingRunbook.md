@@ -112,7 +112,7 @@ Below are some debugging steps which can be followed to identify an issue in the
     ![Troubleshooting Egress App - 4](../../res/images/troubleshooting_runbook/Troubleshooting-EgressApp-4.png)
 
 1. Below the graph inspector, the execution event history can be used to analyse a timestamped series of events
- from the workflow execution. If the failed stage would involve a Lambda function, the Lambda configurations (code,
+ from the workflow execution. If the failed stage involves a Lambda function, the Lambda configurations (code,
  permissions) and logs can be accessed by clicking on the associated links.
 
     ![Troubleshooting Egress App - 5](../../res/images/troubleshooting_runbook/Troubleshooting-EgressApp-5.png)
