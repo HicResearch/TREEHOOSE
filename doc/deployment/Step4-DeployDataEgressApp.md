@@ -5,7 +5,7 @@ Ensure all steps below are executed in AWS region: [London (eu-west-2)](https://
 If this add-on application is added, a researcher can use a GUI-based data egress approval workflow
  to take out data from the TRE with the permission of multiple parties (Information Governance Lead, Research IT).
 
-**Total time to deploy**: Approximately 30 minutes
+**Total time to deploy**: Approximately 35 minutes (without prerequisites)
 
 ## Prerequisites
 
@@ -28,14 +28,16 @@ To skip the need to manually add and verify each email address in Amazon SES, yo
 
 ## Step 4. Deploy Data Egress App
 
+**Time to deploy**: Approximately 35 minutes
+
+### Step 4A. Deploy backend infrastructure
+
 **Time to deploy**: Approximately 20 minutes
 
 Apply these steps only to accounts that are part of the **TRE Projects Prod** OU.
 
 Log in to the [AWS Management Console](https://console.aws.amazon.com/) using your **TRE Project 1 Prod**
  account and Admin privileges.
-
-### Step 4A. Deploy backend infrastructure
 
 - [ ] Edit file *cdk.json* in the `TODO` directory (Step 1C). Change the following required
  parameters for the CDK backend stack:
@@ -67,6 +69,11 @@ cdkv1 deploy
 ### Step 4B. Deploy web app
 
 **Time to deploy**: Approximately 10 minutes
+
+Apply these steps only to accounts that are part of the **TRE Projects Prod** OU.
+
+Log in to the [AWS Management Console](https://console.aws.amazon.com/) using your **TRE Project 1 Prod**
+ account and Admin privileges.
 
 - [ ] Edit file *.env.local* in the `TODO` directory (Step 1C). Change the following required
  parameters for the web application:
@@ -112,6 +119,10 @@ Verify the Amplify app has been updated automatically and the website is reachab
 ![Egress App Website](../../res/images/Status-EgressAppDeployed.png)
 
 ### Step 4C. Configure Egress App access to Data Lake
+
+**Time to deploy**: Approximately 5 minutes
+
+Apply these steps only to accounts that are part of the **TRE Data Prod** OU.
 
 Log in to the [AWS Management Console](https://console.aws.amazon.com/) using your **TRE Datalake 1 Prod**
  account and Admin privileges.
