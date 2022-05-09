@@ -6,8 +6,8 @@ The guidance below should help troubleshoot common issues identified in the TRE 
 
 ### Compute service limits
 
-Some services such as AWS Control Tower or Amazon AppStream 2.0 are affected by service limits usually
- affecting new AWS accounts. To fix these availability issues, you can try [launching and terminating at
+Some services such as AWS Control Tower or Amazon AppStream 2.0 have default service limits
+ which apply to new AWS accounts. To raise default service limits, you can try [launching and terminating at
  least one Amazon EC2 instance](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/LaunchingAndUsingInstances.html)
  (size of instance and run duration prior to termination do not matter).
 
