@@ -84,7 +84,7 @@ This section describes troubleshooting steps and tips for the egress workflow (S
 
 Below are some debugging steps which can be followed to identify an issue in the egress workflow.
  This includes any errors arising between the time the egress request submission button is clicked in SWB
- to the time the request has been egressed or rejected.
+ to the time the request has been approved or rejected.
 
 1. Identify the egress request ID which caused the issue. This should be done by visiting the
  [AWS StepFunctions](https://eu-west-2.console.aws.amazon.com/states/home?region=eu-west-2#/statemachines) service.
