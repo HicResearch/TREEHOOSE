@@ -50,7 +50,7 @@ To allow more workspaces to be created, a TRE administrator needs to:
 
 Limitations in SWB prevent changes to registered data studies. In some cases, selecting certain permissions could
 render the data study unusable. To be able to register the study again using different settings, a TRE administrator
- will need to delete some SWB resources in the AWS Management Console. **There is a risk of damaging the SWB environment
+ will need to delete some SWB resources in the AWS Management Console. **There is a risk of breaking the SWB environment
  if the wrong resources are deleted, therefore caution is advised.**
 
 To remove the data study with issues from the SWB website, follow the instructions below.
