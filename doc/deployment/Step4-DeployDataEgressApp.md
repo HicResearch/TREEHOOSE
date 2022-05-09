@@ -1,67 +1,44 @@
+# Secure Data Egress App Deployment
+
 Ensure all steps below are executed in AWS region: [London (eu-west-2)](https://eu-west-2.console.aws.amazon.com/).
 
-If this add-on application is added, a researcher can use a GUI-based data egress approval workflow to take out data from the TRE with the permission of multiple parties (Information Governance Lead, Research IT).
+If this add-on application is added, a researcher can use a GUI-based data egress approval workflow
+ to take out data from the TRE with the permission of multiple parties (Information Governance Lead, Research IT).
+
+**Total time to deploy**: Approximately 30 minutes
 
 ## Prerequisites
 
 Apply these prerequisites only to accounts that are part of the **TRE Projects Prod** OU.
 
-Log in to the [AWS Management Console](https://console.aws.amazon.com/) using your **TRE Project 1 Prod** account and Admin privileges.
+Log in to the [AWS Management Console](https://console.aws.amazon.com/) using your **TRE Project 1 Prod**
+ account and Admin privileges.
 
 ### Remove email restrictions
 
-By default, a new AWS account will be placed in the [Amazon SES](https://aws.amazon.com/ses/) sandbox which enforces a set of [restrictions](https://docs.aws.amazon.com/ses/latest/dg/request-production-access.html).
+By default, a new AWS account will be placed in the [Amazon SES](https://aws.amazon.com/ses/) sandbox
+ which enforces a set of [restrictions](https://docs.aws.amazon.com/ses/latest/dg/request-production-access.html).
 
-To enable the egress app to send email notifications to signed-up users (information governance leads, IT admins and researchers), an admin must manually add each user's email as a verified entity in SES. Following that, the user must confirm the subscription using a link received in an email.
+To enable the egress app to send email notifications to signed-up users (information governance leads,
+ IT admins and researchers), an admin must manually add each user's email as a verified entity in SES. Following
+ that, the user must confirm the subscription using a link received in an email.
 
-To skip the need to manually add and verify each email address in Amazon SES, you should request production access to SES by following these [instructions](https://docs.aws.amazon.com/ses/latest/dg/request-production-access.html).
+To skip the need to manually add and verify each email address in Amazon SES, you should request production
+ access to SES by following these [instructions](https://docs.aws.amazon.com/ses/latest/dg/request-production-access.html).
 
 ## Step 4. Deploy Data Egress App
 
-**Time to deploy**: Approximately ? minutes
+**Time to deploy**: Approximately 20 minutes
 
 Apply these steps only to accounts that are part of the **TRE Projects Prod** OU.
 
-Log in to the [AWS Management Console](https://console.aws.amazon.com/) using your **TRE Project 1 Prod** account and Admin privileges.
+Log in to the [AWS Management Console](https://console.aws.amazon.com/) using your **TRE Project 1 Prod**
+ account and Admin privileges.
 
-### Step 4A. Setup resources before deployment
+### Step 4A. Deploy backend infrastructure
 
-This step can be removed when we can download the code from the public repository later.
-
-#### Part 1. Create temporary resources
-
-- [ ] Go to Service: [AWS CloudFormation](https://eu-west-2.console.aws.amazon.com/cloudformation/home?region=eu-west-2#/)
-- [ ] Select the [*Stacks*](https://eu-west-2.console.aws.amazon.com/cloudformation/home?region=eu-west-2#/stacks) menu option on the left side
-- [ ] Press button: [*Create Stack* with new resources](https://eu-west-2.console.aws.amazon.com/cloudformation/home?region=eu-west-2#/stacks/create/template)
-- [ ] Select option *Upload a template file* to upload CloudFormation template file: [setup initial resources](../../src/secure_data_egress/ToBeRemoved-SetupTemporaryResources-Cfn.yaml) and press on button *Next*
-- [ ] Provide *Stack name*: "TRESecureEgressAppTempResources". Press on button *Next* twice and then press on button *Create stack*
-
-#### Part 2. Upload source code to S3 bucket
-
-- [ ] Go to Service: [Amazon S3](https://console.aws.amazon.com/s3/get-started?region=eu-west-2)
-- [ ] Select the [*Buckets*](https://console.aws.amazon.com/s3/buckets?region=eu-west-2) menu option on the left side
-- [ ] Select the S3 bucket created in Part 1 (check CloudFormation stack Outputs for resource names)
-- [ ] Upload each of the 2 folders (**secure-egress-backend** and **secure-egress-webapp** from `TO ADD`) using button "Add folder".
-
-### Step 4B. Log in to the EC2 instance
-
-- [ ] Follow these [instructions](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/session-manager.html) to learn how to connect via SSM to the EC2 instance created in Step 1.
-- [ ] Run the following command to log in and initialise your environment:
-```
-sudo -iu ec2-user
-```
-
-- [ ] Run the following commands to download the source code (temporarily using S3):
-```
-mkdir ~/egress-addon
-cd ~/egress-addon
-aws s3 cp s3://<bucket from Step 4A>/secure-egress-backend secure-egress-backend --recursive
-aws s3 cp s3://<bucket from Step 4A>/secure-egress-webapp secure-egress-webapp --recursive
-```
-
-### Step 4C. Deploy backend infrastructure
-
-- [ ] Edit file *cdk.json* in the **secure-egress-backend** directory. Change the following required parameters for the CDK backend stack:
+- [ ] Edit file *cdk.json* in the **secure-egress-backend** directory. Change the following required
+ parameters for the CDK backend stack:
 
 |Parameter Name|Description|Location|AWS Account|
 |:-----------------|:-----------|:-------------|:------------|
@@ -79,7 +56,8 @@ aws s3 cp s3://<bucket from Step 4A>/secure-egress-webapp secure-egress-webapp -
 |tre_admin_email_address|Provide a TRE admin email address that will need to be verified after deployment|To view verified identities after deployment of this CDK stack, go to service [Amazon SES](https://eu-west-2.console.aws.amazon.com/ses/home?region=eu-west-2#/verified-identities)| **TRE Project 1 Prod** account |
 
 - [ ] Run the following commands to create an isolated Python environment and deploy the CDK backend stack:
-```
+
+```bash
 cd ~/egress-addon/secure-egress-backend
 alias cdkv1="npx aws-cdk@1.154"
 python3 -m venv .venv
@@ -89,9 +67,12 @@ cdkv1 bootstrap aws://<<AWS_ACCOUNT_ID>>/<<AWS_REGION>> # TRE Project 1 Prod acc
 cdkv1 deploy
 ```
 
-### Step 4D. Deploy web app
+### Step 4B. Deploy web app
 
-- [ ] Edit file *.env.local* in the **secure-egress-webapp** directory. Change the following required parameters for the web application:
+**Time to deploy**: Approximately 10 minutes
+
+- [ ] Edit file *.env.local* in the **secure-egress-webapp** directory. Change the following required
+ parameters for the web application:
 
 |Parameter Name|Description|Location|AWS Account|
 |:-----------------|:-----------|:-------------|:------------|
@@ -105,7 +86,8 @@ cdkv1 deploy
 |REACT_APP_MAX_DOWNLOADS_ALLOWED|Provide same value as in cdk.json file edited in Step 4C for parameter *max_downloads_allowed* |Check [AWS CloudFormation](https://eu-west-2.console.aws.amazon.com/cloudformation/home?region=eu-west-2#/) *Outputs* tab for *Stack* "EgressAppBackend" and locate *MaxDownloadsAllowed*| **TRE Project 1 Prod** account |
 
 - [ ] Run the following commands to build the React frontend code:
-```
+
+```bash
 cd ~/egress-addon/secure-egress-webapp
 nvm install v16.15.0
 nvm use v16.15.0
@@ -113,8 +95,10 @@ npm install
 npm run build
 ```
 
-- [ ] Run the following commands to copy the packaged React app to S3 and trigger an automatic deployment to Amplify:
-```
+- [ ] Run the following commands to copy the packaged React app to S3 and trigger an automatic
+ deployment to Amplify:
+
+```bash
 cd ~/egress-addon/secure-egress-webapp/build
 zip -r ../build.zip ./
 cd ~/egress-addon/secure-egress-webapp
@@ -122,9 +106,14 @@ aws s3 cp build.zip s3://<bucket from Step 4C>
 ```
 
 Verify the Amplify app has been updated automatically and the website is reachable:
+
 - [ ] Go to Service: [AWS Amplify](https://eu-west-2.console.aws.amazon.com/amplify/home?region=eu-west-2#/)
 - [ ] Select the app and branch created in Step 4A
 - [ ] Confirm the status in the app branch is: *Deployment successfully completed.*
 - [ ] Open the URL from *Domain* and confirm a login prompt appears like in the image below
 
 ![Egress App Website](../../res/images/Status-EgressAppDeployed.png)
+
+### Step 4C. Configure Data Lake Access
+
+`TODO`
