@@ -37,7 +37,7 @@ Log in to the [AWS Management Console](https://console.aws.amazon.com/) using yo
 
 ### Step 4A. Deploy backend infrastructure
 
-- [ ] Edit file *cdk.json* in the **secure-egress-backend** directory. Change the following required
+- [ ] Edit file *cdk.json* in the `TODO` directory (Step 1C). Change the following required
  parameters for the CDK backend stack:
 
 |Parameter Name|Description|Location|AWS Account|
@@ -68,7 +68,7 @@ cdkv1 deploy
 
 **Time to deploy**: Approximately 10 minutes
 
-- [ ] Edit file *.env.local* in the **secure-egress-webapp** directory. Change the following required
+- [ ] Edit file *.env.local* in the `TODO` directory (Step 1C). Change the following required
  parameters for the web application:
 
 |Parameter Name|Description|Location|AWS Account|
