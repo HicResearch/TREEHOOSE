@@ -24,12 +24,12 @@ There are 5 S3 buckets created:
     * Used by the Egress Addon web application
 
 1. TRE Analyst Bucket
-    * A data analyst can run queries using Amazon Athena on the data and
-    store query results here
+    * A data analyst can run queries using [Amazon Athena](https://aws.amazon.com/athena)
+    on the data and store query results here
 
 1. TRE Lake Admin Bucket
-    * A data lake administrator can run queries using Amazon Athena on the data and
-    store query results here
+    * A data lake administrator can run queries using [Amazon Athena](https://aws.amazon.com/athena)
+    on the data and store query results here
 
 1. TRE Access Logs Bucket
     * S3 access logging destination for the other buckets
