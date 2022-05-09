@@ -55,7 +55,7 @@ Log in to the [AWS Management Console](https://console.aws.amazon.com/) using yo
 - [ ] Run the following commands to create an isolated Python environment and deploy the CDK backend stack:
 
 ```bash
-cd ~/egress-addon/secure-egress-backend
+cd `TODO`
 alias cdkv1="npx aws-cdk@1.154"
 python3 -m venv .venv
 source .venv/bin/activate
@@ -85,7 +85,7 @@ cdkv1 deploy
 - [ ] Run the following commands to build the React frontend code:
 
 ```bash
-cd ~/egress-addon/secure-egress-webapp
+cd `TODO`
 nvm install v16.15.0
 nvm use v16.15.0
 npm install
@@ -96,7 +96,7 @@ npm run build
  deployment to Amplify:
 
 ```bash
-cd ~/egress-addon/secure-egress-webapp/build
+cd `TODO`/build
 zip -r ../build.zip ./
 cd ~/egress-addon/secure-egress-webapp
 aws s3 cp build.zip s3://<bucket from Step 4C>
