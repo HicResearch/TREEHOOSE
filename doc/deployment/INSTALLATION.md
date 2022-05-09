@@ -24,7 +24,7 @@ Follow these [instructions](./Step2-DeployServiceWorkbench.md) to install the Se
 
 ### Step 3. Create Data Lake
 
-Follow these [instructions](././Step3-CreateDataLake.md) to create a data lake environment.
+Follow these [instructions](./Step3-CreateDataLake.md) to create a data lake environment.
 
 ### Step 4. Deploy Data Egress App
 
