@@ -79,7 +79,9 @@ If a researcher notices that the SWB workspace creation takes a long time, they 
 
 ### S3 File Mounts
 
-SWB workspaces use S3 file mounts which come with some limitations. `TODO`
+SWB workspaces use S3 file mounts which come with some limitations described in the
+ [official SWB guide](https://github.com/awslabs/service-workbench-on-aws/blob/v5.1.1/docs/Service_Workbench_User_Guide.pdf),
+ pages 13-14.
 
 ## Egress Add-On Application
 
