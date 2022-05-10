@@ -134,7 +134,9 @@ Log in to the [AWS Management Console](https://console.aws.amazon.com/) using yo
 - [ ] Press button *Update*
 - [ ] Select option *Use current template* and press on button *Next*
 - [ ] Change parameter *EgressAppDomainName* with the Amplify domain name generated in Step 4A
- (e.g. <https://{branch}.{app_id}.amplifyapp.com>). `TODO`: create CFN output in the backend stack to provide guidance
- on how to obtain the domain name
+ (e.g. <https://{branch}.{app_id}.amplifyapp.com>).
+ The value can be retrieved from the **TRE Project 1 Prod** AWS account, by checking the
+ [AWS CloudFormation](https://eu-west-2.console.aws.amazon.com/cloudformation/home?region=eu-west-2#/)
+ Outputs tab for Stack "EgressAppBackend" and locating *EgressAppURL*
 - [ ] Press on button *Next* twice and then press on button *Update stack*
 - [ ] Confirm the stack status is "UPDATE_COMPLETE"
