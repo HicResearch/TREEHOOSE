@@ -64,9 +64,11 @@ Log in to the [AWS Management Console](https://console.aws.amazon.com/) using yo
 
 - [ ] Go to Service: [Amazon DynamoDB](https://eu-west-2.console.aws.amazon.com/dynamodbv2/home?region=eu-west-2#service)
 - [ ] Select the [*Tables*](https://eu-west-2.console.aws.amazon.com/dynamodbv2/home?region=eu-west-2#tables) menu option on the left side
-- [ ] Locate the data study (with the name provided when it was registered in SWB) in DynamoDB table *treprod-ldn-pj1-Studies*
+- [ ] Locate the data study (with the name provided when it was registered in SWB) in DynamoDB table *treprod-ldn-pj1-Studies* (please note
+ the table name differs based on the SWB config file details provided in [deployment Step 2C](../deployment/Step2-DeployServiceWorkbench.md))
  and delete the item/row
-- [ ] If required, also locate the bucket name (the data study's source reference) in DynamoDB table *treprod-ldn-pj1-DsAccounts*
+- [ ] If required, also locate the bucket name (the data study's source reference) in DynamoDB table *treprod-ldn-pj1-DsAccounts* (please note
+ the table name differs based on the SWB config file details provided in [deployment Step 2C](../deployment/Step2-DeployServiceWorkbench.md))
  and delete the item/row
 
 You can now try registering the data study again in SWB.
