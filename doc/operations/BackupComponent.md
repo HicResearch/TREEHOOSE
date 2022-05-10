@@ -17,7 +17,7 @@ of backups will be added.
 The below steps provide an illustration of enabling
 backups for a workspace.
 
-1. Login to the TRE Web App as a TRE admin.
+1. Login to the SWB (Service Workbench) Web App as a TRE admin.
 
 1. Navigate to `Workspace Types`
 
@@ -54,7 +54,7 @@ an EBS can be restored, this guide only explain restoring
 EBS by replacing it on the Workspace.
 
 1. The workspace that needs to be restored must be in stopped state.
-   This can be done by Researcher or Admin from the TRE Web App.
+   This can be done by Researcher or Admin from the SWB Web App.
 1. TRE Admin should have the workspace instance id handy for completing these steps.
 1. Log in to the [AWS Management Console](https://console.aws.amazon.com/)
    of the TRE account using Admin privileges.

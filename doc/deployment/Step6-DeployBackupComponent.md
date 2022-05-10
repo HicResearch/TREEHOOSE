@@ -73,7 +73,7 @@ this functionality.
 
 ### Validating EBS volume backups
 
-1. Login into the TRE Web App as an Admin.
+1. Login into the SWB (Service Workbench) Web App as an Admin.
    Navigate to `Workspaces`. In  the list of
    all Available and Stopped workspaces check for a workspace
    based on EC2 and has been created using a configuration
@@ -102,7 +102,7 @@ this functionality.
 
 ### Validating SageMaker Notebook backups
 
-1. Login into the TRE Web App as an Admin.
+1. Login into the SWB Web App as an Admin.
    Navigate to `Workspaces`. In  the list of
    all Available and Stopped workspaces check for a workspace
    based on SageMaker Notebook and has been created using a configuration
