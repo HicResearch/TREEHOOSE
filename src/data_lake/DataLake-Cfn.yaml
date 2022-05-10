@@ -862,3 +862,11 @@ Outputs:
   TRESourceBucketKMSKeyArn:
     Value: !GetAtt TRESourceBucketKMSKey.Arn
     Description: "TRE Data Lake Source Bucket KMS Key"
+
+  TREAccessLogsBucketArn:
+    Value: !GetAtt TREAccessLogsBucket.Arn
+    Description: "TRE Data Lake Access Logs Bucket"
+
+  TREAccessLogsBucketKMSKeyArn:
+    Value: !GetAtt TREAccessLogsBucketKMSKey.Arn
+    Description: "TRE Data Lake Access Logs Bucket KMS Key"
