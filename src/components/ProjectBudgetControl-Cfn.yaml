@@ -182,20 +182,20 @@ Resources:
 
   TREProjectBudgetAction:
     Type: AWS::Budgets::BudgetsAction
-    Properties: 
+    Properties:
       ActionThreshold:
         Type: PERCENTAGE
         Value: !Ref ActionThreshold
       ActionType: APPLY_IAM_POLICY
       ApprovalModel: AUTOMATIC
       BudgetName: !Ref TREProjectBudget
-      Definition: 
-        IamActionDefinition: 
+      Definition:
+        IamActionDefinition:
           PolicyArn: !Ref 'DenyCreateWorkSpacePolicy'
           Roles:
             - !Sub "initial-stack-${SWBStackID}-xacc-env-mgmt"
       ExecutionRoleArn: !GetAtt AWSBudgetsExecutionRole.Arn
       NotificationType: ACTUAL
-      Subscribers: 
+      Subscribers:
         - Type: SNS
           Address: !Ref BudgetNotifySNS

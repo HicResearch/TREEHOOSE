@@ -55,22 +55,27 @@ Some resources in this template have IAM policies attached to control access or 
 There are 5 IAM roles created:
 
 1. TREAdminRole
-    * Has PowerUser access
-    * Can manage KMS keys but cannot use the keys
+
+* Has PowerUser access
+* Can manage KMS keys but cannot use the keys
 
 1. TREDataAnalystRole
-    * Can read data in the TRE Source Bucket and execute Amazon Athena queries
-    * Can put query results in the TRE Analyst Bucket
+
+* Can read data in the TRE Source Bucket and execute Amazon Athena queries
+* Can put query results in the TRE Analyst Bucket
 
 1. TREDataLakeAdminRole
-    * The designated Lake Formation administrator with full access to the Data Lake
-    * Can use KMS keys but cannot manage or perform administrative tasks on KMS keys
 
-1. TRELFRegisterLocationServiceRole
-    * Needed to register TRE Source Bucket and TRE Target Bucket with AWS Lake Formation
+* The designated Lake Formation administrator with full access to the Data Lake
+* Can use KMS keys but cannot manage or perform administrative tasks on KMS keys
+
+1 TRELFRegisterLocationServiceRole
+
+* Needed to register TRE Source Bucket and TRE Target Bucket with AWS Lake Formation
 
 1. TREGlueRole
-    * Role used by AWS Glue for Glue jobs and crawlers
+
+* Role used by AWS Glue for Glue jobs and crawlers
 
 ### AWS Key Management Service (KMS)
 

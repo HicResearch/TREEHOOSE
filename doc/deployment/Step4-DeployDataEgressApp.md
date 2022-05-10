@@ -80,10 +80,10 @@ Log in to the [AWS Management Console](https://console.aws.amazon.com/) using yo
 
 |Parameter Name|Description|Location|AWS Account|
 |:-----------------|:-----------|:-------------|:------------|
-|REACT_APP_APPSYNC_API|Provide resource created in Step 4A - Egress API URL (e.g. "https://.../graphql) |Check [AWS CloudFormation](https://eu-west-2.console.aws.amazon.com/cloudformation/home?region=eu-west-2#/) *Outputs* tab for *Stack* "EgressAppBackend" and locate *AppSyncGraphQLURL* or go to [AWS AppSync APIs](https://eu-west-2.console.aws.amazon.com/appsync/home?region=eu-west-2#/apis) -> Select the API created -> *Settings* -> *API URL* | **TRE Project 1 Prod** account |
+|REACT_APP_APPSYNC_API|Provide resource created in Step 4A - Egress API URL (e.g. "<https://.../graphql>) |Check [AWS CloudFormation](https://eu-west-2.console.aws.amazon.com/cloudformation/home?region=eu-west-2#/) *Outputs* tab for *Stack* "EgressAppBackend" and locate *AppSyncGraphQLURL* or go to [AWS AppSync APIs](https://eu-west-2.console.aws.amazon.com/appsync/home?region=eu-west-2#/apis) -> Select the API created -> *Settings* -> *API URL* | **TRE Project 1 Prod** account |
 |REACT_APP_USER_POOL_CLIENT_ID|Provide resource created in Step 4A - App Client Id |Check [AWS CloudFormation](https://eu-west-2.console.aws.amazon.com/cloudformation/home?region=eu-west-2#/) *Outputs* tab for *Stack* "EgressAppBackend" and locate *CognitoAppClientId* or go to [Amazon Cognito Pools](https://eu-west-2.console.aws.amazon.com/cognito/users/?region=eu-west-2#) -> Select the User Pool created -> Under *General settings* -> *App clients* -> *App client id* | **TRE Project 1 Prod** account |
 |REACT_APP_USER_POOL_ID|Provide resource created in Step 4A - User Pool Id |Check [AWS CloudFormation](https://eu-west-2.console.aws.amazon.com/cloudformation/home?region=eu-west-2#/) *Outputs* tab for *Stack* "EgressAppBackend" and locate *CognitoUserPoolId* or go to [Amazon Cognito Pools](https://eu-west-2.console.aws.amazon.com/cognito/users/?region=eu-west-2#) -> *General settings* -> *Pool Id* | **TRE Project 1 Prod** account |
-|REACT_APP_USER_POOL_DOMAIN|Provide resource created in Step 4A - User Pool Domain Name (e.g. <cognito_userpool_domain>.auth.eu-west-2.amazoncognito.com) |Check [AWS CloudFormation](https://eu-west-2.console.aws.amazon.com/cloudformation/home?region=eu-west-2#/) *Outputs* tab for *Stack* "EgressAppBackend" and locate *CognitoUserPoolDomain* or go to [Amazon Cognito Pools](https://eu-west-2.console.aws.amazon.com/cognito/users/?region=eu-west-2#) -> Under *App integration* -> *Domain name* | **TRE Project 1 Prod** account |
+|REACT_APP_USER_POOL_DOMAIN|Provide resource created in Step 4A - User Pool Domain Name (e.g. {cognito_userpool_domain}.auth.eu-west-2.amazoncognito.com) |Check [AWS CloudFormation](https://eu-west-2.console.aws.amazon.com/cloudformation/home?region=eu-west-2#/) *Outputs* tab for *Stack* "EgressAppBackend" and locate *CognitoUserPoolDomain* or go to [Amazon Cognito Pools](https://eu-west-2.console.aws.amazon.com/cognito/users/?region=eu-west-2#) -> Under *App integration* -> *Domain name* | **TRE Project 1 Prod** account |
 |REACT_APP_REGION|Provide current AWS Region (i.e. eu-west-2)|NA| **TRE Project 1 Prod** account |
 |REACT_APP_EGRESS_IG_ROLE|Provide same value as in cdk.json file edited in Step 4A for parameter *egress_reviewer_roles* - value 1|Check [AWS CloudFormation](https://eu-west-2.console.aws.amazon.com/cloudformation/home?region=eu-west-2#/) *Outputs* tab for *Stack* "EgressAppBackend" and locate *EgressReviewerRole1*| **TRE Project 1 Prod** account |
 |REACT_APP_EGRESS_RIT_ROLE|Provide same value as in cdk.json file edited in Step 4A for parameter *egress_reviewer_roles* - value 2|Check [AWS CloudFormation](https://eu-west-2.console.aws.amazon.com/cloudformation/home?region=eu-west-2#/) *Outputs* tab for *Stack* "EgressAppBackend" and locate *EgressReviewerRole2*| **TRE Project 1 Prod** account |
@@ -106,7 +106,7 @@ npm run build
 cd `TODO`/build
 zip -r ../build.zip ./
 cd ~/egress-addon/secure-egress-webapp
-aws s3 cp build.zip s3://<bucket from Step 4C>
+aws s3 cp build.zip s3://{bucket from Step 4C}
 ```
 
 Verify the Amplify app has been updated automatically and the website is reachable:
@@ -134,7 +134,7 @@ Log in to the [AWS Management Console](https://console.aws.amazon.com/) using yo
 - [ ] Press button *Update*
 - [ ] Select option *Use current template* and press on button *Next*
 - [ ] Change parameter *EgressAppDomainName* with the Amplify domain name generated in Step 4A
- (e.g. https://<branch>.<app_id>.amplifyapp.com). `TODO`: create CFN output in the backend stack to provide guidance
+ (e.g. <https://{branch}.{app_id}.amplifyapp.com>). `TODO`: create CFN output in the backend stack to provide guidance
  on how to obtain the domain name
 - [ ] Press on button *Next* twice and then press on button *Update stack*
 - [ ] Confirm the stack status is "UPDATE_COMPLETE"

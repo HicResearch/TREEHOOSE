@@ -7,7 +7,9 @@ In practice a user may have multiple roles.
 
 IT administrators oversee the deployment and configuration of TREEHOOSE, and manage all ongoing technical aspects. Ideally this will be done by a team of people.
 
-Administrators are assumed to have a working knowledge of all governance requirements for running a trusted research environment, such as knowledge of data protection rules, how data is managed within the organisation, and how access to use or modify data is governed.
+Administrators are assumed to have a working knowledge of all governance requirements
+for running a trusted research environment, such as knowledge of data protection rules,
+how data is managed within the organisation, and how access to use or modify data is governed.
 This is outside the scope of the TREEHOOSE documentation.
 
 Advanced knowledge of AWS is not required, but they should be comfortable with managing complex compute infrastructure on-prem or in another cloud.
@@ -18,12 +20,16 @@ Over time they should seek to develop their knowledge of AWS to support users an
 ## Researchers
 
 Researchers use TREEHOOSE to access confidential data that must not be removed from a secure environment.
-TREEHOOSE provides researchers with a virtual compute environment with the tools needed to process data, and generate outputs that can be removed from the TRE following an approval process.
+TREEHOOSE provides researchers with a virtual compute environment with the tools
+needed to process data, and generate outputs that can be removed from the TRE following an approval process.
 
-The environment is designed to reduce the possibility of unauthorised removal of data from the TRE, for example by blocking outbound network traffic.
+The environment is designed to reduce the possibility of unauthorised removal of
+data from the TRE, for example by blocking outbound network traffic.
 It is suitable for researchers who want to use standard research tools from their field, but who have no cloud experience.
 
-Researchers with more technical compute experience have the option of accessing potentially unlimited scaleable compute resources, including AWS services for handling big data and machine learning, if configured by a TREEHOOSE administrator.
+Researchers with more technical compute experience have the option of accessing
+potentially unlimited scaleable compute resources, including AWS services for
+handling big data and machine learning, if configured by a TREEHOOSE administrator.
 
 ## Data Lake Manager
 

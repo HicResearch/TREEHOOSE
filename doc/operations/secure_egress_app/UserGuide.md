@@ -1,4 +1,7 @@
+# User Guide
+
 There are 2 types of reviewer personas involved in the Egress App workflow:
+
 1. Information Governance Leads
     - uses a SWB user account of type researcher to create a new workspace to view the contents of the data egress request
     - uses an Egress App user account to provide the 1st approval for a data egress request
@@ -66,7 +69,8 @@ There are 2 types of reviewer personas involved in the Egress App workflow:
 
     ![Egress App Workflow - 14](../../../res/images/secure_egress_app/UserGuide-Workflow-14.png)
 
-1. In the Egress Web App, the Information Governance Lead can download the egress request file contents. The number of times a download is allowed is constrained by a parameter set during the Egress App deployment stage.
+1. In the Egress Web App, the Information Governance Lead can download the egress request file contents.
+   The number of times a download is allowed is constrained by a parameter set during the Egress App deployment stage.
 
     ![Egress App Workflow - 15](../../../res/images/secure_egress_app/UserGuide-Workflow-15.png)
 

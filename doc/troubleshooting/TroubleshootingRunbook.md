@@ -129,13 +129,13 @@ Below are some debugging steps which can be followed to identify an issue in the
 1. If the root cause has still not been identified with a Lambda function, further analysis through CloudWatch logs
  can be performed. Use the link in the execution event history to access the Lambda log group.
 
-    - Click on the '__Search all__' button and use the '__filter events__' input
-    - Pass the __Egress Request ID__ in double quotes and search for
-      - e.g. "b0d2aa37-f0b7-4898-98a2-e1d588a2a447"
-    - Expand one of the returned event messages to retrieve the __function_request_id__
-    - Pass the __function_request_id__ in double quotes and search for
-      - e.g. "f7f57dbb-2b1e-43c8-817d-b56a193d785a"
-    - Click on any of the log stream names in the returned event messages
+- Click on the '**Search all**' button and use the '**filter events**' input
+- Pass the **Egress Request ID** in double quotes and search for
+  - e.g. "b0d2aa37-f0b7-4898-98a2-e1d588a2a447"
+- Expand one of the returned event messages to retrieve the **function_request_id**
+- Pass the **function_request_id** in double quotes and search for
+  - e.g. "f7f57dbb-2b1e-43c8-817d-b56a193d785a"
+- Click on any of the log stream names in the returned event messages
 
     This will display all timestamped log messages output by the Lambda function during execution. All messages will
  be associated with the specified egress request ID.
@@ -156,8 +156,9 @@ The use of a task token has a side-effect that an egress request can only be upd
  If something were to go wrong in the workflow after the user has made their decision in the front-end, it would
  not be possible for them to save their decision again. If they tried to do so, they would get a `Null...coerced...` error.
  One way of getting around this without needing the researcher to resubmit their egress request again is to do the following:
-  * In the [AWS Step Functions](https://eu-west-2.console.aws.amazon.com/states/home?region=eu-west-2#/statemachines) service,
+
+- In the [AWS Step Functions](https://eu-west-2.console.aws.amazon.com/states/home?region=eu-west-2#/statemachines) service,
   identify and select the execution that has the issue
-  * Once inside the chosen execution, click the __New Execution__ button. This will clone the existing
+- Once inside the chosen execution, click the **New Execution** button. This will clone the existing
   execution into a new one whilst keeping the same egress request ID
-  * The egress request will be reset back to the **PENDING** state in the Egress App
+- The egress request will be reset back to the **PENDING** state in the Egress App

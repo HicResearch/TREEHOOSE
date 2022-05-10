@@ -28,7 +28,8 @@ Locate the CloudFormation stack deployed in Step 3 and delete it by following th
 
 ServiceWorkbench was deployed in Step 2.
 
-Follow the official [instructions](https://github.com/awslabs/service-workbench-on-aws/blob/mainline/docs/Service_Workbench_Installation_Guide.pdf.) provided by the ServiceWorkbench team to delete the associated resources.
+Follow the official [instructions](https://github.com/awslabs/service-workbench-on-aws/blob/mainline/docs/Service_Workbench_Installation_Guide.pdf.)
+provided by the ServiceWorkbench team to delete the associated resources.
 
 ### Delete the Deployment Instance
 

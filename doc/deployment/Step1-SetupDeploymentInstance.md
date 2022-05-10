@@ -1,3 +1,5 @@
+# Deployment Instance
+
 Ensure all steps below are executed in AWS region:
  [London (eu-west-2)](https://eu-west-2.console.aws.amazon.com/).
 
@@ -25,14 +27,16 @@ Log in to the [AWS Management Console](https://console.aws.amazon.com/) using yo
 - [ ] Follow these [instructions](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/session-manager.html)
  to learn how to connect via SSM to the EC2 instance created in Step 1A.
 - [ ] Run the following command to initialise your environment:
-```
+
+```shell
 sudo -iu ec2-user
 ```
 
 ### Step 1C. Download TREEHOOSE TRE
 
 - [ ] Run the following commands to get a copy of the TREEHOOSE TRE open-source repository:
-```
+
+```shell
 cd /home/ec2-user/tmp
 `TODO`
 ```

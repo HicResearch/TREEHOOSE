@@ -1,8 +1,12 @@
 # Deployment
 
-The TREEHOOSE TRE solution has only been tested in AWS region [London (eu-west-2)](https://eu-west-2.console.aws.amazon.com/). We cannot guarantee the solution or instructions provided will work in other regions and additional work might be required to enable use of other regions.
+The TREEHOOSE TRE solution has only been tested in AWS region [London (eu-west-2)](https://eu-west-2.console.aws.amazon.com/).
+We cannot guarantee the solution or instructions provided will work in other regions and additional work might be required to enable use of other regions.
 
-Please note that most of the deployment instructions will mention the AWS region [London (eu-west-2)](https://eu-west-2.console.aws.amazon.com/). However, when accessing certain global AWS services such as [IAM](https://us-east-1.console.aws.amazon.com/iamv2/home?region=us-east-1#/home), you will be redirected to another AWS region such as North Virginia (us-east-1). Please ensure you switch back to the correct region after the redirect.
+Please note that most of the deployment instructions will mention the AWS region [London (eu-west-2)](https://eu-west-2.console.aws.amazon.com/).
+However, when accessing certain global AWS services such as [IAM](https://us-east-1.console.aws.amazon.com/iamv2/home?region=us-east-1#/home),
+you will be redirected to another AWS region such as North Virginia (us-east-1).
+Please ensure you switch back to the correct region after the redirect.
 
 ---
 
@@ -30,9 +34,11 @@ The TREEHOOSE TRE uses the **ServiceWorkbench** open-source software as the core
 
 ---
 
-Some of the required tools with be installed automatically on the EC2 instance deployed in [Step 1 - Setup Deployment Instance](./Step1-SetupDeploymentInstance.md), while other tools will be installed during the deployment steps.
+Some of the required tools with be installed automatically on the EC2 instance deployed in [Step 1 - Setup Deployment Instance](./Step1-SetupDeploymentInstance.md),
+while other tools will be installed during the deployment steps.
 
 The main packages used are:
+
 - aws cli
 - aws cdk
 - git
@@ -44,13 +50,14 @@ The main packages used are:
 - serverless
 - packer
 
-Please note some of the dependencies like the nvm package will be downloaded from external repositories (e.g. GitHub). Any package management requirements such as availability and security will need to be covered by the TREEHOOSE solution user.
+Please note some of the dependencies like the nvm package will be downloaded from external repositories (e.g. GitHub).
+Any package management requirements such as availability and security will need to be covered by the TREEHOOSE solution user.
 
 ## Source code
 
 ---
 
-| Component |Name                     | Source code location  | 
+| Component |Name                     | Source code location  |
 |:---------:|:------------------------|:-----------------------------------|
 | 1         | ServiceWorkbench | [Official Open-Source Repository](https://github.com/awslabs/service-workbench-on-aws/releases/tag/v5.1.1) |
 | 2         | Data Lake | [CloudFormation Template](../../src/data_lake/DataLake-Cfn.yaml) |
