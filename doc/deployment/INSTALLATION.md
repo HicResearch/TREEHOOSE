@@ -51,3 +51,8 @@ Ensure you can access the SWB website deployed in Step 2.
 ### Secure Data Egress web application
 
 Ensure you can access the Amplify app deployed in Prerequisites.
+
+### Workspace backups
+
+Follow the [verification steps](./Step6-DeployBackupComponent.md#step-6c-validating-workspace-backups) in the
+deployment guide.
