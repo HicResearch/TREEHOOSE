@@ -105,11 +105,6 @@ class EgressBackendStack(cdk.Stack):
             layer_version_arn=self.node.try_get_context(env_id).get("powertools_lambda_layer_arn")
         )
 
-        # Variable for the egress app URL.
-        egress_app_url = self.node.try_get_context(env_id).get("egress_app_url")
-        egress_app_id = self.node.try_get_context(env_id).get("egress_app_id")
-        egress_app_branch = self.node.try_get_context(env_id).get("egress_app_branch")
-
         # Variable for TRE admin email address
         tre_admin_email_address = self.node.try_get_context(env_id).get("tre_admin_email_address")
 
@@ -284,6 +279,15 @@ class EgressBackendStack(cdk.Stack):
         for tag_key, tag_value in self.node.try_get_context(env_id)["dataset"].items():
             Tags.of(egress_staging_bucket).add(tag_key, tag_value)
 
+        # Add Amplify App
+        amplify_branch_name = "main"
+        amplify_app = amplify.App(
+            self,
+            'EgressFrontendApp'
+        )
+        amplify_branch = amplify_app.add_branch(amplify_branch_name)
+        egress_app_url = f"https://{amplify_branch_name}.{amplify_app.app_id}.amplifyapp.com"
+
         # Add Egress Web App Bucket
         egress_webapp_bucket = s3.Bucket(
             self,
@@ -344,8 +348,8 @@ class EgressBackendStack(cdk.Stack):
             timeout=Duration.seconds(60),
             environment={
                 "EGRESS_WEBAPP_BUCKET_NAME": egress_webapp_bucket.bucket_name,
-                "EGRESS_WEBAPP_ID": egress_app_id,
-                "EGRESS_WEBAPP_BRANCH": egress_app_branch,
+                "EGRESS_WEBAPP_ID": amplify_app.app_id,
+                "EGRESS_WEBAPP_BRANCH": amplify_branch_name,
                 "REGION": self.region
             }
         )

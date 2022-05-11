@@ -30,10 +30,7 @@
       "efs_mount_path": "/mnt/egress",
       "cognito_userpool_domain": "<<COGNITO_DOMAIN_TO_BE_CREATED>>",
       "max_downloads_allowed": "1",
-      "tre_admin_email_address": "<<TRE_ADMIN_EMAIL_TO_BE_VERIFIED>>",
-      "egress_app_url": "<<AMPLIFY_APP_URL>>",
-      "egress_app_id": "<<AMPLIFY_APP_ID>>",
-      "egress_app_branch": "<<AMPLIFY_APP_BRANCH>>"
+      "tre_admin_email_address": "<<TRE_ADMIN_EMAIL_TO_BE_VERIFIED>>"
     },
     "base": {
       "ses_configuration_set_name": "egress_app_configuration_set_"
