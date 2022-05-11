@@ -1595,3 +1595,10 @@ class EgressBackendStack(cdk.Stack):
             value=f'{self.node.try_get_context(env_id).get("cognito_userpool_domain")}.auth.{self.region}.amazoncognito.com',
             description="The domain name for the Cognito User Pool created."
         )
+
+        cdk.CfnOutput(
+            self,
+            "EgressWebAppS3BucketName",
+            value=egress_webapp_bucket.bucket_name,
+            description="The name for the S3 bucket created to host the packaged frontend app."
+        )
