@@ -117,26 +117,3 @@ Verify the Amplify app has been updated automatically and the website is reachab
 - [ ] Open the URL from *Domain* and confirm a login prompt appears like in the image below
 
 ![Egress App Website](../../res/images/Status-EgressAppDeployed.png)
-
-### Step 4C. Configure Egress App access to Data Lake
-
-**Time to deploy**: Approximately 5 minutes
-
-Apply these steps only to accounts that are part of the **TRE Data Prod** OU.
-
-Log in to the [AWS Management Console](https://console.aws.amazon.com/) using your **TRE Datalake 1 Prod**
- account and Admin privileges.
-
-- [ ] Go to Service: [AWS CloudFormation](https://eu-west-2.console.aws.amazon.com/cloudformation/home?region=eu-west-2#/)
-- [ ] Select the [*Stacks*](https://eu-west-2.console.aws.amazon.com/cloudformation/home?region=eu-west-2#/stacks)
- menu option on the left side
-- [ ] Locate and select the Stack created in Step 3
-- [ ] Press button *Update*
-- [ ] Select option *Use current template* and press on button *Next*
-- [ ] Change parameter *EgressAppDomainName* with the Amplify domain name generated in Step 4A
- (e.g. <https://{branch}.{app_id}.amplifyapp.com>).
- The value can be retrieved from the **TRE Project 1 Prod** AWS account, by checking the
- [AWS CloudFormation](https://eu-west-2.console.aws.amazon.com/cloudformation/home?region=eu-west-2#/)
- Outputs tab for Stack "EgressAppBackend" and locating *EgressAppURL*
-- [ ] Press on button *Next* twice and then press on button *Update stack*
-- [ ] Confirm the stack status is "UPDATE_COMPLETE"
