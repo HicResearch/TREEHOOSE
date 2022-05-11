@@ -107,15 +107,22 @@ npm install
 npm run build
 ```
 
-- [ ] Run the following commands to copy the packaged React app to S3 and trigger an automatic
- deployment to Amplify:
+- [ ] Run the following commands to build the React app:
 
 ```bash
 cd `TODO`/build
 zip -r ../build.zip ./
-cd `TODO`
-aws s3 cp build.zip s3://{egress web app deploy bucket created in Step 4B}
 ```
+
+- [ ] Run the following commands to copy the React app to S3 and trigger an automatic
+ deployment to Amplify:
+
+```bash
+cd `TODO`
+aws s3 cp build.zip s3://{egress web app bucket created in Step 4B}
+```
+
+To find the egress web app bucket name, you can check - using the **TRE Project 1 Prod** account - the [AWS CloudFormation](https://eu-west-2.console.aws.amazon.com/cloudformation/home?region=eu-west-2#/) *Outputs* tab for *Stack* "EgressAppBackend" and locate *EgressWebAppS3BucketName*
 
 Verify the Amplify app has been updated automatically and the website is reachable:
 
