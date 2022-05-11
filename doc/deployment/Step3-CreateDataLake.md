@@ -23,7 +23,6 @@ Log in to the [AWS Management Console](https://console.aws.amazon.com/) using yo
 
 |Parameter Name|Description|Default value|
 |-----------------|-----------|-------------|
-|EgressAppDomainName|Egress app domain name as allowed origin for CORS configuration attached to TRETargetBucket (e.g. <https://{branch}.{app_id}.amplifyapp.com>). Required only after the egress app is deployed.|*Default is empty (no CORS origin policy applied)*|
 |EgressAppAccount|Account number which is hosting the Egress add-on application (Add **TRE Project 1 Prod** account number)|*No default - must be specified*|
 |LFDatabaseName|Lake Formation database name that will be created|*No default - must be specified*|
 
