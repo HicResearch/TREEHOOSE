@@ -50,7 +50,7 @@ Ensure you can access the SWB website deployed in Step 2.
 
 ### Secure Data Egress web application
 
-Ensure you can access the Amplify app deployed in Prerequisites.
+Ensure you can access the Amplify app deployed in Step 4.
 
 ### Workspace backups
 
