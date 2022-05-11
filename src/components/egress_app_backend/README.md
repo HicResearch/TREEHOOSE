@@ -149,9 +149,9 @@ AWS Lambda function that is subscribed to a SWB-managed SNS topic in order to re
   * Step Function choice task which parses the status of the request as received from the frontend API call in the previous task to determine
   if the request was **APPROVED** or **REJECTED** by Information Governance
 
-* ***Delete Rejected Objects From Staging:***
-  * When **REJECTED** by Information Governance, the Step Function task uses an AWS Lambda function (`handle_egress_rejection`) to delete
-  staged objects from the Egress staging bucket (with the expectation that the researcher will review and submit a new egress request)
+* ***Delete Rejected Objects From Staging - IGLead:***
+  * When **REJECTED** by Information Governance, the Step Function task uses an AWS Lambda function (`handle_egress_rejection`)
+  to delete staged objects from the Egress staging bucket (with the expectation that the researcher will review and submit a new egress request)
 
 * ***Notify Research IT:***
   * If the request is **APPROVED**, control is passed to a Step Function task which uses direct integraton with Amazon SNS to:
@@ -179,7 +179,7 @@ AWS Lambda function that is subscribed to a SWB-managed SNS topic in order to re
   * Step Function choice task which parses the status of the request as received from the frontend API call in the previous task
   to determine if the request was **APPROVED** or **REJECTED** by Research IT
 
-* ***Delete Rejected Objects From Staging:***
+* ***Delete Rejected Objects From Staging - RIT:***
   * When **REJECTED** by Research IT, the Step Function task uses an AWS Lambda function (`handle_egress_rejection`) to delete staged
   objects from the Egress staging bucket (with the expectation that the researcher will review and submit a new egress request)
 
@@ -191,7 +191,7 @@ AWS Lambda function that is subscribed to a SWB-managed SNS topic in order to re
     * Upload the zip file to the datalake target S3 bucket
     * Clean up all related data from both the egress staging bucket and the EFS
 
-* ***Update SWB Egress Store status:***
+* ***Update Request in Egress Store DynamoDB (status):***
   * Step Function task which uses direct integration with Amazon DynamoDB to update the egress store item status in the SWB DynamoDB
   table as follows:
 
@@ -204,3 +204,7 @@ AWS Lambda function that is subscribed to a SWB-managed SNS topic in order to re
   * Setting the status to ***PENDING*** allows the researcher to revise and resubmit the candidate egress data. They may also choose
   to terminate the research workspace and associated egress store at this stage. (They could not do so while the request was in a status
   of ***PROCESSING*** which is set when the egress request is first received by the step function.)
+
+* ***Notify Requester:***
+  * Step Function task to send an email to the requester (e.g. researcher) with the Information Governance lead in copy. The email marks
+  an egress request review as complete and provides instructions with next steps.
