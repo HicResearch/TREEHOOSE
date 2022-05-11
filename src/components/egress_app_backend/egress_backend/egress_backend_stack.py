@@ -6,6 +6,7 @@
 import json
 from os import path
 
+import aws_cdk.aws_amplify as amplify
 import aws_cdk.aws_appsync as appsync
 import aws_cdk.aws_cognito as cognito
 import aws_cdk.aws_dynamodb as ddb
