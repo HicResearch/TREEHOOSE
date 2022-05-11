@@ -154,7 +154,7 @@ AWS Lambda function that is subscribed to a SWB-managed SNS topic in order to re
   to delete staged objects from the Egress staging bucket (with the expectation that the researcher will review and submit a new egress request)
 
 * ***Notify Research IT:***
-  * If the request is **APPROVED**, control is passed to a Step Function task which uses direct integraton with Amazon SNS to:
+  * If the request is **APPROVED**, control is passed to a Step Function task which uses direct integration with Amazon SNS to:
     * Publish a notification to the Information Governance SNS topic
     * Format the notification to include:
       * File types
