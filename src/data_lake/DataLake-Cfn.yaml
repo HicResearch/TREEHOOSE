@@ -16,17 +16,9 @@ Parameters:
     MaxLength: 12
     AllowedPattern: "[0-9]+"
 
-  EgressAppDomainName:
-    Type: String
-    Description: Leave empty initially. After egress app deployment, update with domain name (https://<branch>.<app_id>.amplifyapp.com)
-    Default: ""
-
   LFDatabaseName:
     Type: String
     Description: Lake Formation database name to store a governed table
-
-Conditions:
-  ApplyCORSOrigin: !Not [!Equals [!Ref EgressAppDomainName, ""]]
 
 Metadata:
   AWS::CloudFormation::Interface:
@@ -34,7 +26,6 @@ Metadata:
       - Label:
           default: Egress App Integration Configuration
         Parameters:
-          - EgressAppDomainName
           - EgressAppAccount
       - Label:
           default: Data Lake Configuration
@@ -245,16 +236,6 @@ Resources:
         RestrictPublicBuckets: True
       VersioningConfiguration:
         Status: Enabled
-      CorsConfiguration: !If
-      - ApplyCORSOrigin
-      - CorsRules:
-        - AllowedMethods:
-          - 'GET'
-          AllowedOrigins:
-          - !Ref EgressAppDomainName
-          AllowedHeaders:
-          - '*'
-      - !Ref "AWS::NoValue"
 
   TRESourceBucket:
     Type: AWS::S3::Bucket
