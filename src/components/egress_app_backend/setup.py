@@ -20,7 +20,6 @@ setuptools.setup(
 
     install_requires=[
         "aws-cdk.core==1.154.0",
-        "aws-cdk.pipelines==1.154.0",
         "aws-cdk.aws-lambda==1.154.0",
         "aws-cdk.aws-s3==1.154.0",
         "aws-cdk.aws-s3-notifications==1.154.0",
@@ -32,12 +31,8 @@ setuptools.setup(
         "aws-cdk.aws-stepfunctions-tasks==1.154.0",
         "aws-cdk.aws-dynamodb==1.154.0",
         "aws-cdk.aws-kms==1.154.0",
-        "aws-cdk.aws-codestarnotifications==1.154.0",
         "aws-cdk.aws-appsync==1.154.0",
-        "aws-cdk.aws-ssm==1.154.0",
         "aws-cdk.aws-iam==1.154.0",
-        "aws-cdk.aws-cloudfront==1.154.0",
-        "aws-cdk.aws-cloudfront-origins==1.154.0",
         "aws-cdk.aws-ec2==1.154.0",
         "aws-cdk.aws-efs==1.154.0",
         "aws-cdk.aws-ses==1.154.0",
