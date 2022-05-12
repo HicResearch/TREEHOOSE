@@ -44,7 +44,8 @@ In Cognito:
 
 In SWB:
 
-- [ ] Log in to SWB using the root account (based on the SWB config file provided during deployment)
+- [ ] Log in to SWB using the root account (based on the SWB config file provided during
+ [deployment Step 2C](../../deployment/Step2-DeployServiceWorkbench.md))
 - [ ] Go to menu option *Users*
 - [ ] For each user previously created in Cognito use buttons *Detail* -> *Activate User* to activate them to allow login
 - [ ] For each user of type Information Governance Lead previously created in Cognito use buttons *Detail* -> *Edit*
