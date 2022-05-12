@@ -48,6 +48,18 @@ To set a budget limit for a TRE project and prevent further resource creation wh
  is reached, deploy the optional
  [Project Budget Controls component](../deployment/Step5-AddProjectBudgetControls.md).
 
+## Service Workbench
+
+This section applies only to the payer account, e.g. your organization's **Management** account.
+
+An IT admin can add tags to workspace configurations in SWB. These custom tags can be
+ seen in [AWS Billing](https://aws.amazon.com/aws-cost-management/aws-billing/). You can activate the
+ associated [cost allocation tag](https://us-east-1.console.aws.amazon.com/billing/home?region=eu-west-2#/tags)
+ to track costs for the group of resources (workspaces) created with that tag.
+
+To learn more about cost allocation tags, view the
+ [AWS Billing user guide](https://docs.aws.amazon.com/awsaccountbilling/latest/aboutv2/cost-alloc-tags.html).
+
 ## Learn More
 
 To learn about all the services that help with cost management, view the
