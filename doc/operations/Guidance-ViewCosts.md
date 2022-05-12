@@ -40,7 +40,7 @@ Log in to the [AWS Management Console](https://console.aws.amazon.com/)
  [AWS Cost Management](https://us-east-1.console.aws.amazon.com/cost-management/home?region=eu-west-2)
 - [ ] Select the *Cost Explorer* menu option on the left side
 
-![Guidance CostExplorer TRE Project](../../res/images/Guidance-CostExplorer-TREProject.png)
+![Guidance CostExplorer TRE Project](../../res/images/Guidance-CostExplorer-TRE-Project.png)
 
 ## Cost Control
 
