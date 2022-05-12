@@ -37,7 +37,7 @@ In Cognito:
 - [ ] Go to Service: [AWS Cognito](https://eu-west-2.console.aws.amazon.com/cognito/home?region=eu-west-2)
 - [ ] Select [*Manage User Pools*](https://eu-west-2.console.aws.amazon.com/cognito/users/?region=eu-west-2)
 - [ ] Select the *User Pool* for SWB called e.g. *treprod-pj1-userPool* (based on the SWB config file provided
- during deployment)
+ during deployment in Step 2)
 - [ ] Under *General settings*, select menu option *Users and groups*
 - [ ] Use button *Create user* to create at least one SWB user to represent an Information Governance Lead
 - [ ] Use button *Create user* to create at least one SWB user to represent a Research IT Admin
