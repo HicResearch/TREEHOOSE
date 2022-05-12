@@ -1,4 +1,4 @@
-# ServiceWorkbench
+# Service Workbench
 
 [Service Workbench on AWS](https://aws.amazon.com/government-education/research-and-technical-computing/service-workbench/)
  is a cloud solution that enables IT teams to provide secure, repeatable, and federated control of access to data, tooling,
