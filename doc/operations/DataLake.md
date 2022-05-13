@@ -58,7 +58,7 @@ First provide the AWS account where the data resides. This will be the data lake
 ![Data Usage - 1](../../res/images/data_lake/DataUsage-1.png)
 
 Provide the **TRE Source Bucket** bucket name and the KMS key used to encrypt it. In addition,
- specify the path of the dataset (in section *Studies*) that you wish to make available to researchers.
+ specify the path to the dataset (in section *Studies*) that you wish to make available to researchers.
  If you need help finding these details, use the **TRE Datalake 1 Prod** account and check the
  [AWS CloudFormation](https://eu-west-2.console.aws.amazon.com/cloudformation/home?region=eu-west-2#/)
  *Resources* tab for *Stack* "TREDataLake1".
@@ -73,9 +73,10 @@ SWB will generate a CloudFormation template as shown below.
 
 ![Data Usage - 4](../../res/images/data_lake/DataUsage-4.png)
 
-As an IT administrator, if you have approval from a Data Lake Manager to run the
-CloudFormation template to make the data study available in SWB, you can
-log in to the [AWS Management Console](https://console.aws.amazon.com/)
+As an IT administrator, you will first need approval from a Data Lake Manager
+ to run the CloudFormation template that will make the data study available in SWB.
+ If approval has been given, log in to the
+ [AWS Management Console](https://console.aws.amazon.com/)
  using your **TRE Datalake 1 Prod** account and Admin privileges. Then use the
  *Create Stack* button from SWB to load the page below.
 
@@ -93,7 +94,7 @@ User personas involved: IT Administrators and Data Lake Managers
 As an IT Administrator, log in to the SWB Web App deployed in
  [Step 2 in the deployment guide](../deployment/Step2-DeployServiceWorkbench.md) using
  a SWB user account of type *admin*. Select menu option *Studies* on the left side
- and select tab *Organization* to locate the previously created data study *Dataset1*.
+ and select tab *Organization* to locate the previously created data study, e.g. *Dataset1*.
 
 The data study admin can edit the permissions for the data study and in the example
  below the admin provided a researcher with read-only access to *Dataset1*. Note the
@@ -106,17 +107,18 @@ The data study admin can edit the permissions for the data study and in the exam
 
 User personas involved: Researchers
 
-The researcher who was provided with read-only access to the data study *Dataset1* can
- now create a workspace with this study attached. As a Researcher, select the study
+The researcher who was provided with read-only access to the data study, e.g. *Dataset1*,
+ can now create a workspace with this study attached. As a Researcher, select the study
  like in the image below.
 
 ![Data Usage - 8](../../res/images/data_lake/DataUsage-8.png)
 
-Then create a SWB workspace with any configuration available. An example is provided below.
+Then create a SWB workspace with a suitable configuration that is available. An example
+ is provided below.
 
 ![Data Usage - 9](../../res/images/data_lake/DataUsage-9.png)
 
-Open a connection to the workspace to check the study data is available and the shared
+Open a connection to the workspace to check the study data is mounted and the shared
  dataset can be accessed.
 
 ![Data Usage - 10](../../res/images/data_lake/DataUsage-10.png)
