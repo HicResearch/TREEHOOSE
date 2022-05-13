@@ -47,9 +47,7 @@ Before proceeding with the instructions below, review the
 
 User personas involved: IT Administrators and Data Lake Managers
 
-#### IT Administrators
-
-Log in to the SWB Web App deployed in
+As an IT Administrator, log in to the SWB Web App deployed in
  [Step 2 in the deployment guide](../deployment/Step2-DeployServiceWorkbench.md) using
  a SWB user account of type *admin*. Select menu option *Data Sources* on the left side
  and press on button *Register Studies*.
@@ -90,8 +88,35 @@ Run the stack and ensure it completes successfully. Then return to SWB and test 
 
 ### Step 2. Provide Researchers with access to Data Study
 
-User personas involved: IT Administrators
+User personas involved: IT Administrators and Data Lake Managers
+
+As an IT Administrator, log in to the SWB Web App deployed in
+ [Step 2 in the deployment guide](../deployment/Step2-DeployServiceWorkbench.md) using
+ a SWB user account of type *admin*. Select menu option *Studies* on the left side
+ and select tab *Organization* to locate the previously created data study *Dataset1*.
+
+The data study admin can edit the permissions for the data study and in the example
+ below the admin provided a researcher with read-only access to *Dataset1*. Note the
+ admin should change permissions only if they got approval from the Data Lake Managers
+ in charge of that data study.
+
+![Data Usage - 7](../../res/images/data_lake/DataUsage-7.png)
 
 ### Step 3. Create Workspace with Data Study Attached
 
 User personas involved: Researchers
+
+The researcher who was provided with read-only access to the data study *Dataset1* can
+ now create a workspace with this study attached. As a Researcher, select the study
+ like in the image below.
+
+![Data Usage - 8](../../res/images/data_lake/DataUsage-8.png)
+
+Then create a SWB workspace with any configuration available. An example is provided below.
+
+![Data Usage - 9](../../res/images/data_lake/DataUsage-9.png)
+
+Open a connection to the workspace to check the study data is available and the shared
+ dataset can be accessed.
+
+![Data Usage - 10](../../res/images/data_lake/DataUsage-10.png)
