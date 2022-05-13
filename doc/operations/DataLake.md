@@ -40,3 +40,58 @@ To learn more about Amazon Athena, check the
 
 ## Data Usage
 
+Before proceeding with the instructions below, review the
+ [TRE user personas](../architecture/User-Personas.md).
+
+### Step 1. Register Data Study in Service Workbench
+
+User personas involved: IT Administrators and Data Lake Managers
+
+#### IT Administrators
+
+Log in to the SWB Web App deployed in
+ [Step 2 in the deployment guide](../deployment/Step2-DeployServiceWorkbench.md) using
+ a SWB user account of type *admin*. Select menu option *Data Sources* on the left side
+ and press on button *Register Studies*.
+
+First provide the AWS account where the data resides. This will be the data lake account,
+ e.g. **TRE Datalake 1 Prod**.
+
+![Data Usage - 1](../../res/images/DataUsage-1.png)
+
+Provide the **TRE Source Bucket** bucket name and the KMS key used to encrypt it. In addition,
+ specify the path of the dataset (in section *Studies*) that you wish to make available to researchers.
+ If you need help finding these details, use the **TRE Datalake 1 Prod** account and check the
+ [AWS CloudFormation](https://eu-west-2.console.aws.amazon.com/cloudformation/home?region=eu-west-2#/)
+ *Resources* tab for *Stack* "TREDataLake1".
+
+![Data Usage - 2](../../res/images/DataUsage-2.png)
+
+If the details are correct, you will see this status page.
+
+![Data Usage - 3](../../res/images/DataUsage-3.png)
+
+SWB will generate a CloudFormation template as shown below.
+
+![Data Usage - 4](../../res/images/DataUsage-4.png)
+
+As an IT administrator, if you have approval from a Data Lake Manager to run the
+CloudFormation template to make the data study available in SWB, you can
+log in to the [AWS Management Console](https://console.aws.amazon.com/)
+ using your **TRE Datalake 1 Prod** account and Admin privileges. Then use the
+ *Create Stack* button from SWB to load the page below.
+
+![Data Usage - 5](../../res/images/DataUsage-5.png)
+
+Run the stack and ensure it completes successfully. Then return to SWB and test the
+ data study connection and ensure the status matches the image below.
+
+![Data Usage - 6](../../res/images/DataUsage-6.png)
+
+### Step 2. Provide Researchers with access to Data Study
+
+User personas involved: IT Administrators
+
+### Step 3. Create Workspace with Data Study Attached
+
+User personas involved: Researchers
