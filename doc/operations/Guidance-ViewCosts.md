@@ -55,7 +55,10 @@ This section applies only to the payer account, e.g. your organization's **Manag
 An IT admin can add tags to workspace configurations in SWB. These custom tags can be
  seen in [AWS Billing](https://aws.amazon.com/aws-cost-management/aws-billing/). You can activate the
  associated [cost allocation tag](https://us-east-1.console.aws.amazon.com/billing/home?region=eu-west-2#/tags)
- to track costs for the group of resources (workspaces) created with that tag.
+ to track costs for the group of resources (workspaces) created with that tag. An example of using the tag
+ that shows if a workspace has backup enabled or not can be seen below.
+
+![Guidance CostExplorer TRE Cost Allocation Tag](../../res/images/Guidance-CostExplorer-TRE-CostAllocationTag.png)
 
 To learn more about cost allocation tags, view the
  [AWS Billing user guide](https://docs.aws.amazon.com/awsaccountbilling/latest/aboutv2/cost-alloc-tags.html).
