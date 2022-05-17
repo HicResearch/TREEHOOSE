@@ -3,6 +3,7 @@ import os
 
 import boto3
 from aws_lambda_powertools import Logger, Metrics, Tracer
+from botocore.config import Config
 
 tracer = Tracer(service="TREGetSagemakerNotebookInfoFunction")
 logger = Logger(service="TREGetSagemakerNotebookInfoFunction", sample_rate=0.1)
@@ -13,7 +14,7 @@ metrics = Metrics(
 
 sagemaker = boto3.client("sagemaker")
 iam_client = boto3.client("iam")
-s3_client = boto3.client("s3")
+s3_client = boto3.client("s3", config=Config(signature_version="s3v4"))
 
 BACKUP_TAG = json.loads(os.environ["BACKUP_TAG"])
 BACKUP_BUCKET = os.environ["BACKUP_BUCKET"]
