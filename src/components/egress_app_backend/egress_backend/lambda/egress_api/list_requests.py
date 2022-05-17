@@ -11,8 +11,8 @@ from aws_lambda_powertools import Logger, Tracer
 tracer = Tracer(service="ListRequestsAPI")
 logger = Logger(service="ListRequestsAPI")
 
-ddb = boto3.resource('dynamodb')
-table = os.environ['TABLE']
+ddb = boto3.resource("dynamodb")
+table = os.environ["TABLE"]
 
 
 def list_requests():
@@ -23,4 +23,4 @@ def list_requests():
     response = ddb_table.scan()
 
     logger.debug("Succesful database scan of all egress requests")
-    return response['Items']
+    return response["Items"]

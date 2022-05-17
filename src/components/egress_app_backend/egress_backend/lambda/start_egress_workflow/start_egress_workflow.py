@@ -15,12 +15,12 @@ tracer = Tracer(service="TriggerEgressWorkflow")
 logger = Logger(service="TriggerEgressWorkflow", sample_rate=0.1)
 metrics = Metrics(service="TriggerEgressWorkflow", namespace="EgressRequests")
 
-step_fn_client = boto3.client('stepfunctions')
+step_fn_client = boto3.client("stepfunctions")
 
-egress_workflow_step_fn_arn = os.environ['STEP_FUNCTION_ARN']
-reviewer_list = os.environ['REVIEWER_LIST']
-egress_app_url = os.environ['EGRESS_APP_URL']
-tre_admin_email_address = os.environ['EGRESS_APP_ADMIN_EMAIL']
+egress_workflow_step_fn_arn = os.environ["STEP_FUNCTION_ARN"]
+reviewer_list = os.environ["REVIEWER_LIST"]
+egress_app_url = os.environ["EGRESS_APP_URL"]
+tre_admin_email_address = os.environ["EGRESS_APP_ADMIN_EMAIL"]
 
 
 @metrics.log_metrics()
@@ -45,10 +45,12 @@ def start_egress_workflow(message):
     message["egress_app_url"] = egress_app_url
     message["tre_admin_email_address"] = tre_admin_email_address
 
-    logger.info('Starting workflow with egress request ID: ' + message["egress_request_id"])
+    logger.info(
+        "Starting workflow with egress request ID: " + message["egress_request_id"]
+    )
 
     step_fn_client.start_execution(
         stateMachineArn=egress_workflow_step_fn_arn,
         name=message["egress_request_id"],
-        input=json.dumps(message)
+        input=json.dumps(message),
     )

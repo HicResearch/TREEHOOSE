@@ -11,8 +11,8 @@ from aws_lambda_powertools import Logger, Tracer
 tracer = Tracer(service="TriggerEgressWorkflow")
 logger = Logger(service="TriggerEgressWorkflow")
 
-ddb = boto3.client('dynamodb')
-table = os.environ['TABLE']
+ddb = boto3.client("dynamodb")
+table = os.environ["TABLE"]
 
 
 @tracer.capture_lambda_handler
@@ -20,19 +20,11 @@ table = os.environ['TABLE']
 def handler(event, context):
     return ddb.update_item(
         TableName=table,
-        Key={
-            "egress_request_id": {
-                "S": event['input']
-            }
-        },
+        Key={"egress_request_id": {"S": event["input"]}},
         UpdateExpression="set task_token=:t, current_reviewer_group=:r",
         ExpressionAttributeValues={
-            ":t": {
-                "S": event['token']
-            },
-            ":r": {
-                "S": event['current_reviewer_group']
-            }
+            ":t": {"S": event["token"]},
+            ":r": {"S": event["current_reviewer_group"]},
         },
-        ReturnValues="ALL_NEW"
+        ReturnValues="ALL_NEW",
     )

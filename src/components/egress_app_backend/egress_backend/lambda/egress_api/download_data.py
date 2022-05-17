@@ -9,6 +9,7 @@ from typing import Any
 import boto3
 from aws_lambda_powertools import Logger, Tracer
 from botocore.config import Config
+from botocore.exceptions import ClientError
 
 tracer = Tracer(service="DownloadDataAPI")
 logger = Logger(service="DownloadDataAPI")
@@ -18,20 +19,18 @@ logger = Logger(service="DownloadDataAPI")
 #
 ####################################################################
 s3_client = boto3.client(
-    "s3",
-    config=Config(signature_version='s3v4'),
-    region_name=os.environ['REGION']
+    "s3", config=Config(signature_version="s3v4"), region_name=os.environ["REGION"]
 )
 
-ddb = boto3.resource('dynamodb')
+ddb = boto3.resource("dynamodb")
 ####################################################################
 #
 # Variable assignments
 #
 ####################################################################
-bucket = os.environ['DATALAKE_BUCKET']
-table = os.environ['TABLE']
-max_downloads_allowed = os.environ['MAX_DOWNLOADS_ALLOWED']
+bucket = os.environ["DATALAKE_BUCKET"]
+table = os.environ["TABLE"]
+max_downloads_allowed = os.environ["MAX_DOWNLOADS_ALLOWED"]
 
 
 @tracer.capture_lambda_handler
@@ -40,15 +39,18 @@ def download_data(arguments: str, context: Any):
 
     try:
         # Static filename
-        file = 'egress_data.zip'
-        top_level_prefix = 'approved_egress'
+        file = "egress_data.zip"
+        top_level_prefix = "approved_egress"
 
         # Get the relevant fields from the request
-        inbound_egress_request_id = arguments['request']['egress_request_id']
-        inbound_workspace_id = arguments['request']['workspace_id']
-        inbound_download_count = arguments['request']['download_count']
+        inbound_egress_request_id = arguments["request"]["egress_request_id"]
+        inbound_workspace_id = arguments["request"]["workspace_id"]
+        inbound_download_count = arguments["request"]["download_count"]
 
-        logger.info("Download Data API invoked with Egress Request ID: " + inbound_egress_request_id)
+        logger.info(
+            "Download Data API invoked with Egress Request ID: %s",
+            inbound_egress_request_id,
+        )
 
         # If downloads are allowed
         if int(inbound_download_count) < int(max_downloads_allowed):
@@ -62,17 +64,16 @@ def download_data(arguments: str, context: Any):
 
             # Generate presign URL
             presign = s3_client.generate_presigned_url(
-                'get_object',
+                "get_object",
                 ExpiresIn=3600,
-                Params={
-                    'Bucket': bucket,
-                    'Key': object_key
-                }
+                Params={"Bucket": bucket, "Key": object_key},
             )
-            logger.debug("Presign URL generated: " + presign)
+            logger.debug("Presign URL generated: %s", presign)
 
             # Update count field in DB
-            update_count_in_db(inbound_egress_request_id, int(inbound_download_count) + 1)
+            update_count_in_db(
+                inbound_egress_request_id, int(inbound_download_count) + 1
+            )
 
             # Return URL
             logger.info("Presign URL generated")
@@ -82,10 +83,9 @@ def download_data(arguments: str, context: Any):
         else:
             response = "Download limit exceeded. Please contact an administrator"
             logger.warn(response)
-
-    except Exception as e:
-        response = "Error from lambda_handler: " + str(e)
-        logger.error(response)
+    except ClientError as e:
+        response = "Error from lambda_handler: " + e.response["Error"]["Message"]
+        logger.error(e.response["Error"]["Message"])
 
 
 def update_count_in_db(request_id, inbound_count):
@@ -94,11 +94,7 @@ def update_count_in_db(request_id, inbound_count):
 
     # Set download_count field to 1
     ddb_table.update_item(
-        Key={
-            'egress_request_id': request_id
-        },
-        UpdateExpression='SET download_count = :count',
-        ExpressionAttributeValues={
-            ':count': inbound_count
-        }
+        Key={"egress_request_id": request_id},
+        UpdateExpression="SET download_count = :count",
+        ExpressionAttributeValues={":count": inbound_count},
     )
