@@ -65,7 +65,7 @@ An IT admin can add tags to workspace configurations in SWB. These custom tags c
  to track costs for the group of resources (workspaces) created with that tag. An example of using the tag
  that shows if a workspace has backup enabled or not can be seen below.
 
-![Guidance CostExplorer TRE Cost Allocation Tag](../../res/images/Guidance-CostExplorer-TRE-CostAllocationTag.png)
+![Guidance Cost Explorer TRE Cost Allocation Tag](../../res/images/Guidance-CostExplorer-TRE-CostAllocationTag.png)
 
 To learn more about cost allocation tags, view the
  [AWS Billing user guide](https://docs.aws.amazon.com/awsaccountbilling/latest/aboutv2/cost-alloc-tags.html).
@@ -84,6 +84,9 @@ To view costs for a particular category (e.g. combined charges for a TRE project
  and **TRE Datalake 1 Prod**, data storage costs in **TRE Datalake 1 Prod**, etc.), you can create cost
  categories using these
  [instructions](https://docs.aws.amazon.com/awsaccountbilling/latest/aboutv2/manage-cost-categories.html).
+
+If you need to get a comprehensive set of cost and usage data, you can generate reports using the
+ [AWS Cost and Usage Reports](https://docs.aws.amazon.com/cur/latest/userguide/what-is-cur.html) service.
 
 ## Learn More
 
