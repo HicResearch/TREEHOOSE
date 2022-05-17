@@ -31,7 +31,7 @@ AWS Cost Explorer provides several filters to generate a different view of the c
 
 ![Guidance CostExplorer TRE - Service filter](../../res/images/Guidance-CostExplorer-TRE-ServicesView.png)
 
-For each of the accounts, you can also use AWS Cost Explorer in that account as shown below.
+You can also use AWS Cost Explorer in any of the member AWS accounts as shown below.
 
 > Note: A new AWS account needs to initialise AWS Cost Explorer before it can use the service. Follow these
 > [instructions](https://docs.aws.amazon.com/cost-management/latest/userguide/ce-enable.html) to enable it.
