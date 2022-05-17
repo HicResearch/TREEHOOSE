@@ -104,7 +104,7 @@ AWS Lambda function that is subscribed to a SWB-managed SNS topic in order to re
 
 * ***Save Request To DynamoDB:***
   * Step Function task which uses direct integration with Amazon DynamoDB to write the request to the Egress Request DynamoDB table
-  * The status of the entry is set to ***PROCESSING** to maintain consistency with the SWB Egress store status update below
+  * The status of the entry is set to ***PROCESSING*** to maintain consistency with the SWB Egress store status update below
 
 * ***Update Request in Egress Store DynamoDB (processing):***
   * Step Function task which uses direct integration with Amazon DynamoDB to update the egress store item status in the SWB DynamoDB
@@ -147,14 +147,14 @@ AWS Lambda function that is subscribed to a SWB-managed SNS topic in order to re
 
 * ***Information Governance Approved?:***
   * Step Function choice task which parses the status of the request as received from the frontend API call in the previous task to determine
-  if the request was **APPROVED** or **REJECTED** by Information Governance
+  if the request was ***APPROVED*** or ***REJECTED*** by Information Governance
 
 * ***Delete Rejected Objects From Staging - IGLead:***
-  * When **REJECTED** by Information Governance, the Step Function task uses an AWS Lambda function (`handle_egress_rejection`)
+  * When ***REJECTED*** by Information Governance, the Step Function task uses an AWS Lambda function (`handle_egress_rejection`)
   to delete staged objects from the Egress staging bucket (with the expectation that the researcher will review and submit a new egress request)
 
 * ***Notify Research IT:***
-  * If the request is **APPROVED**, control is passed to a Step Function task which uses direct integration with Amazon SNS to:
+  * If the request is ***APPROVED***, control is passed to a Step Function task which uses direct integration with Amazon SNS to:
     * Publish a notification to the Information Governance SNS topic
     * Format the notification to include:
       * File types
@@ -177,14 +177,14 @@ AWS Lambda function that is subscribed to a SWB-managed SNS topic in order to re
 
 * ***Research IT Approved?:***
   * Step Function choice task which parses the status of the request as received from the frontend API call in the previous task
-  to determine if the request was **APPROVED** or **REJECTED** by Research IT
+  to determine if the request was ***APPROVED*** or ***REJECTED*** by Research IT
 
 * ***Delete Rejected Objects From Staging - RIT:***
-  * When **REJECTED** by Research IT, the Step Function task uses an AWS Lambda function (`handle_egress_rejection`) to delete staged
+  * When ***REJECTED*** by Research IT, the Step Function task uses an AWS Lambda function (`handle_egress_rejection`) to delete staged
   objects from the Egress staging bucket (with the expectation that the researcher will review and submit a new egress request)
 
 * ***Copy Approved Objects to Datalake:***
-  * If the request is **APPROVED**, control is passed to a Step Function task which uses an AWS Lambda function
+  * If the request is ***APPROVED***, control is passed to a Step Function task which uses an AWS Lambda function
   (`copy_egress_candidates_to_datalake`) to:
     * Download the approved egress objects unto an EFS file store that is attached to the Lambda function
     * Create a zip file containing all the objects
