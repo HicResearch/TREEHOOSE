@@ -13,7 +13,7 @@ The egress application backend is defined as a Python-based [CDK](https://aws.am
 
 ## 1. Egress Backend Stack
 
-The ___egress_backend/egress_backend_stack.py___ defines the resources that make up the egress approval workflow.
+The *egress_backend/egress_backend_stack.py* defines the resources that make up the egress approval workflow.
  These include the series of Lambda functions in the StepFunctions (Egress workflow) and the Amplify app hosting
  the user interface (Egress Web App).
 
@@ -32,30 +32,30 @@ This table is used to store egress requests as they are received from SWB. These
 [AWS AppSync](https://aws.amazon.com/appsync/) is a fully managed service that makes it easy to develop GraphQL APIs
  by handling the heavy lifting of securely connecting to data sources like DynamoDB, Lambda, and more. [GraphQL](https://graphql.org/)
  is a query language for the API, and a server-side runtime for executing queries using a type system defined for your data.
- The data types are defined in __egress_backend/graphql/schema.graphql__ and include the definition of an egress request
+ The data types are defined in *egress_backend/graphql/schema.graphql* and include the definition of an egress request
  and its attributes. Additionally, definitions of data queries and mutations (updates) are also included:
 
 * listRequests - Lists all egress requests (Query)
 * updateRequest - Updates a given request with approval status, justification, and approver name (Mutation)
 * downloadData - Generates a S3 presigned URL which will be used by the frontend to download data associated with the request (Mutation)
 
-Appsync uses the schema in combination with resolvers (defined in egress_backend_stack.py), which provides integration with a single Lambda
+Appsync uses the schema in combination with resolvers (defined in *egress_backend_stack.py*), which provides integration with a single Lambda
  (Egress-API) executing the business logic for the API.
 
-The Lambda code is defined in ___egress_backend/lambda/egress_api__ where __main.py__ serves as the entry point. This script is called
+The Lambda code is defined in *egress_backend/lambda/egress_api* where *main.py* serves as the entry point. This script is called
  anytime the AppSync endpoint is called and is able to filter (switch cases) the request type and execute different scripts containing
  differing business logic.
 
 * **List Requests API**
   * ***Request Parameters:*** None
   * ***Response:*** List of egress request objects
-  * Calling the endpoint with the listRequests query will invoke the `list_request.py` script through `main.py`. This function
+  * Calling the endpoint with the listRequests query will invoke the *list_request.py* script through *main.py*. This function
     executes a table scan to retrieve all of the egress requests from the DynamoDB table.
 
 * **Update Requests API**
   * ***Request Parameters:*** egress_request_id, workspace_id, download_count
   * ***Response:*** String (Success message)
-  * Calling the endpoint with the updatesRequests mutation will invoke the `update_request.py` script through `main.py`. The function
+  * Calling the endpoint with the updatesRequests mutation will invoke the *update_request.py* script through *main.py*. The function
     starts off by checking if the supplied request_id is valid by querying the database. After successful verification of the request,
     the supplied task token is used to resume the relevant egress workflow (StepFunctions) execution passing in an approval or rejection status.
     The supplied reason is used later in the workflow to update the request details in the database.
@@ -63,8 +63,8 @@ The Lambda code is defined in ___egress_backend/lambda/egress_api__ where __main
 * **Download Data API**
   * ***Request Parameters:*** egress_request_id, status, download_count
   * ***Response:*** String (S3 presigned URL)
-  * Calling the endpoint with the downloadData mutation will invoke the `download_data.py` script through `main.py`. The function first checks
-    if the download_count exceeds a configurable parameter `max_downloads_allowed` (specified in `cdk.json`). If the max download count has not
+  * Calling the endpoint with the downloadData mutation will invoke the *download_data.py* script through *main.py*. The function first checks
+    if the download_count exceeds a configurable parameter `max_downloads_allowed` (specified in *cdk.json*). If the max download count has not
     been exceeded, the script proceeds to construct the object key from the supplied parameters. If the file exists in the datalake bucket, a S3
     presigned URL is generated and returned as a string. After successful generation, the download_count attribute for the request is updated in
     the table. Note that the frontend maintains the running total as the user clicks on the button and once the limit is reached (by checking the
@@ -75,9 +75,9 @@ The Lambda code is defined in ___egress_backend/lambda/egress_api__ where __main
 
 >Note: This requires installation of Amplify CLI - instructions can be found [here](https://docs.amplify.aws/cli/start/install)
 
-Any changes to the GraphQL schema should be made inside ___egress-backend/egress_backend/graphql/schema.graphql__ in the backend.
- This file should then be copied/overwritten to this location ___egress-webapp/src/graphql/schema.graphql___ in the client.
- Then run the command `amplify add codegen` in ___egress-webapp/src/graphql___ to generate the updated models for the client to use.
+Any changes to the GraphQL schema should be made inside *egress-backend/egress_backend/graphql/schema.graphql* in the backend.
+ This file should then be copied/overwritten to this location *egress-webapp/src/graphql/schema.graphql* in the client.
+ Then run the command `amplify add codegen` in *egress-webapp/src/graphql* to generate the updated models for the client to use.
  You should see updated queries/mutations/subscriptions.js files in the same location.
 
 ### 1.4. Egress Staging S3 Bucket
@@ -91,11 +91,11 @@ S3 bucket used to temporarily stage candidate egress objects so they can be insp
 AWS Lambda function that is subscribed to a SWB-managed SNS topic in order to receive notifications of new egress requests. This function
  invokes the step function that defines the egress approval workflow. It also feeds configuration parameters into the workflow which will
  be used at various points. Among the key values are:
-  * ___egress_request_id___: Unique identifier for an egress request.
-  * ___reviewer_list___: List of user groups (as defined in the IdP) that have approval responsibility. The list ordering should reflect
+  * *egress_request_id*: Unique identifier for an egress request.
+  * *reviewer_list*: List of user groups (as defined in the IdP) that have approval responsibility. The list ordering should reflect
   the approval priority.
-  * ___egress_app_url___: URL for the egress application. Used when sending the final decision email to the requester.
-  * ___tre_admin_email_address___: Email address for the TRE administrator(s) or administrator group. Also used as the "From" email address
+  * *egress_app_url*: URL for the egress application. Used when sending the final decision email to the requester.
+  * *tre_admin_email_address*: Email address for the TRE administrator(s) or administrator group. Also used as the "From" email address
   for the final decision email. The email body also references this email address.
 
 ### 1.6. Egress Workflow Step Function
