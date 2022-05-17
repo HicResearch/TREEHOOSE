@@ -15,7 +15,7 @@ Data Lake Managers are responsible for uploading datasets into the data lake
 
 The **TRE Source Bucket** is created after
  [deploying the data lake](../deployment/Step3-CreateDataLake.md) and is registered
- with [AWS Lake Formation](https://aws.amazon.com/lake-formation/). [Data Lake Managers](./architecture/User-Personas.md#Data-Lake-Manager)
+ with [AWS Lake Formation](https://aws.amazon.com/lake-formation/). [Data Lake Managers](../architecture/User-Personas.md#Data-Lake-Manager)
  can use this encrypted bucket to store data suitable as input for research activities.
 
 Data Lake Managers can upload data to the **TRE Source Bucket** using
