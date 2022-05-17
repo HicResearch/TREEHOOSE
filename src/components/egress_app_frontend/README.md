@@ -2,21 +2,27 @@
 
 - [Egress App Front-End](#egress-app-front-end)
   - [Egress Frontend Solution](#egress-frontend-solution)
+    - [App.js](#appjs)
+    - [components/egress/EgressRequestList.js](#componentsegressegressrequestlistjs)
+    - [components/egress/columnHeaders.js](#componentsegresscolumnheadersjs)
+    - [components/topBar/Topbar.jsx](#componentstopbartopbarjsx)
+    - [graphql](#graphql)
   - [GraphQL Schema Change](#graphql-schema-change)
   - [Component Libraries](#component-libraries)
   - [Available Scripts](#available-scripts)
-    - [`yarn start`](#yarn-start)
-    - [`yarn start:local`](#yarn-startlocal)
-    - [`yarn test`](#yarn-test)
-    - [`yarn build`](#yarn-build)
-    - [`yarn eject`](#yarn-eject)
+    - [`npm start`](#npm-start)
+    - [`npm start:local`](#npm-startlocal)
+    - [`npm test`](#npm-test)
+    - [`npm build`](#npm-build)
+    - [`npm eject`](#npm-eject)
+    - [`npm pipeline`](#npm-pipeline)
   - [Learn More](#learn-more)
     - [Code Splitting](#code-splitting)
     - [Analyzing the Bundle Size](#analyzing-the-bundle-size)
     - [Making a Progressive Web App](#making-a-progressive-web-app)
     - [Advanced Configuration](#advanced-configuration)
     - [Deployment](#deployment)
-    - [yarn build fails to minify](#yarn-build-fails-to-minify)
+    - [npm build fails to minify](#npm-build-fails-to-minify)
 
 The **Egress web application** is an add-on solution that enables management of data egress requests
  from the Trusted Research Environment (TRE).
@@ -85,7 +91,7 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 
 In the project directory, you can run:
 
-### `yarn start`
+### `npm start`
 
 Runs the app in development mode.\
 Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
@@ -95,7 +101,7 @@ You will also see any lint errors in the console.
 
 >Note: The web app will run with limited functionality, as there is no integration with AppSync or Cognito.
 
-### `yarn start:local`
+### `npm start:local`
 
 Runs the app in development mode with **Cognito and AppSync integration**.\
 Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
@@ -107,9 +113,9 @@ You will also see any lint errors in the console.
 >all of the integration endpoints. The integration endpoints can be found under *Environment
 >variables in the Amplify management console*.
 
-Format of the __'.env.local'__ file:
+Format of the **'.env.local'** file:
 
-```
+```console
 REACT_APP_APPSYNC_API=
 REACT_APP_REGION=
 REACT_APP_USER_POOL_CLIENT_ID=
@@ -117,13 +123,13 @@ REACT_APP_USER_POOL_ID=
 REACT_APP_USER_POOL_DOMAIN=
 ```
 
-### `yarn test`
+### `npm test`
 
 Launches the test runner in the interactive watch mode.\
 See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests)
  for more information.
 
-### `yarn build`
+### `npm build`
 
 Builds the app for production to the `build` folder.
 It bundles React in production mode and optimizes the build for the best performance.
@@ -133,7 +139,7 @@ The build is minified and the filenames include the hashes. Your app is ready to
 See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment)
  for more information.
 
-### `yarn eject`
+### `npm eject`
 
 **Note: this is a one-way operation. Once you `eject`, you can’t go back!**
 
@@ -147,6 +153,13 @@ Instead, it will copy all the configuration files and the transitive dependencie
 You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments,
  and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful
  if you couldn’t customize it when you are ready for it.
+
+### `npm pipeline`
+
+This will run a series of commands to lint the
+code using [eslint](https://eslint.org/), check code formatting
+using [prettier](https://prettier.io/) and
+`npm audit` & `npm outdated` to run node package manager audit.
 
 ## Learn More
 
@@ -174,6 +187,6 @@ To learn about advanced configurations, view this [guidance](https://facebook.gi
 
 To learn about deployments, view this [guidance](https://facebook.github.io/create-react-app/docs/deployment)
 
-### yarn build fails to minify
+### npm build fails to minify
 
-To troubleshoot issues when yarn build fails to minify, view this [guidance](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+To troubleshoot issues when npm build fails to minify, view this [guidance](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
