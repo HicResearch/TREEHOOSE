@@ -32,9 +32,11 @@ This table is used to store egress requests as they are received from SWB. These
 [AWS AppSync](https://aws.amazon.com/appsync/) is a fully managed service that makes it easy to develop GraphQL APIs
  by handling the heavy lifting of securely connecting to data sources like DynamoDB, Lambda, and
  more. [GraphQL](https://graphql.org/) is a query language for the API, and a server-side runtime for executing
- queries using a type system defined for your data. The data types are defined in
- *src/components/egress_app_backend/egress_backend/graphql/schema.graphql* and include the definition of an egress
- request and its attributes. Additionally, definitions of data queries and mutations (updates) are also included:
+ queries using a type system defined for your data.
+
+ The data types are defined in *src/components/egress_app_backend/egress_backend/graphql/schema.graphql*
+ and include the definition of an egress request and its attributes. Additionally, definitions of data queries
+ and mutations (updates) are also included:
 
 * listRequests - Lists all egress requests (Query)
 * updateRequest - Updates a given request with approval status, justification, and approver name (Mutation)
