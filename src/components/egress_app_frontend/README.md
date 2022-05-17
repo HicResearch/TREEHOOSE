@@ -38,8 +38,9 @@ The root of the application which provides the entry point for all the component
 ### components/egress/EgressRequestList.js
 
 This file contains the code required to render the egress requests in the form of a table, while providing
- sort and search capabilities. On render, the script makes an API call to [AWS AppSync](https://aws.amazon.com/appsync/) to fetch the egress requests
- from the database. The script also interacts with another API to allow for download of egress request objects.
+ sort and search capabilities. On render, the script makes an API call to
+ [AWS AppSync](https://aws.amazon.com/appsync/) to fetch the egress requests from the database. The script
+ also interacts with another API to allow for download of egress request objects.
 
 To render webpage components such as the table, buttons, and modals, the React library called
  [Material Design for Boostrap](https://mdbootstrap.com/docs/react/) is utilised.
@@ -56,20 +57,25 @@ This file contains the code to render the top header bar on the page which conta
 ### graphql
 
 This folder contains all of the graphql scripts and components to interact with the AppSync API.
- The __schema.graphql__ contains the schema definition of the API
+ The *schema.graphql* contains the schema definition of the API
 
-The __mutations.js__ and __queries.js__ scripts contain the GraphQL code, which the webapp uses
+The *mutations.js* and *queries.js* scripts contain the GraphQL code, which the webapp uses
  to fetch or modify data from the API.
 
 ## GraphQL Schema Change
 
->Note: This requires installation of Amplify CLI - instructions can be found [here](https://docs.amplify.aws/cli/start/install)
+>Note: This requires installation of Amplify CLI - [instructions](https://docs.amplify.aws/cli/start/install)
 
-1. Any changes to the GraphQL schema should be made inside 'src/components/egress_app_backend/egress_backend/graphql/schema.graphql' in the backend.
-1. Remove any existing files inside 'src/graphql/schema.graphql' in the frontend.
-1. Copy the __schema.graphql__ from the backend to  'src/components/egress_app_frontend/src/graphql/schema.graphql' in the frontend.
-1. Run the command `amplify add codegen` in 'src/components/egress_app_frontend/src/graphql' to generate the updated models for the frontend client to use.
-1. You should see updated queries/mutations/subscriptions.js files in the same location.
+1. Any changes to the GraphQL schema should be made inside
+ *src/components/egress_app_backend/egress_backend/graphql/schema.graphql* in the backend.
+1. Remove any existing files inside *src/components/egress_app_frontend/src/graphql/schema.graphql*
+ in the frontend.
+1. Copy the *schema.graphql* from the backend to *src/components/egress_app_frontend/src/graphql/schema.graphql*
+ in the frontend.
+1. Run the command `amplify add codegen` in *src/components/egress_app_frontend/src/graphql* to generate
+ the updated models
+ for the frontend client to use.
+1. You should see updated *queries.js* and *mutations.js* files in the same location.
 
 ## Component Libraries
 
@@ -97,9 +103,9 @@ Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 The page will reload if you make edits.\
 You will also see any lint errors in the console.
 
->Note: This requires a __'.env.local'__ file in the frontend source code directory, which contains
->all of the integration endpoints. The integration endpoints can be found under __Environment
->variables in the Amplify management console__.
+>Note: This requires a *.env.local* file in the frontend source code directory, which contains
+>all of the integration endpoints. The integration endpoints can be found under *Environment
+>variables in the Amplify management console*.
 
 Format of the __'.env.local'__ file:
 
@@ -114,7 +120,8 @@ REACT_APP_USER_POOL_DOMAIN=
 ### `yarn test`
 
 Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests)
+ for more information.
 
 ### `yarn build`
 
@@ -123,7 +130,8 @@ It bundles React in production mode and optimizes the build for the best perform
 
 The build is minified and the filenames include the hashes. Your app is ready to be deployed!
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment)
+ for more information.
 
 ### `yarn eject`
 
