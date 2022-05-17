@@ -38,7 +38,7 @@ The root of the application which provides the entry point for all the component
 ### components/egress/EgressRequestList.js
 
 This file contains the code required to render the egress requests in the form of a table, while providing
- sort and search capabilities. On render, the script makes an API call to AppSync to fetch the egress requests
+ sort and search capabilities. On render, the script makes an API call to [AWS AppSync](https://aws.amazon.com/appsync/) to fetch the egress requests
  from the database. The script also interacts with another API to allow for download of egress request objects.
 
 To render webpage components such as the table, buttons, and modals, the React library called
