@@ -4,7 +4,6 @@ import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import { Button } from '@mui/material';
 import { Auth } from 'aws-amplify';
-import logo from './logo.png';
 import './navbar.css';
 
 function NavBar() {
@@ -12,9 +11,6 @@ function NavBar() {
         <div style={{ flexGrow: 1 }}>
             <AppBar position="static" color="primary">
                 <Toolbar>
-                    <div className="topBarLogoContainer">
-                        <img src={logo} alt="Logo" />
-                    </div>
                     <Typography variant="h5" color="inherit" style={{ flexGrow: 1 }}>
                         TRE Secure Data Egress
                     </Typography>

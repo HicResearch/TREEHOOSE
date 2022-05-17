@@ -40,23 +40,7 @@ function App() {
         </div>
     ) : (
         <AmplifyAuthenticator>
-            <AmplifySignIn
-                slot="sign-in"
-                hideSignUp="true"
-                headerText="Sign In"
-                // formFields={null}
-                // federated={federated}
-            >
-                {/* <div slot="federated-buttons">
-          <Button color='primary'
-                  variant='contained'
-                  className='sign-in-button'
-                  fullWidth
-                  onClick={() => Auth.federatedSignIn({customProvider: "AWSSSO"})}
-                  >Sign In with College Credentials</Button>
-
-        </div> */}
-            </AmplifySignIn>
+            <AmplifySignIn slot="sign-in" hideSignUp="true" headerText="Sign In" />
         </AmplifyAuthenticator>
     );
 }
