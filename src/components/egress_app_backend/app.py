@@ -8,7 +8,7 @@
 from aws_cdk import core as cdk
 from aws_cdk.core import Aspects, Tags
 from cdk_nag import AwsSolutionsChecks
-from egress_backend_stack import EgressBackendStack
+from egress_backend.egress_backend_stack import EgressBackendStack
 
 ENVIRONMENT_TYPE = "Prod"
 
