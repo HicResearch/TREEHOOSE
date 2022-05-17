@@ -51,7 +51,7 @@ Column headers of the egress request table are predefined here.
 
 ### components/topBar/Topbar.jsx
 
-This file contains the code to render the top header bar on the page. The header contains the title and logo.
+This file contains the code to render the top header bar on the page which contains the application title.
 
 ### graphql
 
