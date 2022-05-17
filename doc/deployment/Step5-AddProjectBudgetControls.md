@@ -40,7 +40,7 @@ For guidance identifying the default workspace types (products) created by SWB, 
 - [ ] Go to Service: [AWS CloudFormation](https://eu-west-2.console.aws.amazon.com/cloudformation/home?region=eu-west-2#/)
 - [ ] Select the [*Stacks*](https://eu-west-2.console.aws.amazon.com/cloudformation/home?region=eu-west-2#/stacks) menu option on the left side
 - [ ] Press button: [*Create Stack* with new resources](https://eu-west-2.console.aws.amazon.com/cloudformation/home?region=eu-west-2#/stacks/create/template)
-- [ ] Select option *Upload a template file* to upload CloudFormation template file: [project budget controls](../../src/components/ProjectBudgetControl-Cfn.yaml) and press on button *Next*
+- [ ] Select option *Upload a template file* to upload CloudFormation template file: [project budget controls](../../src/components/budget_controls/ProjectBudgetControl-Cfn.yaml) and press on button *Next*
 - [ ] Provide *Stack name*: "TREProject1ProdBudgetControl". Add the parameters required. Press on button *Next* twice and then press on button *Create stack*
 
 |Parameter Name|Description|Default value|
