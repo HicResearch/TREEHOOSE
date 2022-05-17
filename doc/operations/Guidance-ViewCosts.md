@@ -80,6 +80,11 @@ This account can use
  [consolidated billing](https://docs.aws.amazon.com/awsaccountbilling/latest/aboutv2/consolidated-billing.html)
  to view AWS charges incurred by all other accounts in the AWS Organizations structure.
 
+To view costs for a particular category (e.g. combined charges for a TRE project covered by **TRE Project 1 Prod**
+ and **TRE Datalake 1 Prod**, data storage costs in **TRE Datalake 1 Prod**, etc.), you can create cost
+ categories using these
+ [instructions](https://docs.aws.amazon.com/awsaccountbilling/latest/aboutv2/manage-cost-categories.html).
+
 ## Learn More
 
 To learn about all the services that help with cost management, view the
