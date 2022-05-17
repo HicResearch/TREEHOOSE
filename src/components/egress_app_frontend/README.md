@@ -68,7 +68,7 @@ The __mutations.js__ and __queries.js__ scripts contain the GraphQL code, which 
 1. Any changes to the GraphQL schema should be made inside 'src/components/egress_app_backend/egress_backend/graphql/schema.graphql' in the backend.
 1. Remove any existing files inside 'src/graphql/schema.graphql' in the frontend.
 1. Copy the __schema.graphql__ from the backend to  'src/components/egress_app_frontend/src/graphql/schema.graphql' in the frontend.
-1. Run the command `amplify add codegen` in 'src/graphql' to generate the updated models for the frontend client to use.
+1. Run the command `amplify add codegen` in 'src/components/egress_app_frontend/src/graphql' to generate the updated models for the frontend client to use.
 1. You should see updated queries/mutations/subscriptions.js files in the same location.
 
 ## Component Libraries
