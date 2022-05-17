@@ -102,17 +102,17 @@ AWS Lambda function that is subscribed to a SWB-managed SNS topic in order to re
 
 ![Egress Workflow](../../../res/images/Graph-EgressApp-StepFunctions.png)
 
-* ***Save Request To DynamoDB:***
+* **Save Request To DynamoDB:**
   * Step Function task which uses direct integration with Amazon DynamoDB to write the request to the Egress Request DynamoDB table
   * The status of the entry is set to ***PROCESSING*** to maintain consistency with the SWB Egress store status update below
 
-* ***Update Request in Egress Store DynamoDB (processing):***
+* **Update Request in Egress Store DynamoDB (processing):**
   * Step Function task which uses direct integration with Amazon DynamoDB to update the egress store item status in the SWB DynamoDB
   table to ***PROCESSING***
   * With this status in place, the researcher is not permitted to terminate the workspace (& associated egress store) because there
   is a request in flight
 
-* ***Copy Objects to Egress Staging:***
+* **Copy Objects to Egress Staging:**
   * Step Function task which uses an AWS Lambda function (`copy_egress_candidates_to_staging`) to:
     * Retrieve the JSON version metadata file from the `egress_store_object_list_location` in the inbound SNS message
     This file contains a list of candidate egress objects and their associated S3 Version IDs that relate to this particular egress
@@ -124,7 +124,7 @@ AWS Lambda function that is subscribed to a SWB-managed SNS topic in order to re
     * Extract a list of distinct file types being staged. This list will be fed into the step function so that it can be included
     in notification alerts
 
-* ***Notify Information Governance:***
+* **Notify Information Governance:**
   * Step Function task which uses direct integration with Amazon SNS to:
     * Publish a notification to the Information Governance SNS topic
     * Format the notification to include:
@@ -133,27 +133,27 @@ AWS Lambda function that is subscribed to a SWB-managed SNS topic in order to re
       * Research Project
       * Researcher Email
 
-* ***Information Governance Decision:***
+* **Information Governance Decision:**
   * Step Function task which uses an AWS Lambda function (`update-egress-request-with-task-token-function`) to write a step function
   task token as an attribute of the egress request item in the DynamoDB table
   * The task pauses and waits for a callback which includes the token before it can resume execution
   * Callback will be received via a GraphQL API call from the frontend which will be processed by the `egress-api-handler`
   * Validation in the API will ensure that only the Information Governance role can update the request at this point in time
 
-* ***Save Information Governance Decision:***
+* **Save Information Governance Decision:**
   * Step Function task which uses direct integration with Amazon DynamoDB to update the Information Governance decision in the DynamoDB table
   * This task is triggered by the UpdateRequest API being invoked. The API invokes a Lambda function which uses the task token previously
   retrieved (when requests were loaded in the frontend) to resume the step function execution
 
-* ***Information Governance Approved?:***
+* **Information Governance Approved?:**
   * Step Function choice task which parses the status of the request as received from the frontend API call in the previous task to determine
   if the request was ***APPROVED*** or ***REJECTED*** by Information Governance
 
-* ***Delete Rejected Objects From Staging - IGLead:***
+* **Delete Rejected Objects From Staging - IGLead:**
   * When ***REJECTED*** by Information Governance, the Step Function task uses an AWS Lambda function (`handle_egress_rejection`)
   to delete staged objects from the Egress staging bucket (with the expectation that the researcher will review and submit a new egress request)
 
-* ***Notify Research IT:***
+* **Notify Research IT:**
   * If the request is ***APPROVED***, control is passed to a Step Function task which uses direct integration with Amazon SNS to:
     * Publish a notification to the Information Governance SNS topic
     * Format the notification to include:
@@ -163,27 +163,27 @@ AWS Lambda function that is subscribed to a SWB-managed SNS topic in order to re
       * Researcher Email
       * Information Governance Email
 
-* ***Research IT Decision:***
+* **Research IT Decision:**
   * Step Function task which uses an AWS Lambda function (`update-egress-request-with-task-token-function`) to write a step function
   task token as an attribute of the egress request item in the DynamoDB table
   * The task pauses and waits for a callback which includes the token before it can resume execution
   * Callback will be received via a GraphQL API call from the frontend which will be processed by the `egress-api-handler`
   * Validation in the API will ensure that only the Research IT role can update the request at this point in time
 
-* ***Save Research IT Decision:***
+* **Save Research IT Decision:**
   * Step Function task which uses direct integration with Amazon DynamoDB to update the Research IT decision in the DynamoDB table.
   * This task is triggered by the UpdateRequest API being invoked. The API invokes a Lambda function which uses the task token previously
   retrieved (when requests were loaded in the frontend) to resume the step function execution
 
-* ***Research IT Approved?:***
+* **Research IT Approved?:**
   * Step Function choice task which parses the status of the request as received from the frontend API call in the previous task
   to determine if the request was ***APPROVED*** or ***REJECTED*** by Research IT
 
-* ***Delete Rejected Objects From Staging - RIT:***
+* **Delete Rejected Objects From Staging - RIT:**
   * When ***REJECTED*** by Research IT, the Step Function task uses an AWS Lambda function (`handle_egress_rejection`) to delete staged
   objects from the Egress staging bucket (with the expectation that the researcher will review and submit a new egress request)
 
-* ***Copy Approved Objects to Datalake:***
+* **Copy Approved Objects to Datalake:**
   * If the request is ***APPROVED***, control is passed to a Step Function task which uses an AWS Lambda function
   (`copy_egress_candidates_to_datalake`) to:
     * Download the approved egress objects unto an EFS file store that is attached to the Lambda function
@@ -191,7 +191,7 @@ AWS Lambda function that is subscribed to a SWB-managed SNS topic in order to re
     * Upload the zip file to the datalake target S3 bucket
     * Clean up all related data from both the egress staging bucket and the EFS
 
-* ***Update Request in Egress Store DynamoDB (status):***
+* **Update Request in Egress Store DynamoDB (status):**
   * Step Function task which uses direct integration with Amazon DynamoDB to update the egress store item status in the SWB DynamoDB
   table as follows:
 
@@ -205,6 +205,6 @@ AWS Lambda function that is subscribed to a SWB-managed SNS topic in order to re
   to terminate the research workspace and associated egress store at this stage. (They could not do so while the request was in a status
   of ***PROCESSING*** which is set when the egress request is first received by the step function.)
 
-* ***Notify Requester:***
+* **Notify Requester:**
   * Step Function task to send an email to the requester (e.g. researcher) with the Information Governance lead in copy. The email marks
   an egress request review as complete and provides instructions with next steps.
