@@ -17,6 +17,9 @@ There will also be costs for the data lake account (e.g. **TRE Datalake 1 Prod**
  easy-to-use interface to visualise costs. An example of daily costs associated with
  the all the accounts used for a TRE deployment is provided below.
 
+> Note: The Management account should already have AWS Cost Explorer enabled as per the instructions
+> in [Step 2 in the deployment prerequisites](../deployment/Prerequisites.md) section.
+
 Log in to the [AWS Management Console](https://console.aws.amazon.com/)
  using your organization's **Management** account and Admin privileges.
 
