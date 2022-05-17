@@ -36,9 +36,9 @@ AWS Cost Explorer provides several filters to generate a different view of the c
 
 You can also use AWS Cost Explorer in any of the member AWS accounts as shown below.
 
-> Note: A new AWS account needs to initialise AWS Cost Explorer before it can use the service. Follow these
-> [instructions](https://docs.aws.amazon.com/cost-management/latest/userguide/ce-enable.html) to enable it.
-> This process can take around 24 hours to complete.
+> Note: A new AWS account needs to initialise AWS Cost Explorer before it can use the service. Follow
+> these [instructions](https://docs.aws.amazon.com/cost-management/latest/userguide/ce-enable.html)
+> to enable it. This process can take around 24 hours to complete.
 
 Log in to the [AWS Management Console](https://console.aws.amazon.com/)
  using your **TRE Project 1 Prod** account and Admin privileges.
