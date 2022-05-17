@@ -13,9 +13,9 @@ The egress application backend is defined as a Python-based [CDK](https://aws.am
 
 ## 1. Egress Backend Stack
 
-The *egress_backend/egress_backend_stack.py* defines the resources that make up the egress approval workflow.
- These include the series of Lambda functions in the StepFunctions (Egress workflow) and the Amplify app hosting
- the user interface (Egress Web App).
+The *src/components/egress_app_backend/egress_backend/egress_backend_stack.py* defines the resources that make up
+ the egress approval workflow. These include the series of Lambda functions in the StepFunctions
+ (Egress workflow) and the Amplify app hosting the user interface (Egress Web App).
 
 The egress workflow utilizes [AWS Step Functions](https://aws.amazon.com/step-functions/) which is
  a visual workflow service that orchestrates a series of [Lambda](https://aws.amazon.com/lambda/) functions and tasks
@@ -33,20 +33,22 @@ This table is used to store egress requests as they are received from SWB. These
  by handling the heavy lifting of securely connecting to data sources like DynamoDB, Lambda, and
  more. [GraphQL](https://graphql.org/) is a query language for the API, and a server-side runtime for executing
  queries using a type system defined for your data.
- The data types are defined in *egress_backend/graphql/schema.graphql* and include the definition of an egress request
- and its attributes. Additionally, definitions of data queries and mutations (updates) are also included:
+ The data types are defined in *src/components/egress_app_backend/egress_backend/graphql/schema.graphql*
+ and include the definition of an egress request and its attributes. Additionally, definitions of data
+ queries and mutations (updates) are also included:
 
 * listRequests - Lists all egress requests (Query)
 * updateRequest - Updates a given request with approval status, justification, and approver name (Mutation)
 * downloadData - Generates a S3 presigned URL which will be used by the frontend to download data associated with the
  request (Mutation)
 
-Appsync uses the schema in combination with resolvers (defined in *egress_backend_stack.py*), which provides integration
+Appsync uses the schema in combination with resolvers
+ (defined in *src/components/egress_app_backend/egress_backend/egress_backend_stack.py*), which provides integration
  with a single Lambda (Egress-API) executing the business logic for the API.
 
-The Lambda code is defined in *egress_backend/lambda/egress_api* where *main.py* serves as the entry point.
- This script is called anytime the AppSync endpoint is called and is able to filter (switch cases) the request
- type and execute different scripts containing differing business logic.
+The Lambda code is defined in *src/components/egress_app_backend/egress_backend/lambda/egress_api* where *main.py*
+ serves as the entry point. This script is called anytime the AppSync endpoint is called and is able to filter
+ (switch cases) the request type and execute different scripts containing differing business logic.
 
 * **List Requests API**
   * ***Request Parameters:*** None
