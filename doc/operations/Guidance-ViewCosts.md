@@ -70,6 +70,16 @@ An IT admin can add tags to workspace configurations in SWB. These custom tags c
 To learn more about cost allocation tags, view the
  [AWS Billing user guide](https://docs.aws.amazon.com/awsaccountbilling/latest/aboutv2/cost-alloc-tags.html).
 
+## Management Account
+
+The **Management** account is defined in the [deployment prerequisites](../deployment/Prerequisites.md) section.
+From a cost perspective, it has the responsibilities of a payer account and as such, it is responsible for
+ also paying all the charges that are accrued by the member accounts (e.g. **TRE Project 1 Prod**).
+
+This account can use
+ [consolidated billing](https://docs.aws.amazon.com/awsaccountbilling/latest/aboutv2/consolidated-billing.html)
+ to view AWS charges incurred by all other accounts in the AWS Organizations structure.
+
 ## Learn More
 
 To learn about all the services that help with cost management, view the
