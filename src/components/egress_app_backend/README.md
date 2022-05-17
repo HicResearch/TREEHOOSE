@@ -44,8 +44,8 @@ This table is used to store egress requests as they are received from SWB. These
  request (Mutation)
 
 Appsync uses the schema in combination with resolvers
- (defined in *src/components/egress_app_backend/egress_backend/egress_backend_stack.py*), which provides integration
- with a single Lambda (Egress-API) executing the business logic for the API.
+ (*src/components/egress_app_backend/egress_backend/egress_backend_stack.py*),
+ which provides integration with a single Lambda (Egress-API) executing the business logic for the API.
 
 The Lambda code is defined in *src/components/egress_app_backend/egress_backend/lambda/egress_api* where *main.py*
  serves as the entry point. This script is called anytime the AppSync endpoint is called and is able to filter
