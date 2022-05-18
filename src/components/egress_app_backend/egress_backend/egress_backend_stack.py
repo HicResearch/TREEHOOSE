@@ -115,8 +115,7 @@ class EgressBackendStack(cdk.Stack):
         tre_admin_email_address = self.node.try_get_context(env_id).get(
             "tre_admin_email_address"
         )
-
-        # The code that defines your stack goes here
+        
         this_dir = path.dirname(__file__)
 
         # SES Configuration Set components
