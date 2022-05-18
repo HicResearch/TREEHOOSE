@@ -1,6 +1,10 @@
 {
     "name": "egress-webapp",
     "version": "0.1.0",
+    "author": {
+        "name": "AWS Professional Services",
+        "url": "https://aws.amazon.com/professional-services/"
+    },
     "private": true,
     "dependencies": {
         "@aws-amplify/ui-react": "^1.2.21",
