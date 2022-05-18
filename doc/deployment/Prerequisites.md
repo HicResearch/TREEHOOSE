@@ -189,3 +189,6 @@ These steps are optional, but recommended for implementing best practices on AWS
  [instructions](https://docs.aws.amazon.com/singlesignon/latest/userguide/manage-your-accounts.html)
 - [ ] To allow IAM users to view Billing on AWS, please follow these
  [instructions](https://docs.aws.amazon.com/awsaccountbilling/latest/aboutv2/control-access-billing.html#ControllingAccessWebsite-Activate)
+- [ ] To learn how to manage AWS Organizations effectively, please follow the
+ [best practices notes](https://aws.amazon.com/blogs/mt/best-practices-for-organizational-units-with-aws-organizations/) and the
+ [recommended OU setup](https://docs.aws.amazon.com/whitepapers/latest/organizing-your-aws-environment/recommended-ous.html)
