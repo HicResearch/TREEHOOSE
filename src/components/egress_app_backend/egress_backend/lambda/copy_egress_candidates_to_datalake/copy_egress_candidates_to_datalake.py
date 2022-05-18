@@ -14,33 +14,32 @@ from aws_lambda_powertools.metrics import MetricUnit
 tracer = Tracer(service="EgressCopyToDatalake")
 logger = Logger(service="EgressCopyToDatalake", sample_rate=0.1)
 metrics = Metrics(service="EgressCopyToDatalake", namespace="EgressRequests")
-s3 = boto3.client('s3')
-s3_resource = boto3.resource('s3')
+s3 = boto3.client("s3")
+s3_resource = boto3.resource("s3")
 
-source_bucket = os.environ.get('EGRESS_STAGING_BUCKET')
-target_bucket = os.environ.get('EGRESS_DATALAKE_BUCKET')
-target_bucket_kms_key = os.environ.get('EGRESS_DATALAKE_BUCKET_KMS_KEY')
-efs_mount_path = os.environ.get('EFS_MOUNT_PATH')
+source_bucket = os.environ.get("EGRESS_STAGING_BUCKET")
+target_bucket = os.environ.get("EGRESS_DATALAKE_BUCKET")
+target_bucket_kms_key = os.environ.get("EGRESS_DATALAKE_BUCKET_KMS_KEY")
+efs_mount_path = os.environ.get("EFS_MOUNT_PATH")
 
 
 @metrics.log_metrics()
 @tracer.capture_lambda_handler
 @logger.inject_lambda_context(log_event=True)
 def handler(event, context):
-    workspace_id = event['workspace_id']
-    egress_request_id = event['egress_request_id']
+    workspace_id = event["workspace_id"]
+    egress_request_id = event["egress_request_id"]
 
-    logger.info('Starting copy to datalake bucket with egress request ID: ' + egress_request_id)
+    logger.info(
+        "Starting copy to datalake bucket with egress request ID: " + egress_request_id
+    )
 
-    logger.debug('Staging bucket: ' + source_bucket)
-    logger.debug('Datalake bucket: ' + target_bucket)
+    logger.debug("Staging bucket: " + source_bucket)
+    logger.debug("Datalake bucket: " + target_bucket)
 
     s3_prefix = f"{workspace_id}/{egress_request_id}"
 
-    copy_files_to_egress_datalake(
-        source_bucket=source_bucket,
-        s3_prefix=s3_prefix
-    )
+    copy_files_to_egress_datalake(source_bucket=source_bucket, s3_prefix=s3_prefix)
     metrics.add_metric(name="EgressRequestApproved", value=1, unit=MetricUnit.Count)
     return True
 
@@ -55,7 +54,7 @@ def copy_files_to_egress_datalake(source_bucket: str, s3_prefix: str):
         delete_staged_objects(object_list, source_bucket)
         delete_efs_objects(downloaded_list)
     else:
-        logger.warn('No objects were found in the source bucket')
+        logger.warn("No objects were found in the source bucket")
 
 
 ####################################################################
@@ -73,25 +72,22 @@ def get_objects_list(bucket, prefix, object_list):
     :return: []
     """
     # prepare args for retrieving items from a prefix (items from a certain prefix only)
-    kwargs = {
-        'Bucket': bucket,
-        'Prefix': prefix
-    }
+    kwargs = {"Bucket": bucket, "Prefix": prefix}
 
-    paginator = s3.get_paginator('list_objects_v2')
+    paginator = s3.get_paginator("list_objects_v2")
     pages = paginator.paginate(**kwargs)
 
     for page in pages:
-        for obj in page['Contents']:
-            object_k = obj['Key']
+        for obj in page["Contents"]:
+            object_k = obj["Key"]
             if object_k.endswith("/"):
                 # this is not an object
                 continue
             else:
                 object_list.append(object_k)
 
-    logger.info('Retrieved list of objects')
-    logger.debug('Object list: ' + str(object_list))
+    logger.info("Retrieved list of objects")
+    logger.debug("Object list: " + str(object_list))
     return object_list
 
 
@@ -102,12 +98,13 @@ def get_objects_list(bucket, prefix, object_list):
 def zip_and_upload(downloaded_list, target_bucket, s3_prefix):
 
     # Static filename and top level prefix
-    file_name = 'egress_data.zip'
-    top_level_prefix = 'approved_egress'
+    file_name = "egress_data.zip"
+    top_level_prefix = "approved_egress"
 
     # Create zip file and load downloaded objects from /tmp
-    with tempfile.NamedTemporaryFile(mode='w+b', suffix='.zip', dir=efs_mount_path, delete=True) as f, \
-         ZipFile(f.name, 'w', compression=ZIP_DEFLATED, allowZip64=True) as ziph:
+    with tempfile.NamedTemporaryFile(
+        mode="w+b", suffix=".zip", dir=efs_mount_path, delete=True
+    ) as f, ZipFile(f.name, "w", compression=ZIP_DEFLATED, allowZip64=True) as ziph:
         for _counter, object_f in enumerate(downloaded_list, start=1):
             logger.debug("WRITING FILE: " + object_f)
             # Write the file to the zip archive specifying the file name too instead of using the entire file path
@@ -123,12 +120,15 @@ def zip_and_upload(downloaded_list, target_bucket, s3_prefix):
             target_bucket,
             target_path,
             ExtraArgs={
-                'ServerSideEncryption': 'aws:kms',
-                'SSEKMSKeyId': target_bucket_kms_key
-            }
+                "ServerSideEncryption": "aws:kms",
+                "SSEKMSKeyId": target_bucket_kms_key,
+            },
         )
 
-        logger.info('%s object(s) zipped successfully and uploaded to datalake bucket', str(_counter))
+        logger.info(
+            "%s object(s) zipped successfully and uploaded to datalake bucket",
+            str(_counter),
+        )
 
 
 ####################################################################
@@ -156,11 +156,13 @@ def download_objects(object_list, source_bucket, downloaded_list):
 
         # Download object into download path in tmp dir
         s3.download_file(source_bucket, obj, download_path)
-        logger.debug('Downloaded %s from %s to %s', str(obj), source_bucket, download_path)
+        logger.debug(
+            "Downloaded %s from %s to %s", str(obj), source_bucket, download_path
+        )
 
         downloaded_list.append(download_path)
 
-    logger.info('Downloaded %s object(s) unto EFS storage', str(_counter))
+    logger.info("Downloaded %s object(s) unto EFS storage", str(_counter))
     return downloaded_list
 
 
@@ -181,16 +183,13 @@ def delete_staged_objects(object_list, source_bucket):
     # retrieve objects in the list
     for _counter, obj in enumerate(object_list, start=1):
         # create arguments for delete object call in staging bucket
-        kwargs = {
-            'Bucket': source_bucket,
-            'Key': obj
-        }
+        kwargs = {"Bucket": source_bucket, "Key": obj}
 
         # delete objects in staging bucket
         s3.delete_object(**kwargs)
-        logger.debug('Deleted %s from %s', str(obj), source_bucket)
+        logger.debug("Deleted %s from %s", str(obj), source_bucket)
 
-    logger.info('Deleted %s object/s from staging bucket', str(_counter))
+    logger.info("Deleted %s object/s from staging bucket", str(_counter))
     return True
 
 
@@ -208,9 +207,9 @@ def delete_efs_objects(downloaded_list):
     # retrieve objects in the list
     for _counter, obj in enumerate(downloaded_list, start=1):
         os.remove(obj)
-        logger.debug('Deleted %s from EFS', str(obj))
+        logger.debug("Deleted %s from EFS", str(obj))
 
-    logger.info('Deleted %s object(s) from EFS', str(_counter))
+    logger.info("Deleted %s object(s) from EFS", str(_counter))
     return True
 
 
@@ -219,5 +218,5 @@ def delete_efs_objects(downloaded_list):
 ##########################################################################################################
 def get_file_name(path: str):
     # split the object key into parts and get the file name
-    obj_parts = path.split('/')
+    obj_parts = path.split("/")
     return obj_parts[-1]

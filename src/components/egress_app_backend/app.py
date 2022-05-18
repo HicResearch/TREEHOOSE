@@ -8,20 +8,20 @@
 from aws_cdk import core as cdk
 from aws_cdk.core import Aspects, Tags
 from cdk_nag import AwsSolutionsChecks
-from egress_backend_stack import EgressBackendStack
+from egress_backend.egress_backend_stack import EgressBackendStack
 
 ENVIRONMENT_TYPE = "Prod"
 
 app = cdk.App()
 
 egress_backend_stack = EgressBackendStack(
-    app,
-    "EgressAppBackend",
-    env_id=ENVIRONMENT_TYPE
+    app, "EgressAppBackend", env_id=ENVIRONMENT_TYPE
 )
 
 Tags.of(egress_backend_stack).add("Environment", ENVIRONMENT_TYPE)
-for tag_key, tag_value in app.node.try_get_context(ENVIRONMENT_TYPE)["resource_tags"].items():
+for tag_key, tag_value in app.node.try_get_context(ENVIRONMENT_TYPE)[
+    "resource_tags"
+].items():
     Tags.of(egress_backend_stack).add(tag_key, tag_value)
 
 # Stack security scanning

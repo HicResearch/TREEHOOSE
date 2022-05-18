@@ -10,14 +10,14 @@ from aws_lambda_powertools import Logger
 
 logger = Logger(service="PreTokenGeneration", sample_rate=0.1)
 
-reviewer_list = os.environ['REVIEWER_LIST']
+reviewer_list = os.environ["REVIEWER_LIST"]
 
 
 def custom_groups_exist(event: str):
     """
     Utility method to determine if the passed in event contains the custom groups attribute.
     """
-    return event['request']['userAttributes'].get('custom:groups') is not None
+    return event["request"]["userAttributes"].get("custom:groups") is not None
 
 
 @logger.inject_lambda_context(log_event=True)
@@ -36,19 +36,21 @@ def handler(event, context):
     # If custom group attribute exists, modify the token. Otherwise return as is
     if custom_groups_exist(event):
         # Get the custom:groups attribute
-        adfs_groups = event['request']['userAttributes']['custom:groups']
-        user_id = event['request']['userAttributes']['sub']
+        adfs_groups = event["request"]["userAttributes"]["custom:groups"]
+        user_id = event["request"]["userAttributes"]["sub"]
         reviewer_list_groups = json.loads(reviewer_list)
 
         # Loop through expected groups and check for a match
         for group in reviewer_list_groups:
             if group in adfs_groups:
                 # override claim in ID token
-                logger.debug("Performing group override after matching custom group: %s for user with sub: %s", str(group), str(user_id))
+                logger.debug(
+                    "Performing group override after matching custom group: %s for user with sub: %s",
+                    str(group),
+                    str(user_id),
+                )
                 event["response"]["claimsOverrideDetails"] = {
-                    "groupOverrideDetails": {
-                        "groupsToOverride": [group]
-                    }
+                    "groupOverrideDetails": {"groupsToOverride": [group]}
                 }
 
     # return ID token to Amazon Cognito
