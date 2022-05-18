@@ -329,7 +329,7 @@ class EgressBackendStack(cdk.Stack):
                     effect=iam.Effect.ALLOW,
                     actions=["amplify:StartDeployment"],
                     resources=[
-                        f"arn:aws:amplify:{self.region}:{self.account}:apps/*/branches/*"
+                       f"arn:aws:amplify:{self.region}:{self.account}:apps/{amplify_app.app_id}/branches/{amplify_branch_name}/deployments/start"
                     ],
                 ),
             ],
