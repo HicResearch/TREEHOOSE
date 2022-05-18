@@ -95,8 +95,8 @@ Before proceeding with the steps below, please be aware of the following limitat
 - Do not add the same SWB user under both *Admin* and *Read Only* permissions for a registered data study as
  it leads to permission errors when viewing the study
 - Once an external S3 bucket is registered as data study, it cannot be updated nor deleted. Please view the
- [troubleshooting guide](../../troubleshooting/TroubleshootingRunbook.md) for instructions on how to handle
- this situation
+ [troubleshooting guide](../../troubleshooting/TroubleshootingRunbook.md#external-data-studies) for instructions
+ on how to handle this situation
 
 Follow the instructions below to provide SWB users of type Information Governance Lead with access to view
  the egress requests made by researchers in SWB.
