@@ -45,8 +45,7 @@ The solution must be deployed in a multi-account environment created and
 - [ ] Press button: [*Set up landing zone*](https://eu-west-2.console.aws.amazon.com/controltower/home/setup?region=eu-west-2)
 
 >Troubleshooting Note: If you see the message "Your AWS Environment is not ready for AWS Control Tower to be set up.",
->please refer to `TODO: insert link` (Expand on "Launch and terminate at least one EC2 instance (size of instance and
->duration of run prior to termination do not matter), as this establishes the base compute service limits") before proceeding.
+>please refer to the [troubleshooting guide](../troubleshooting/TroubleshootingRunbook.md#compute-service-limits).
 
 Leave every option set to default in the Control Tower Landing Zone Setup, except:
 
