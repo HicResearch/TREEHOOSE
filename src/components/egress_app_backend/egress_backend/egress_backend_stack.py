@@ -1253,13 +1253,13 @@ class EgressBackendStack(cdk.Stack):
             ),
         )
 
-        # Define CFN NAG Rule Suppressions
+        # Define CDK NAG Rule Suppressions
         NagSuppressions.add_resource_suppressions(
             ses_sender_email_verification,
             [
                 {
                     "id": "AwsSolutions-IAM5",
-                    "reason": "Yes wildcard is used but this has been scoped down to the Admin app. \
+                    "reason": "Yes wildcard is used but this has been scoped down to the Egress app. \
                         Needed for deployment flexibility and it only applies to logging actions",
                 }
             ],
@@ -1493,7 +1493,7 @@ class EgressBackendStack(cdk.Stack):
             [
                 {
                     "id": "AwsSolutions-IAM5",
-                    "reason": "Yes wildcard is used but this has been scoped down to the Admin app. \
+                    "reason": "Yes wildcard is used but this has been scoped down to the Egress app. \
                         Needed for deployment flexibility and it only applies to logging actions",
                 }
             ],
@@ -1504,7 +1504,7 @@ class EgressBackendStack(cdk.Stack):
             [
                 {
                     "id": "AwsSolutions-IAM5",
-                    "reason": "Yes wildcard is used but this has been scoped down to the Admin app. \
+                    "reason": "Yes wildcard is used but this has been scoped down to the Egress app. \
                         Needed for deployment flexibility and it only applies to logging actions",
                 }
             ],
@@ -1538,16 +1538,6 @@ class EgressBackendStack(cdk.Stack):
         NagSuppressions.add_resource_suppressions(
             egress_webapp_redeploy_lambda_role,
             [{"id": "AwsSolutions-IAM5", "reason": "Wilcard permissions are expected"}],
-            True,
-        )
-        NagSuppressions.add_resource_suppressions(
-            egress_webapp_redeploy_lambda_role,
-            [
-                {
-                    "id": "AwsSolutions-IAM4",
-                    "reason": "AWS Managed role is used for Lambda Basic Execution Policy",
-                }
-            ],
             True,
         )
         NagSuppressions.add_resource_suppressions(
