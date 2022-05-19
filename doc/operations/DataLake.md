@@ -24,6 +24,7 @@ Data Lake Managers can upload data to the **TRE Source Bucket** using
  [optimisation methods](https://aws.amazon.com/premiumsupport/knowledge-center/s3-upload-large-files/).
 
 Optionally, Data Lake Managers:
+
 * can apply ETL jobs on S3 buckets using [AWS Glue](https://aws.amazon.com/glue/) to prepare
  or transform the data before they store it in the **TRE Source Bucket** to share it with researchers.
 * can query S3 data buckets like **TRE Source Bucket** using [Amazon Athena](https://aws.amazon.com/athena)

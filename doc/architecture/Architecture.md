@@ -142,9 +142,11 @@ Below diagrams explain how the backup solution works
 for
 
 1. EC2 based workspaces.
+
 ![EC2 backed workspaces](../../res/images/ec2-based-backup-design.png)
 
 1. SageMaker notebook based workspaces
+
 ![SageMaker notebook backed workspaces](../../res/images/sagemaker-notebook-backup-design.png)
 
 Key Components:

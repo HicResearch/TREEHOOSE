@@ -31,10 +31,11 @@ To skip the need to manually add and verify each email address in Amazon SES, yo
 **Time to deploy**: Approximately 35 minutes
 
 ### Step 4A. Log in to the EC2 instance
+
 - [ ] Follow these instructions to learn how to connect via SSM to the EC2 instance created in Step 1.
 - [ ] Run the following command to log in and initialise your environment:
 
-```
+```shell
 sudo -iu ec2-user
 ```
 
