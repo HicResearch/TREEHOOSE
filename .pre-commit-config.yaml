@@ -41,4 +41,4 @@ repos:
       rev: v0.59.1
       hooks:
       -   id: cfn-python-lint
-          files: src/.*\.(json|yml|yaml)$
+          files: src/.*\.(yml|yaml)$
