@@ -134,3 +134,14 @@ Verify the Amplify app has been updated automatically and the website is reachab
 - [ ] Open the URL from *Domain* and confirm a login prompt appears like in the image below
 
 ![Egress App Website](../../res/images/Status-EgressAppDeployed.png)
+
+## Appendix
+
+The web application deployed by the Egress Application does not have web application
+firewall protection enabled by default.
+For additional security follow [these](https://docs.aws.amazon.com/waf/latest/developerguide/getting-started.html) steps to
+deploy a an [AWS WAF](https://aws.amazon.com/waf/).
+As Amplify does not natively support integration with WAF
+deploy the Egress Application Web App using [these](https://docs.aws.amazon.com/prescriptive-guidance/latest/patterns/deploy-a-react-based-single-page-application-to-amazon-s3-and-cloudfront.html)
+instructions.
+The CloudFront distribution created by the deployment can then be attached to WAF.
