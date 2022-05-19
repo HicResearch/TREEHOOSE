@@ -9,7 +9,6 @@ repos:
       -   id: check-added-large-files
       -   id: debug-statements
       -   id: name-tests-test
-      -   id: double-quote-string-fixer
       -   id: requirements-txt-fixer
   - repo: https://github.com/awslabs/git-secrets
     rev: 80230afa8c8bdeac766a0fece36f95ffaa0be778
