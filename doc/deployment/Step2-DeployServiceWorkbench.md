@@ -1,3 +1,5 @@
+# Deploy Service Workbench
+
 Ensure all steps below are executed in AWS region: [London (eu-west-2)](https://eu-west-2.console.aws.amazon.com/).
 
 ## Step 2. Deploy ServiceWorkbench
@@ -8,24 +10,27 @@ Ensure all steps below are executed in AWS region: [London (eu-west-2)](https://
 
 - [ ] Follow these [instructions](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/session-manager.html) to learn how to connect via SSM to the EC2 instance created in Step 1.
 - [ ] Run the following command to log in and initialise your environment:
-```
+
+```bash
 sudo -iu ec2-user
 ```
 
 ### Step 2B. Download ServiceWorkbench
 
 - [ ] Run the following commands to get a copy of the open-source software called ServiceWorkbench (SWB):
-```
+
+```bash
 cd /home/ec2-user/tmp
-wget https://github.com/awslabs/service-workbench-on-aws/archive/refs/tags/v5.1.0.tar.gz
-tar -xzf v5.1.0.tar.gz
+wget https://github.com/awslabs/service-workbench-on-aws/archive/refs/tags/v5.1.1.tar.gz
+tar -xzf v5.1.1.tar.gz
 ```
 
 ### Step 2C. Create configuration file
 
 - [ ] Run the following commands to create a configuration file for SWB:
-```
-cd /home/ec2-user/tmp/service-workbench-on-aws-5.1.0/main/config/settings
+
+```bash
+cd /home/ec2-user/tmp/service-workbench-on-aws-5.1.1/main/config/settings
 cp .defaults.yml treprod.yml
 nano treprod.yml
 ```
@@ -33,7 +38,8 @@ nano treprod.yml
 Inside the `treprod.yml` file, change the parameters below as instructed and then save the file.
 
 - [ ] Add:
-```
+
+```bash
 awsRegion: eu-west-2
 solutionName: pj1
 rootUserName: <replace this with TRE project IT admin's username>
@@ -45,9 +51,10 @@ isAppStreamEnabled: true
 ```
 
 - [ ] Remove:
-```
-versionNumber: '5.1.0'
-versionDate: '2022-03-22'
+
+```bash
+versionNumber: '5.1.1'
+versionDate: '2022-04-08'
 ```
 
 Note: Remove the versionNumber and versionDate in the configuration file every time you need to run Step 2E. This is a fix for an issue in SWB in which a script fails when these 2 parameters are set.
@@ -57,8 +64,9 @@ Note: Remove the versionNumber and versionDate in the configuration file every t
 **Time to deploy**: Approximately 15 minutes
 
 - [ ] Run the following commands to install SWB:
-```
-cd /home/ec2-user/tmp/service-workbench-on-aws-5.1.0
+
+```bash
+cd /home/ec2-user/tmp/service-workbench-on-aws-5.1.1
 ./scripts/environment-deploy.sh treprod
 ```
 
@@ -67,15 +75,17 @@ cd /home/ec2-user/tmp/service-workbench-on-aws-5.1.0
 **Time to deploy**: Approximately 15 minutes
 
 - [ ] Run the following commands to install the required packer package:
-```
+
+```bash
 sudo yum install -y yum-utils
 sudo yum-config-manager --add-repo https://rpm.releases.hashicorp.com/AmazonLinux/hashicorp.repo
 sudo yum -y install packer
 ```
 
 - [ ] Run the following commands to build the default SWB workspace images:
-```
-cd /home/ec2-user/tmp/service-workbench-on-aws-5.1.0/main/solution/machine-images
+
+```bash
+cd /home/ec2-user/tmp/service-workbench-on-aws-5.1.1/main/solution/machine-images
 pnpx sls build-image -s treprod
 ```
 
@@ -86,9 +96,11 @@ pnpx sls build-image -s treprod
 > Currently set to default instructions and image provided by SWB
 
 #### Part 1
+
 - [ ] Run the following commands to create an image builder in AppStream:
-```
-cd /home/ec2-user/tmp/service-workbench-on-aws-5.1.0/scripts/app-stream
+
+```bash
+cd /home/ec2-user/tmp/service-workbench-on-aws-5.1.1/scripts/app-stream
 npm install
 npm audit fix
 npm run start-image-builder -- default eu-west-2 default default
@@ -104,9 +116,10 @@ Log in to the [AWS Management Console](https://console.aws.amazon.com/) using yo
 - [ ] On the new tab page that opened in your browser, log in as *Administrator*
 - [ ] On the Windows Desktop provided by AppStream, press on the Start button and right click on Windows Powershell to select *Run as administrator*
 - [ ] Run the following commands in Windows Powershell to create an AppStream image:
-```
+
+```bash
 cd ~\Documents
-Invoke-WebRequest -Uri https://raw.githubusercontent.com/awslabs/service-workbench-on-aws/v5.1.0/scripts/app-stream/buildImage.ps1 -OutFile buildImage.ps1
+Invoke-WebRequest -Uri https://raw.githubusercontent.com/awslabs/service-workbench-on-aws/v5.1.1/scripts/app-stream/buildImage.ps1 -OutFile buildImage.ps1
 .\buildImage.ps1
 ```
 
@@ -117,15 +130,19 @@ You can view the image created in AppStream's menu option: [*Image registry*](ht
 **Time to deploy**: Approximately 10 minutes
 
 - [ ] Run the following commands to get the web link for SWB:
-```
-cd /home/ec2-user/tmp/service-workbench-on-aws-5.1.0
+
+```bash
+cd /home/ec2-user/tmp/service-workbench-on-aws-5.1.1
 ./scripts/get-info.sh treprod
 ```
+
 - [ ] Copy the value for *Website URL* and open the browser to access the page
-- [ ] Log in using the *rootUserEmail* user set in the configuration file in step 2C. For the first time login, use the temporary password received in an email. Alternatively, use the password shown in the get-info.sh output under *Temporary Native Pool Password*
+- [ ] Log in using the *rootUserEmail* user set in the configuration file in step 2C. For the first time login, use the temporary password received in an email.
+  Alternatively, use the password shown in the get-info.sh output under *Temporary Native Pool Password*
 - [ ] In the SWB website, select *Accounts* on the left side menu
 - [ ] Select *AWS Accounts* and press on button *Add AWS Account*. Some of the settings are adjustable (e.g. time limits, instance type). Below you can find suggested values:
-```
+
+```console
 Account Name: TRE-Project-1-Prod
 AWS Account ID: <The ID for the TRE Project 1 Prod account>
 Description: TRE Project 1 Prod - Compute Resources
@@ -138,6 +155,11 @@ AppStreamImageName: <The image built in step 2F - Part 2>
 AppStreamInstanceType: stream.standard.small
 AppStreamFleetType: ON_DEMAND
 ```
+
+Note there are 3 options you can select for the AppStream Fleet Type: ON_DEMAND, ALWAYS_ON and ELASTIC. SWB only supports ON_DEMAND and ALWAYS_ON.
+ALWAYS_ON will reduce the waiting time to establish an AppStream connection, but it will cost more.
+To learn more about AppStream fleet types, follow this [guide](https://docs.aws.amazon.com/appstream2/latest/developerguide/fleet-type.html).
+
 - [ ] Press on button *Onboard AWS Account* and follow all remaining instructions on the web page
 - [ ] Confirm the account status matches the image below
 

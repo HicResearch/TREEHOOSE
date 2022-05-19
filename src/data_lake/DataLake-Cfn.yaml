@@ -16,24 +16,6 @@ Parameters:
     MaxLength: 12
     AllowedPattern: "[0-9]+"
 
-  EgressAppDomainName:
-    Type: String
-    Description: Domain name used for the Egress App
-
-  EgressAppStackName:
-    Type: String
-    Description: Stack name used for the Egress-Backend
-
-  EgressAppCopyLambdaPrefix:
-    Type: String
-    Description: Prefix for the lambda function which copies approved egress data to the data lake
-    Default: copyegresscandidatestodatalake
-
-  EgressAppDownloadLambdaPrefix:
-    Type: String
-    Description: Prefix for the lambda function which downloads approved egress data from the data lake
-    Default: EgressApiLambdaServiceRole
-
   LFDatabaseName:
     Type: String
     Description: Lake Formation database name to store a governed table
@@ -44,11 +26,7 @@ Metadata:
       - Label:
           default: Egress App Integration Configuration
         Parameters:
-          - EgressAppDomainName
           - EgressAppAccount
-          - EgressAppCopyLambdaPrefix
-          - EgressAppDownloadLambdaPrefix
-          - EgressAppStackName
       - Label:
           default: Data Lake Configuration
         Parameters:
@@ -163,7 +141,6 @@ Resources:
           - id: W35
             reason: S3 bucket hosting access logs shouldn't have access logging configured
     Properties:
-      BucketName: tre-access-logs-bucket
       BucketEncryption:
         ServerSideEncryptionConfiguration:
           - BucketKeyEnabled: true
@@ -175,8 +152,6 @@ Resources:
         BlockPublicPolicy: True
         IgnorePublicAcls: True
         RestrictPublicBuckets: True
-      VersioningConfiguration:
-        Status: Enabled
 
   TREAccessLogsBucketPolicy:
     Type: AWS::S3::BucketPolicy
@@ -189,7 +164,7 @@ Resources:
             Action:
               - 's3:PutObject'
             Effect: Allow
-            Resource: "arn:aws:s3:::tre-access-logs-bucket/logs-tre-target-bucket*"
+            Resource: !Sub "arn:aws:s3:::${TREAccessLogsBucket}/logs-tre-target-bucket*"
             Principal:
               Service: logging.s3.amazonaws.com
             Condition:
@@ -203,7 +178,7 @@ Resources:
             Action:
               - 's3:PutObject'
             Effect: Allow
-            Resource: "arn:aws:s3:::tre-access-logs-bucket/logs-tre-source-bucket*"
+            Resource: !Sub "arn:aws:s3:::${TREAccessLogsBucket}/logs-tre-source-bucket*"
             Principal:
               Service: logging.s3.amazonaws.com
             Condition:
@@ -217,7 +192,7 @@ Resources:
             Action:
               - 's3:PutObject'
             Effect: Allow
-            Resource: "arn:aws:s3:::tre-access-logs-bucket/logs-tre-analyst-results-bucket*"
+            Resource: !Sub "arn:aws:s3:::${TREAccessLogsBucket}/logs-tre-analyst-results-bucket*"
             Principal:
               Service: logging.s3.amazonaws.com
             Condition:
@@ -231,7 +206,7 @@ Resources:
             Action:
               - 's3:PutObject'
             Effect: Allow
-            Resource: "arn:aws:s3:::tre-access-logs-bucket/logs-tre-lake-admin-results-bucket*"
+            Resource: !Sub "arn:aws:s3:::${TREAccessLogsBucket}/logs-tre-lake-admin-results-bucket*"
             Principal:
               Service: logging.s3.amazonaws.com
             Condition:
@@ -261,14 +236,6 @@ Resources:
         RestrictPublicBuckets: True
       VersioningConfiguration:
         Status: Enabled
-      CorsConfiguration:
-        CorsRules:
-          - AllowedMethods:
-            - 'GET'
-            AllowedOrigins:
-            - !Ref EgressAppDomainName
-            AllowedHeaders:
-            - '*'
 
   TRESourceBucket:
     Type: AWS::S3::Bucket
@@ -876,3 +843,11 @@ Outputs:
   TRESourceBucketKMSKeyArn:
     Value: !GetAtt TRESourceBucketKMSKey.Arn
     Description: "TRE Data Lake Source Bucket KMS Key"
+
+  TREAccessLogsBucketArn:
+    Value: !GetAtt TREAccessLogsBucket.Arn
+    Description: "TRE Data Lake Access Logs Bucket"
+
+  TREAccessLogsBucketKMSKeyArn:
+    Value: !GetAtt TREAccessLogsBucketKMSKey.Arn
+    Description: "TRE Data Lake Access Logs Bucket KMS Key"

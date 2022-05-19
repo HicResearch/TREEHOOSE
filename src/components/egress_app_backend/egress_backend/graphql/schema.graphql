@@ -1,0 +1,72 @@
+input DownloadDataInput {
+	egress_request_id: String!
+	workspace_id: String!
+	download_count: String!
+}
+
+type Mutation {
+	updateRequest(request: UpdateRequestInput!): String
+		@aws_auth(cognito_groups: ["InformationGovernance","TREAdmin"])
+	downloadData(request: DownloadDataInput!): presign_payload
+		@aws_auth(cognito_groups: ["InformationGovernance"])
+}
+
+type Query {
+	listRequests: [Request]
+		@aws_auth(cognito_groups: ["InformationGovernance","TREAdmin"])
+}
+
+type Request @aws_auth(cognito_groups: ["InformationGovernance","TREAdmin"]) {
+	egress_request_id: String!
+	egress_store_name: String!
+	swb_egress_store_id: String!
+	project_id: String!
+	workspace_id: String!
+	requested_by: String!
+	requested_dt: String!
+	updated_by: String!
+	updated_dt: String!
+	egress_status: String!
+	s3_egress_store_bucket: String!
+	s3_egress_store_bucket_path: String!
+	s3_egress_store_object_list_location: String!
+	s3_swb_object_metadata_version: String!
+	task_token: String
+	ig_reviewer_1_name: String
+	ig_reviewer_1_email: String
+	ig_reviewer_1_dt: String
+	ig_reviewer_1_reason: String
+	ig_reviewer_1_decision: String
+	rit_reviewer_2_name: String
+	rit_reviewer_2_email: String
+	rit_reviewer_2_dt: String
+	rit_reviewer_2_reason: String
+	rit_reviewer_2_decision: String
+	current_reviewer_group: String
+	s3_staging_object_metadata_version: String
+	download_count: String
+}
+
+input UpdateRequestInput {
+	egress_request_id: String!
+	task_token: String!
+	ig_reviewer_1_name: String
+	ig_reviewer_1_email: String
+	ig_reviewer_1_dt: String
+	ig_reviewer_1_reason: String
+	ig_reviewer_1_decision: String
+	rit_reviewer_2_name: String
+	rit_reviewer_2_email: String
+	rit_reviewer_2_dt: String
+	rit_reviewer_2_reason: String
+	rit_reviewer_2_decision: String
+}
+
+type presign_payload {
+	presign_url: String
+}
+
+schema {
+	query: Query
+	mutation: Mutation
+}

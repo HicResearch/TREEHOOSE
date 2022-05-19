@@ -37,8 +37,8 @@ repos:
         args:
           - "-s"
           - "mdl_style.rb"
-  - repo: https://github.com/aws-cloudformation/cfn-python-lint
-    rev: v0.59.1
-    hooks:
-      - id: cfn-python-lint
-        files: src.*\.(json|yml|yaml)$
+  -   repo: https://github.com/awslabs/cfn-python-lint
+      rev: v0.59.1
+      hooks:
+      -   id: cfn-python-lint
+          files: src/.*\.(json|yml|yaml)$

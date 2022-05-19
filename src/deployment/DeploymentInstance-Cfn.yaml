@@ -154,7 +154,7 @@ Resources:
                         . ~/.nvm/nvm.sh; \
                         source ~/.bashrc; \
                         nvm install v14.17.0; \
-                        npm install -g pnpm serverless; \
+                        npm install -g pnpm@5.18.9 serverless@3.8.0; \
                         echo \"Completed nodejs and serverless installs\"; \
                         echo \"---\"; \
                         echo \"Downloading additional packages\"; \
@@ -502,6 +502,12 @@ Resources:
                   - ec2:CreateDefaultVpc
                   - ec2:DescribeRegions
                 Resource: "*"
+        - PolicyName: CDKAccessPolicy
+          PolicyDocument:
+            Statement:
+              - Effect: Allow
+                Action: sts:AssumeRole
+                Resource: !Sub "arn:aws:iam::${AWS::AccountId}:role/cdk-*"
 
 Outputs:
   InstanceId:
