@@ -115,7 +115,7 @@ class EgressBackendStack(cdk.Stack):
         tre_admin_email_address = self.node.try_get_context(env_id).get(
             "tre_admin_email_address"
         )
-        
+
         this_dir = path.dirname(__file__)
 
         # SES Configuration Set components
@@ -328,7 +328,7 @@ class EgressBackendStack(cdk.Stack):
                     effect=iam.Effect.ALLOW,
                     actions=["amplify:StartDeployment"],
                     resources=[
-                       f"arn:aws:amplify:{self.region}:{self.account}:apps/{amplify_app.app_id}/branches/{amplify_branch_name}/deployments/start"
+                        f"arn:aws:amplify:{self.region}:{self.account}:apps/{amplify_app.app_id}/branches/{amplify_branch_name}/deployments/start"
                     ],
                 ),
             ],
@@ -992,6 +992,10 @@ class EgressBackendStack(cdk.Stack):
                     ),
                 )
             ),
+            log_config=appsync.LogConfig(
+                exclude_verbose_content=True,
+                field_log_level=appsync.FieldLogLevel.ERROR,
+            ),
         )
 
         send_final_decision_email = sfn_tasks.CallAwsService(
@@ -1579,6 +1583,17 @@ class EgressBackendStack(cdk.Stack):
                 {
                     "id": "AwsSolutions-IAM5",
                     "reason": "Wildcard permissions are required",
+                }
+            ],
+            True,
+        )
+        NagSuppressions.add_resource_suppressions_by_path(
+            self,
+            f"/{self.stack_name}/Egress-Api/ApiLogsRole/Resource",
+            [
+                {
+                    "id": "AwsSolutions-IAM4",
+                    "reason": "CDK generated role to push AppSync logs to CloudWatch",
                 }
             ],
             True,
