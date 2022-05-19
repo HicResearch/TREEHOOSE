@@ -1,92 +1,50 @@
 # TREEHOOSE
 
 ---
+[![security: bandit](https://img.shields.io/badge/security-bandit-yellow.svg)](https://github.com/PyCQA/bandit)
+[![PEP8](https://img.shields.io/badge/code%20style-pep8-orange.svg)](https://www.python.org/dev/peps/pep-0008/)
+
+[![Apache License 2.0](https://badgen.net/badge/license/Apache%20License%202.0/blue)](./LICENSE)
+![Release Alpha](https://badgen.net/badge/release/Alpha/orange)
 
 DARE UK Sprint Project: Trusted Research Environment and Enclave for Hosting
 Open Original Science Exploration
 
-## Overview
+## What is TREEHOOSE
 
 ---
 
-## Table of Contents
-* [1. Introduction](#1-introduction)
-* [2. Architecture](#2-architecture)
-  * [2.1. User Personas](#21-user-personas)
-  * [2.2. Design](#22-design)
-    * [2.2.1. Solution](#221-solution)
-    * [2.2.2. Considerations](#222-considerations)
-  * [2.3. Costs](#23-costs)
-* [3. Security](#3-security)
-  * [3.1. Controls](#31-controls)
-* [4. Deployment](#4-deployment)
-  * [4.1. Overview](#41-overview)
-  * [4.2. Installation](#42-installation)
-  * [4.3. Uninstallation](#43-uninstallation)
-* [5. Operations](#5-operations)
-  * [5.1. Cost Management](#51-cost-management)
-  * [5.2. Service Workbench](#52-service-workbench)
-  * [5.3. Data Lake](#53-data-lake)
-  * [5.4. Egress App](#54-egress-app)
-    * [5.4.1. Configuration Guide](#541-configuration-guide)
-    * [5.4.2. User Guide](#542-user-guide)
-  * [5.5. Workspace Backups](#55-workspace-backups)
-* [6. Troubleshooting](#6-troubleshooting)
-  * [6.1. Runbook](#61-runbook)
-
-### 1. Introduction
-
-#### 2. Architecture
-
-##### 2.1.User Personas
-
-##### 2.2. Design
-
-###### 2.2.1 Solution
-
-###### 2.2.2 Considerations
-
-##### 2.3. Costs
-
-#### 3. Security
-
-##### 3.1. Controls
-
-#### 4. Deployment
-
-##### 4.1. Overview
-
-##### 4.2. Installation
-
-##### 4.3. Uninstallation
-
-#### 5. Operations
-
-##### 5.1. Cost Management
-
-##### 5.2. Service Workbench
-
-##### 5.3. Data Lake
-
-##### 5.4. Egress App
-
-###### 5.4.1. Configuration Guide
-
-###### 5.4.2. User Guide
-
-##### 5.5. Workspace Backups
-
-#### 6. Troubleshooting
-
-##### 6.1. Runbook
+## Use cases
 
 ---
+
+## Documentation
+
+---
+
+The documentation is divided into several sections:
+
+* [Architecture](./doc/architecture/README.md)
+* [Security](./doc/security/SecurityControls.md)
+* [Deployment](./doc/deployment/README.md)
+* [Operations](./doc/operations/README.md)
+* [Troubleshooting](./doc/troubleshooting/TroubleshootingRunbook.md)
 
 ## Contributing
 
 ---
+The main purpose of this repository is to continue evolving TREEHOOSE, making it faster and easier to use. Development of TREEHOOSE happens in the open on GitHub, and we are grateful to the community for contributing bugfixes and improvements. Read below to learn how you can take part in improving TREEHOOSE.
 
-See [CONTRIBUTING](./CONTRIBUTING.md) for more information.
+### [Code of Conduct](CODE_OF_CONDUCT.md)
+
+TREEHOOSE has adopted a Code of Conduct that we expect project participants to adhere to.
+Please read the full text so that you can understand what actions will and will not be tolerated.
+
+### [Contributing Guide](CONTRIBUTING.md)
+
+Read our contributing guide to learn about our development process,
+how to propose bugfixes and improvements, and how to
+integrate your changes in this repository.
 
 ## License
 
