@@ -40,3 +40,15 @@ sudo -iu ec2-user
 cd /home/ec2-user/tmp
 `TODO`
 ```
+
+> Note: The installation process requires 3rd party
+open-source libraries to be installed on the
+EC2 instance that does not come bundled by default
+with the Operating System. \
+The list is as below \
+>
+> - yum-utils, git, jq, and packer from yum repository.
+> - AWS CLI V2, AWS CDK V1.0 and V2.0
+> - NVM, NodeJs V14.17.0 and V16.15.0
+> - NPM packages pnpm, serverless
+> - GO
