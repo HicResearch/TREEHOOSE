@@ -2,18 +2,12 @@
 
 ---
 
-## TREEHOOSE (TRE)
+This document explains the high level architecture of
+the Trusted Research Environment that would be deployed
+on AWS Cloud following the installation
+steps in this repository.
 
----
-
-TREEHOOSE is the Trusted Research Environment (TRE) implementation
-that will be deployed for each research project.
-Deploying the solution with the **default parameters**
-builds the following environment in the AWS Cloud.
-
-![TREEHOOSE Architecture](../../res/images/TREEHOOSE-architecture.png)
-
-### Overview
+## Overview
 
 ---
 
@@ -31,11 +25,51 @@ provides optional add-on components to enable
 - Workspace backups
 - Budget controls
 
-### Solution Overview
+TREEHOOSE is the Trusted Research Environment (TRE) implementation
+that will be deployed for each research project.
+Deploying the solution with the **default parameters**
+builds the following environment in AWS Cloud.
+
+![TREEHOOSE Architecture](../../res/images/TREEHOOSE-architecture.png)
+
+The solution uses Infrastructure as Code for deployment.
+Additional sections in this document provide additional details about each component. Below is a brief explaination
+of the numbered legends in the diagram.
+
+1. TRE Data Managers use AWS Management console to upload
+   data to the TRE Data Lake to be used for research.
+1. IT Administrators use Service Workbench web applications
+   to administer resources in the TRE environment.
+1. The budgets add-on is used to set budget limits for the TRE
+   environment. IT admins can set the budget and any actions
+   to be taken when the budget thresholds are breached.
+1. Backup functionality for research workspaces can also be
+   enabled for researcher workspaces. IT Admins can monitor
+   these through AWS Backup.
+1. Data Managers can provide researchers access to relevant
+   data sets from the data lake.
+1. Researchers can create approved workspaces through Service Workbench Web application.
+   They get secure access to compute resources using
+   Amazon AppStream. Details of connecting to workspaces is available within the Web App.
+1. On research completion the researcher can request egress of
+   research results.
+1. The egress request is processed through an add-on app
+   with a comprehensive review process with multiple approvers
+   before the data is available to be downloaded.
+1. Egress requests that are approved, result in creation of
+  downloadable version of the data that Data Egress Manager
+  can share with Researcher.
+1. Audit & Compliance teams get full visibility into all
+    user activities resulting in AWS API calls through centralised
+    CloudTrail logs. Additionally, they get breakglass
+    access to all TRE projects/accounts in the TRE through
+    a Lambda function role in Audit account.
+
+## Component Overview
 
 ---
 
-#### *AWS Control Tower*
+### *AWS Control Tower*
 
 ---
 
@@ -53,7 +87,7 @@ that will be setup by using the TREEHOOSE solution.
 
 ![Multi-account structure](../../res/images/multi-account-setup.png)
 
-#### *Service Workbench on AWS Solution*
+### *Service Workbench on AWS Solution*
 
 ---
 
@@ -73,7 +107,7 @@ Key Components :
   (more services as desired; this is customisable by providing Service Catalog templates).
 - For the secure access environment: AWS AppStream 2.0
 
-#### *Datalake*
+### *Datalake*
 
 ---
 
@@ -90,7 +124,7 @@ Key Components :
 
 - AWS Lake Formation
 
-#### *Data Egress Application*
+### *Data Egress Application*
 
 ---
 
@@ -117,7 +151,7 @@ Key Components :
 - For the backend: AWS Step Functions, Amazon EFS,
   AWS Lambda, Amazon DynamoDB, Amazon SES, Amazon S3, Amazon SNS, Amazon Cognito
 
-#### *Workspace backup*
+### *Workspace backup*
 
 ---
 
@@ -152,7 +186,7 @@ Key Components:
 - For the backend: AWS Step Functions,
   AWS Lambda, Amazon CloudWatch Events, AWS CloudForamtion, AWS Backup, Amazon S3
 
-#### *Budget controls*
+### *Budget controls*
 
 ---
 
