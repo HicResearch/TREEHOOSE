@@ -1516,12 +1516,24 @@ class EgressBackendStack(cdk.Stack):
         )
         NagSuppressions.add_resource_suppressions(
             egress_webapp_redeploy_lambda_policy,
-            [{"id": "AwsSolutions-IAM5", "reason": "Wilcard permissions are expected"}],
+            [
+                {
+                    "id": "AwsSolutions-IAM5",
+                    "reason": "Policy is already restricted to a specific resource and usage of \
+                        wildcard inside the resource is allowed.",
+                }
+            ],
             True,
         )
         NagSuppressions.add_resource_suppressions(
             egress_webapp_redeploy_lambda_role,
-            [{"id": "AwsSolutions-IAM5", "reason": "Wilcard permissions are expected"}],
+            [
+                {
+                    "id": "AwsSolutions-IAM5",
+                    "reason": "Policy is already restricted to a specific resource and usage of \
+                        wildcard inside the resource is allowed.",
+                }
+            ],
             True,
         )
         NagSuppressions.add_resource_suppressions(
@@ -1551,7 +1563,7 @@ class EgressBackendStack(cdk.Stack):
             [
                 {
                     "id": "AwsSolutions-IAM5",
-                    "reason": "Wilcard permissions are required for S3 notifications",
+                    "reason": "Wildcard permissions are required for S3 notifications",
                 }
             ],
             True,
