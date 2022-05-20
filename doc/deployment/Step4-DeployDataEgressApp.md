@@ -146,3 +146,12 @@ As Amplify does not natively support integration with WAF
 deploy the Egress Application Web App using [these](https://docs.aws.amazon.com/prescriptive-guidance/latest/patterns/deploy-a-react-based-single-page-application-to-amazon-s3-and-cloudfront.html)
 instructions.
 The CloudFront distribution created by the deployment can then be attached to WAF.
+
+AWS WAF ruleset baseline for WebApps is as follows:
+
+- Bot control (50 WCU)
+- Admin protection (100 WCU)
+- Amazon IP reputation list (25 WCU)
+- Anonymous IP list (50 WCU)
+- Core rule set (700 WCU)
+- Known bad inputs (200 WCU)
