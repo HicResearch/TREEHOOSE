@@ -118,6 +118,25 @@ class EgressBackendStack(cdk.Stack):
 
         this_dir = path.dirname(__file__)
 
+        # Create KMS keys for resources
+        s3_kms_key = kms.Key(
+            self, "Egress-S3-Key", alias="alias/Egress-S3-Key", enable_key_rotation=True
+        )
+
+        dynamodb_kms_key = kms.Key(
+            self,
+            "Egress-DynamoDB-Key",
+            alias="alias/Egress-DynamoDB-Key",
+            enable_key_rotation=True,
+        )
+
+        sns_kms_key = kms.Key(
+            self,
+            "Egress-Sns-Key",
+            alias="alias/Egress-Sns-Key",
+            enable_key_rotation=True,
+        )
+
         # SES Configuration Set components
         ses_config_set_name = f"{base_config['ses_configuration_set_name']}{env_id}"
 
@@ -129,7 +148,7 @@ class EgressBackendStack(cdk.Stack):
             env_id=env_id,
             configuration_set_name=ses_config_set_name,
         )
-        ses_monitoring_sns_topic = sns.Topic(self, "SES-Monitoring-Notifications")
+        ses_monitoring_sns_topic = sns.Topic(self, "SES-Monitoring-Notifications", master_key=sns_kms_key)
 
         sns_configuration_set_destination = (
             EmailConfigurationSetEventDestinationCustomResource(
@@ -204,25 +223,6 @@ class EgressBackendStack(cdk.Stack):
         # Create S3 VPC Gateway Endpoint to allow Lambda function comms to S3
         ec2.GatewayVpcEndpoint(
             self, "S3VpcEndpoint", vpc=vpc, service=ec2.GatewayVpcEndpointAwsService.S3
-        )
-
-        # Create KMS keys for resources
-        s3_kms_key = kms.Key(
-            self, "Egress-S3-Key", alias="alias/Egress-S3-Key", enable_key_rotation=True
-        )
-
-        dynamodb_kms_key = kms.Key(
-            self,
-            "Egress-DynamoDB-Key",
-            alias="alias/Egress-DynamoDB-Key",
-            enable_key_rotation=True,
-        )
-
-        sns_kms_key = kms.Key(
-            self,
-            "Egress-Sns-Key",
-            alias="alias/Egress-Sns-Key",
-            enable_key_rotation=True,
         )
 
         # Define DynamoDB table to hold egress requests
@@ -1510,26 +1510,6 @@ class EgressBackendStack(cdk.Stack):
                     "id": "AwsSolutions-IAM5",
                     "reason": "Yes wildcard is used but this has been scoped down to the Egress app. \
                         Needed for deployment flexibility and it only applies to logging actions",
-                }
-            ],
-            True,
-        )
-        NagSuppressions.add_resource_suppressions(
-            ses_monitoring_sns_topic,
-            [
-                {
-                    "id": "AwsSolutions-SNS2",
-                    "reason": "Topic does not contain sensitive or customer data so encryption is unnecessary",
-                }
-            ],
-            True,
-        )
-        NagSuppressions.add_resource_suppressions(
-            ses_monitoring_sns_topic,
-            [
-                {
-                    "id": "AwsSolutions-SNS3",
-                    "reason": "Topic is not used to publish to HTTP endpoints",
                 }
             ],
             True,
