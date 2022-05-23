@@ -41,7 +41,7 @@ of the numbered steps in the diagram.
 1. IT Administrators use the Service Workbench web application
    to administer resources in the TRE environment.
 1. The budget controls component is used to set budget limits for the TRE
-   environment. IT admins can set the budget and any actions
+   project. IT Administrators can set the budget and any actions
    to be taken when the budget thresholds are breached.
 1. Backup functionality for research workspaces can also be
    enabled. IT Admins can monitor
@@ -50,20 +50,20 @@ of the numbered steps in the diagram.
    data sets from the data lake.
 1. Researchers can create and connect to approved workspaces through the Service Workbench web application.
    They get secure access to compute resources using
-   Amazon AppStream. Details of connecting to workspaces is available within the Web App.
+   Amazon AppStream 2.0.
 1. On research completion the researcher can request egress of
    research results.
 1. The egress request is processed through a Data Egress App add-on
    with a comprehensive review process with multiple approvers
-   before the data is available to be downloaded.
+   before the data is available for download.
 1. Egress requests that are approved can be downloaded by Data Egress Managers
-  downloadable version of the data that Data Egress Manager
+  and shared with the Researcher who requested the data egress.
   There is a configurable limit to the number of downloads which can be made.
 1. Audit & Compliance teams get full visibility into all
     user activities resulting in AWS API calls through centralised
     CloudTrail logs. Additionally, they get breakglass
     access to all TRE projects/accounts in the TRE through
-    a Lambda function role in Audit account.
+    a Lambda function role in the Audit account.
 
 ## Component Overview
 
@@ -107,7 +107,7 @@ Key Components :
   (more services as desired; this is customisable by providing Service Catalog templates).
 - For the secure access environment: AWS AppStream 2.0
 
-### *Datalake*
+### *Data Lake*
 
 ---
 
@@ -122,7 +122,7 @@ This is a mandatory add-on.
 
 Key Components :
 
-- AWS Lake Formation
+- AWS Lake Formation, Amazon S3, AWS KMS, AWS Glue, Amazon Athena
 
 ### *Data Egress Application*
 
@@ -149,7 +149,7 @@ Key Components :
 
 - For the UI: AWS Amplify
 - For the backend: AWS Step Functions, Amazon EFS,
-  AWS Lambda, Amazon DynamoDB, Amazon SES, Amazon S3, Amazon SNS, Amazon Cognito
+  AWS Lambda, Amazon DynamoDB, Amazon SES, Amazon S3, AWS KMS, Amazon SNS, Amazon Cognito, AWS AppSync
 
 ### *Workspace backup*
 
@@ -184,7 +184,7 @@ for
 Key Components:
 
 - For the backend: AWS Step Functions,
-  AWS Lambda, Amazon CloudWatch Events, AWS CloudForamtion, AWS Backup, Amazon S3
+  AWS Lambda, Amazon CloudWatch Events, AWS CloudFormation, AWS Backup, Amazon S3
 
 ### *Budget controls*
 
