@@ -31,7 +31,7 @@ Below are the key design considerations for TREEHOOSE
   and also enabled for all API calls.
 - For all [AWS IAM](https://aws.amazon.com/iam/) policies principle of least privilege has been followed.
 - [AWS Accounts](https://aws.amazon.com/account/) provide well-defined billing and security boundaries.
-  Hence each research project should be hosted in a seperate AWS account
+  Hence each research project should be hosted in a separate AWS account.
 
 ## Considerations for End Users
 
