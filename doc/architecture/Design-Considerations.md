@@ -20,7 +20,7 @@ Below are the key design considerations for TREEHOOSE
 - [AWS Config](https://aws.amazon.com/config/) is enabled in all AWS accounts
   and the config records centralised for Auditing.
 - [Amazon CloudWatch](https://aws.amazon.com/cloudwatch/) is used for
-  log aggregation and metrics for each TRE project/AWS account
+  log aggregation and metrics for each TRE project/AWS account.
 
 ## Security
 
