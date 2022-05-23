@@ -41,7 +41,7 @@ These are some additional decisions that the end user of
 TREEHOOSE should make based on their functional and
 non-functional requirements.
 
-- Centralise and enable AWS Security services like
+- Centralise and enable AWS Security services like:
   - [AWS Security Hub](https://aws.amazon.com/security-hub/)
   - [Amazon GuardDuty](https://aws.amazon.com/guardduty/)
   - [Amazon Macie](https://aws.amazon.com/macie/)
