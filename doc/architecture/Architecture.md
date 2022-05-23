@@ -13,7 +13,7 @@ steps in this repository.
 
 The TREEHOOSE solution is formed of
 [Service Workbench on AWS](https://aws.amazon.com/government-education/research-and-technical-computing/service-workbench/)
-and a data lake that together provides the building blocks
+and a data lake that together provide the building blocks
 for the Trusted Research Environment (TRE) capability.
 [AWS Control Tower](https://aws.amazon.com/controltower/) provides the scalable
 multi-account setup for managing TRE implementations at scale in AWS Cloud.
@@ -73,16 +73,16 @@ of the numbered steps in the diagram.
 
 ---
 
-Using TREEHOOSE implemenation a user should be able to run multiple
-isolated projects and trusted research environment in parallel
-and scale according the organisation's research needs.
+Using the TREEHOOSE implementation allows a user to run multiple isolated
+TRE projects in parallel and to scale according to the organisation's research needs.
 
-To enable TREEHOOSE implementation to support scalable research workloads
-, meet the organization’s security and auditing requirements, and evolve with business requirements
-it uses AWS Control Tower to set up and govern a secure,
+The TREEHOOSE TRE implementation supports scalable research workloads,
+aims to meet an organization’s security and auditing requirements,
+and can evolve with the business demands.
+To meet this goal, an AWS Control Tower provides the setup to govern a secure,
 multi-account AWS environment, called a landing zone.
 
-Below is the high-level Organization Unit and Account Structure
+Below is the high-level Organizational Unit and Account Structure
 that will be setup by using the TREEHOOSE solution.
 
 ![Multi-account structure](../../res/images/multi-account-setup.png)
@@ -111,10 +111,8 @@ Key Components :
 
 ---
 
-TREEHOOSE uses a data lake setup that
-uses [AWS Lake Formation](https://aws.amazon.com/lake-formation/)
-under the hoods for creating a secure and scalable
-data store for storing research data.
+TREEHOOSE uses a data lake setup that leverages AWS Lake Formation
+to create a secure and scalable data store for storing research data.
 A data lake is a centralized, curated, and secured repository that stores all your data,
 both in its original form and prepared for analysis.
 It creates a pre-configured data lake to be used for TRE data pipelines.
@@ -165,12 +163,15 @@ researchers to select whether they want to enable
 periodic workspace backups when creating the workspace.
 
 Only TRE administrators can control the backup frequency
-and back retention periods. Also, any restore operations
+and retention periods. Also, any restore operations
 need to be performed by admins.
 
-This add-on uses [AWS Backup](https://aws.amazon.com/backup/) for backing up block storage attached to
-[Amazon EC2](https://aws.amazon.com/ec2/) based compute workspaces while it uses a be-spoke
-implementation to backup [Amazon SageMaker Notebook Instances](https://docs.aws.amazon.com/sagemaker/latest/dg/nbi.html)
+This component uses:
+
+- [AWS Backup](https://aws.amazon.com/backup/) for backing up block storage attached to
+  [Amazon EC2](https://aws.amazon.com/ec2/) based compute workspaces
+- a be-spoke
+  implementation to backup [Amazon SageMaker Notebook Instances](https://docs.aws.amazon.com/sagemaker/latest/dg/nbi.html)
 
 Below diagrams explain how the backup solution works
 for
@@ -191,16 +192,16 @@ Key Components:
 ---
 
 Budget controls is an optional
-add-on that allows administrators and finance stakeholders
+component that allows administrators and finance stakeholders
 of the TRE to stay on top of project finances.
-This add-on can optionally be deployed for
+This component can optionally be deployed for
 each TRE project and allows to
 
 - **Monitor** : set thresholds for sending budget alerts
 - **Report** : sending notification on budget usage
-- **Repond** : automate actions to avoid over-spending
+- **Repsond** : automate actions to avoid over-spending
 
-The add-on uses [AWS Budgets](https://aws.amazon.com/aws-cost-management/aws-budgets/)
+The component uses [AWS Budgets](https://aws.amazon.com/aws-cost-management/aws-budgets/)
  to plan and set expectations around TRE project costs.
 
 Key Components:
