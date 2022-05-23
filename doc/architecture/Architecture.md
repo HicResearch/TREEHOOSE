@@ -38,7 +38,7 @@ of the numbered steps in the diagram.
 
 1. TRE Data Managers use AWS Management console to upload
    data to the TRE Data Lake to be used for research.
-1. IT Administrators use Service Workbench web applications
+1. IT Administrators use the Service Workbench web application
    to administer resources in the TRE environment.
 1. The budget controls component is used to set budget limits for the TRE
    environment. IT admins can set the budget and any actions
