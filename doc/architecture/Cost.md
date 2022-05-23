@@ -91,7 +91,7 @@ Example
 ### S3 storage
 
 A researcher works on a 1 TB data study
-and produces a 10 GB output to download
+and produces a 10 GB output to download.
 
 Example
 |AWS Service|Monthly cost|
