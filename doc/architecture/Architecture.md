@@ -56,7 +56,7 @@ of the numbered steps in the diagram.
 1. The egress request is processed through a Data Egress App add-on
    with a comprehensive review process with multiple approvers
    before the data is available to be downloaded.
-1. Egress requests that are approved, result in creation of
+1. Egress requests that are approved can be downloaded by Data Egress Managers
   downloadable version of the data that Data Egress Manager
   can share with Researcher.
 1. Audit & Compliance teams get full visibility into all
