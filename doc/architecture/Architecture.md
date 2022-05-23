@@ -34,7 +34,7 @@ builds the following environment in AWS Cloud.
 
 The solution uses Infrastructure as Code for deployment.
 Additional sections in this document provide additional details about each component. Below is a brief explanation
-of the numbered legends in the diagram.
+of the numbered steps in the diagram.
 
 1. TRE Data Managers use AWS Management console to upload
    data to the TRE Data Lake to be used for research.
