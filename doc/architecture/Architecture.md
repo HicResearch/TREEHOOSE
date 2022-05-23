@@ -40,7 +40,7 @@ of the numbered steps in the diagram.
    data to the TRE Data Lake to be used for research.
 1. IT Administrators use Service Workbench web applications
    to administer resources in the TRE environment.
-1. The budgets add-on is used to set budget limits for the TRE
+1. The budget controls component is used to set budget limits for the TRE
    environment. IT admins can set the budget and any actions
    to be taken when the budget thresholds are breached.
 1. Backup functionality for research workspaces can also be
