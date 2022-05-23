@@ -132,7 +132,7 @@ This add-on provides a data egress approval workflow
 for researchers to take out data from TRE with the permission of multiple parties
 (data manager, research IT, etc.).
 The add-on is hosted as a web application supported by
-backend infrastrucutre. Each add-on installation is tied
+backend infrastructure. Each add-on installation is tied
 to a specific TRE project.
 
 The add-on provides a streamlined
