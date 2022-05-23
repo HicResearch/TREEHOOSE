@@ -33,7 +33,7 @@ builds the following environment in AWS Cloud.
 ![TREEHOOSE Architecture](../../res/images/TREEHOOSE-architecture.png)
 
 The solution uses Infrastructure as Code for deployment.
-Additional sections in this document provide additional details about each component. Below is a brief explaination
+Additional sections in this document provide additional details about each component. Below is a brief explanation
 of the numbered legends in the diagram.
 
 1. TRE Data Managers use AWS Management console to upload
