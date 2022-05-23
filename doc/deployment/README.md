@@ -65,6 +65,6 @@ Any package management requirements such as availability and security will need 
 | 4         | Project Budget Controls | [CloudFormation Template](../../src/components/ProjectBudgetControl-Cfn.yaml) |
 | 5         | Workspace Backup | [CDKv2 Application](./) |
 
-[Installation Guide](./INSTALLATION.md)
+## [Installation Guide](./INSTALLATION.md)
 
-[Uninstallation Guide](./UNINSTALLATION.md)
+## [Uninstallation Guide](./UNINSTALLATION.md)
