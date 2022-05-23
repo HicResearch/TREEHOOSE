@@ -53,7 +53,7 @@ of the numbered steps in the diagram.
    Amazon AppStream. Details of connecting to workspaces is available within the Web App.
 1. On research completion the researcher can request egress of
    research results.
-1. The egress request is processed through an add-on app
+1. The egress request is processed through a Data Egress App add-on
    with a comprehensive review process with multiple approvers
    before the data is available to be downloaded.
 1. Egress requests that are approved, result in creation of
