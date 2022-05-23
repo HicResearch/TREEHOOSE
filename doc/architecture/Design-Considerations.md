@@ -29,7 +29,7 @@ Below are the key design considerations for TREEHOOSE
 - Use [AWS KMS](https://aws.amazon.com/kms/) for encryption at-rest.
 - Encryption in-transit is enabled for all AWS services where applicable
   and also enabled for all API calls.
-- For all [AWS IAM](https://aws.amazon.com/iam/) policies principle of least privilege has been followed.
+- For all [AWS IAM](https://aws.amazon.com/iam/) policies the principle of least privilege has been followed.
 - [AWS Accounts](https://aws.amazon.com/account/) provide well-defined billing and security boundaries.
   Hence each research project should be hosted in a separate AWS account.
 
