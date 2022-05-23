@@ -46,7 +46,7 @@ of the numbered steps in the diagram.
 1. Backup functionality for research workspaces can also be
    enabled. IT Admins can monitor
    these through AWS Backup.
-1. Data Managers can provide researchers access to relevant
+1. Data Managers and IT Administrators can work together to provide researchers with access to relevant
    data sets from the data lake.
 1. Researchers can create and connect to approved workspaces through the Service Workbench web application.
    They get secure access to compute resources using
