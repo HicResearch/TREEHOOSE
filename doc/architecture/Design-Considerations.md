@@ -49,5 +49,5 @@ non-functional requirements.
 
 - Enable [AWS Web Application Firewall](https://aws.amazon.com/waf/) for Web Applications.
 - Enable additional [Control Tower Guardrails](https://docs.aws.amazon.com/controltower/latest/userguide/guardrails.html).
-- Use [Amazon EC2 reserved instances](https://aws.amazon.com/ec2/pricing/reserved-instances/)
+- Use [Amazon EC2 reserved instances](https://aws.amazon.com/ec2/pricing/reserved-instances/).
 - [Optimize](https://docs.aws.amazon.com/whitepapers/latest/best-practices-for-deploying-amazon-appstream-2/cost-optimization.html) how you use AppStream.
