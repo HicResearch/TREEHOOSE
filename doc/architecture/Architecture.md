@@ -44,7 +44,7 @@ of the numbered steps in the diagram.
    environment. IT admins can set the budget and any actions
    to be taken when the budget thresholds are breached.
 1. Backup functionality for research workspaces can also be
-   enabled for researcher workspaces. IT Admins can monitor
+   enabled. IT Admins can monitor
    these through AWS Backup.
 1. Data Managers can provide researchers access to relevant
    data sets from the data lake.
