@@ -58,7 +58,7 @@ of the numbered steps in the diagram.
    before the data is available to be downloaded.
 1. Egress requests that are approved can be downloaded by Data Egress Managers
   downloadable version of the data that Data Egress Manager
-  can share with Researcher.
+  There is a configurable limit to the number of downloads which can be made.
 1. Audit & Compliance teams get full visibility into all
     user activities resulting in AWS API calls through centralised
     CloudTrail logs. Additionally, they get breakglass
