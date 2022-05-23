@@ -48,7 +48,7 @@ of the numbered steps in the diagram.
    these through AWS Backup.
 1. Data Managers can provide researchers access to relevant
    data sets from the data lake.
-1. Researchers can create approved workspaces through Service Workbench Web application.
+1. Researchers can create and connect to approved workspaces through the Service Workbench web application.
    They get secure access to compute resources using
    Amazon AppStream. Details of connecting to workspaces is available within the Web App.
 1. On research completion the researcher can request egress of
