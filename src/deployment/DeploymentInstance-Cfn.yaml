@@ -405,6 +405,9 @@ Resources:
                   - lambda:RemovePermission
                   - lambda:DeleteFunction
                   - lambda:UpdateFunctionCode
+                  # Needed for subsequent updates to deployment
+                  - lambda:UpdateFunctionConfiguration
+                  - lambda:ListTags
                 Resource: "*"
         - PolicyName: SMWorkflowPolicy
           PolicyDocument:
