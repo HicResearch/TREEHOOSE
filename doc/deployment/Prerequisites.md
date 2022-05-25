@@ -74,7 +74,7 @@ Ensure the encryption key setup in Step 1A is also automatically applied to all 
  button *Enable trusted access*
 - [ ] Press button: [*Create StackSet*](https://eu-west-2.console.aws.amazon.com/cloudformation/home?region=eu-west-2#/stacksets/create)
 - [ ] Select option *Service-managed permissions*
-- [ ] Select option *Upload a template file* to upload CloudFormation template file: [landing zone encryption](../../src/pre_requisites/templates/LandingZoneEncryption-Cfn.yaml) and press on button *Next*
+- [ ] Select option *Upload a template file* to upload CloudFormation template file: [landing zone encryption](../../src/pre_requisites/LandingZoneEncryption-Cfn.yaml) and press on button *Next*
 - [ ] Provide *StackSet name*: "ControlTowerSetup-EncryptionKey" and press on button *Next* twice
 - [ ] For *Deployment targets*, ensure *Automatic deployment* is set to Enabled and select region *eu-west-2 (London)*,
  then press on button *Next* and *Submit*
