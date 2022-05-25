@@ -276,6 +276,19 @@ Resources:
                   - cloudformation:DescribeStackEvents
                 Effect: Allow
                 Resource: "*"
+        - PolicyName: CdkDeploy
+          PolicyDocument:
+            Statement:
+              # In addition to CloudFormationAccess
+              - Action:
+                  - cloudformation:CreateChangeSet
+                  - cloudformation:DescribeChangeSet
+                  - cloudformation:ExecuteChangeSet
+                  - ecr:CreateRepository
+                  - ecr:SetRepositoryPolicy
+                  - ecr:DescribeRepositories
+                Effect: Allow
+                Resource: "*"
         - PolicyName: LogsAccess
           PolicyDocument:
             Statement:
