@@ -48,22 +48,22 @@ Apply these steps only to accounts that are part of the **TRE Projects Prod** OU
 Log in to the [AWS Management Console](https://console.aws.amazon.com/) using your **TRE Project 1 Prod**
  account and Admin privileges.
 
-- [ ] Edit file *cdk.json* in the `/home/ec2-user/tmp/TREEHOOSE/src/components/egress_app_backend/` directory (Step 1C). Change the following required
+- [ ] Edit file [`cdk.json`](../../src/components/egress_app_backend/cdk.json) in the `/home/ec2-user/tmp/TREEHOOSE/src/components/egress_app_backend/` directory (Step 1C). Change the following required
  parameters for the CDK backend stack:
 
 |Parameter Name|Description|Location|AWS Account|
 |:-----------------|:-----------|:-------------|:------------|
-|swb_egress_store_arn|Provide resource created in Step 2 - S3 Bucket: Egress Store Bucket Arn |Check [AWS CloudFormation](https://eu-west-2.console.aws.amazon.com/cloudformation/home?region=eu-west-2#/) *Resources* tab for *Stack* "treprod-ldn-pj1-backend" or go to [Amazon S3 Buckets](https://s3.console.aws.amazon.com/s3/buckets?region=eu-west-2)| **TRE Project 1 Prod** account |
-|swb_egress_notification_topic|Provide resource created in Step 2 - SNS Topic: Egress Notification Topic Arn |Check [AWS CloudFormation](https://eu-west-2.console.aws.amazon.com/cloudformation/home?region=eu-west-2#/) *Resources* tab for *Stack* "treprod-ldn-pj1-backend" or go to [Amazon SNS Topics](https://eu-west-2.console.aws.amazon.com/sns/v3/home?region=eu-west-2#/topics)| **TRE Project 1 Prod** account |
-|swb_egress_notification_bucket_arn|Provide resource created in Step 2 - S3 Bucket: Egress Notification Bucket Arn |Check [AWS CloudFormation](https://eu-west-2.console.aws.amazon.com/cloudformation/home?region=eu-west-2#/) *Resources* tab for *Stack* "treprod-ldn-pj1-backend" or go to [Amazon S3 Buckets](https://s3.console.aws.amazon.com/s3/buckets?region=eu-west-2)| **TRE Project 1 Prod** account |
-|swb_egress_notification_bucket_kms_arn|Provide resource created in Step 2 - KMS Key: Egress Store Encryption Key Arn |Check [AWS CloudFormation](https://eu-west-2.console.aws.amazon.com/cloudformation/home?region=eu-west-2#/) *Resources* tab for *Stack* "treprod-ldn-pj1-backend" or go to [AWS KMS Keys](https://eu-west-2.console.aws.amazon.com/kms/home?region=eu-west-2#/kms/keys)| **TRE Project 1 Prod** account |
-|swb_egress_store_db_table|Provide resource created in Step 2 - DynamoDB Table: Egress Store Table Arn |Check [AWS CloudFormation](https://eu-west-2.console.aws.amazon.com/cloudformation/home?region=eu-west-2#/) *Resources* tab for *Stack* "treprod-ldn-pj1-backend" or go to [Amazon DynamoDB Tables](https://eu-west-2.console.aws.amazon.com/dynamodbv2/home?region=eu-west-2#tables)| **TRE Project 1 Prod** account |
-|datalake_target_bucket_arn|Provide resource created in Step 3 - S3 Bucket: TRE Target Bucket |Check [AWS CloudFormation](https://eu-west-2.console.aws.amazon.com/cloudformation/home?region=eu-west-2#/) *Resources* tab for *Stack* "TREDataLake1" or go to [Amazon S3 Buckets](https://s3.console.aws.amazon.com/s3/buckets?region=eu-west-2)| **TRE Datalake 1 Prod** account |
-|datalake_target_bucket_kms_arn|Provide resource created in Step 3 - KMS Key: TRE Target Bucket KMS Key |Check [AWS CloudFormation](https://eu-west-2.console.aws.amazon.com/cloudformation/home?region=eu-west-2#/) *Resources* tab for *Stack* "TREDataLake1" or go to [AWS KMS Keys](https://eu-west-2.console.aws.amazon.com/kms/home?region=eu-west-2#/kms/keys)| **TRE Datalake 1 Prod** account |
-|cognito_userpool_domain|Provide name for a new Amazon Cognito domain to be created|To view resources created after deployment of this CDK stack, go to service [Amazon Cognito](https://eu-west-2.console.aws.amazon.com/cognito/home?region=eu-west-2)| **TRE Project 1 Prod** account |
+|swb_egress_store_arn|Provide resource created in Step 2 - S3 Bucket: Egress Store Bucket Arn (`EgressStoreBucket`)|Check [AWS CloudFormation](https://eu-west-2.console.aws.amazon.com/cloudformation/home?region=eu-west-2#/) *Resources* tab for *Stack* "treprod-ldn-pj1-backend" or go to [Amazon S3 Buckets](https://s3.console.aws.amazon.com/s3/buckets?region=eu-west-2)| **TRE Project 1 Prod** account |
+|swb_egress_notification_topic|Provide resource created in Step 2 - SNS Topic: Egress Notification Topic Arn (`EgressNotificationTopic`)|Check [AWS CloudFormation](https://eu-west-2.console.aws.amazon.com/cloudformation/home?region=eu-west-2#/) *Resources* tab for *Stack* "treprod-ldn-pj1-backend" or go to [Amazon SNS Topics](https://eu-west-2.console.aws.amazon.com/sns/v3/home?region=eu-west-2#/topics)| **TRE Project 1 Prod** account |
+|swb_egress_notification_bucket_arn|Provide resource created in Step 2 - S3 Bucket: Egress Notification Bucket Arn (`EgressNotificationBucket`)|Check [AWS CloudFormation](https://eu-west-2.console.aws.amazon.com/cloudformation/home?region=eu-west-2#/) *Resources* tab for *Stack* "treprod-ldn-pj1-backend" or go to [Amazon S3 Buckets](https://s3.console.aws.amazon.com/s3/buckets?region=eu-west-2)| **TRE Project 1 Prod** account |
+|swb_egress_notification_bucket_kms_arn|Provide resource created in Step 2 - KMS Key: Egress Store Encryption Key Arn (`EgressStoreEncryptionKey`)|Check [AWS CloudFormation](https://eu-west-2.console.aws.amazon.com/cloudformation/home?region=eu-west-2#/) *Resources* tab for *Stack* "treprod-ldn-pj1-backend" or go to [AWS KMS Keys](https://eu-west-2.console.aws.amazon.com/kms/home?region=eu-west-2#/kms/keys)| **TRE Project 1 Prod** account |
+|swb_egress_store_db_table|Provide resource created in Step 2 - DynamoDB Table: Egress Store Table Arn (`EgressStoreDb`)|Check [AWS CloudFormation](https://eu-west-2.console.aws.amazon.com/cloudformation/home?region=eu-west-2#/) *Resources* tab for *Stack* "treprod-ldn-pj1-backend" or go to [Amazon DynamoDB Tables](https://eu-west-2.console.aws.amazon.com/dynamodbv2/home?region=eu-west-2#tables)| **TRE Project 1 Prod** account |
+|datalake_target_bucket_arn|Provide resource created in Step 3 - S3 Bucket: TRE Target Bucket (output `TRETargetBucketArn`)|Check [AWS CloudFormation](https://eu-west-2.console.aws.amazon.com/cloudformation/home?region=eu-west-2#/) *Resources* tab for *Stack* "TREDataLake1" or go to [Amazon S3 Buckets](https://s3.console.aws.amazon.com/s3/buckets?region=eu-west-2)| **TRE Datalake 1 Prod** account |
+|datalake_target_bucket_kms_arn|Provide resource created in Step 3 - KMS Key: TRE Target Bucket KMS Key (output `TRETargetBucketKMSKeyArn`)|Check [AWS CloudFormation](https://eu-west-2.console.aws.amazon.com/cloudformation/home?region=eu-west-2#/) *Resources* tab for *Stack* "TREDataLake1" or go to [AWS KMS Keys](https://eu-west-2.console.aws.amazon.com/kms/home?region=eu-west-2#/kms/keys)| **TRE Datalake 1 Prod** account |
+|cognito_userpool_domain|Provide name for a new Amazon Cognito domain to be created, e.g. `treprod-pj1-egress-userpool`|To view resources created after deployment of this CDK stack, go to service [Amazon Cognito](https://eu-west-2.console.aws.amazon.com/cognito/home?region=eu-west-2)| **TRE Project 1 Prod** account |
 |tre_admin_email_address|Provide a TRE admin email address that will need to be verified after deployment|To view verified identities after deployment of this CDK stack, go to service [Amazon SES](https://eu-west-2.console.aws.amazon.com/ses/home?region=eu-west-2#/verified-identities)| **TRE Project 1 Prod** account |
 
-- [ ] Run the following commands to create an isolated Python environment and deploy the CDK backend stack:
+- [ ] Run the following commands to create an isolated Python environment and deploy the CDK backend stack, replacing `DEPLOYMENT_ACCOUNT` with TRE Project 1 Prod account ID:
 
 ```bash
 cd /home/ec2-user/tmp/TREEHOOSE/src/components/egress_app_backend/
@@ -71,7 +71,7 @@ alias cdkv1="npx aws-cdk@1.154"
 python3 -m venv .venv
 source .venv/bin/activate
 pip3 install -r requirements.txt
-cdkv1 bootstrap aws://<<AWS_ACCOUNT_ID>>/<<AWS_REGION>> # TRE Project 1 Prod account ID / eu-west-2
+cdkv1 bootstrap aws://DEPLOYMENT_ACCOUNT/eu-west-2
 cdkv1 deploy
 ```
 
