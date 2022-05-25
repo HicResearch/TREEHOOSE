@@ -34,8 +34,8 @@ alias cdk2="npx aws-cdk@2.x"
 
 ### Step 6B. Deploy backend infrastructure
 
-- [ ] Update `cdk.json` file to meet your requirements. Below are
-      the options available
+- [ ] Update the [`cdk.json`](../../src/components/workspace_backup/cdk.json) file to meet your requirements.
+      Below are the options available
 
 |Parameter|Usage|Default Value|Notes|
 |---------|-----|-------------|-----|
