@@ -48,7 +48,7 @@ Apply these steps only to accounts that are part of the **TRE Projects Prod** OU
 Log in to the [AWS Management Console](https://console.aws.amazon.com/) using your **TRE Project 1 Prod**
  account and Admin privileges.
 
-- [ ] Edit file [`cdk.json`](../../src/components/egress_app_backend/cdk.json) in the `/home/ec2-user/tmp/TREEHOOSE/src/components/egress_app_backend/` directory (Step 1C). Change the following required
+- [ ] Edit file [`cdk.json`](../../src/components/egress_app_backend/cdk.json) in the `src/components/egress_app_backend/` directory (Step 1C). Change the following required
  parameters for the CDK backend stack:
 
 |Parameter Name|Description|Location|AWS Account|
@@ -66,7 +66,7 @@ Log in to the [AWS Management Console](https://console.aws.amazon.com/) using yo
 - [ ] Run the following commands to create an isolated Python environment and deploy the CDK backend stack, replacing `DEPLOYMENT_ACCOUNT` with TRE Project 1 Prod account ID:
 
 ```bash
-cd /home/ec2-user/tmp/TREEHOOSE/src/components/egress_app_backend/
+cd src/components/egress_app_backend
 alias cdkv1="npx aws-cdk@1.154"
 python3 -m venv .venv
 source .venv/bin/activate
