@@ -162,6 +162,22 @@ class EgressBackendStack(cdk.Stack):
             )
         )
 
+        sns_kms_key.add_to_resource_policy(
+            iam.PolicyStatement(
+                effect=iam.Effect.ALLOW,
+                principals=[
+                    iam.ServicePrincipal("ses.amazonaws.com"),
+                ],
+                resources=[
+                    "*",
+                ],
+                actions=[
+                    "kms:GenerateDataKey*",
+                    "kms:Decrypt",
+                ],
+            )
+        )
+
         # Custom resource to handle email identity verification
         ses_sender_email_verification = EmailIdentityVerificationCustomResource(
             self,
