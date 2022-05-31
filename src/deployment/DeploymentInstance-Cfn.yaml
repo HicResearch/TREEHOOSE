@@ -151,6 +151,7 @@ Resources:
                         echo \"---\"; \
                         echo \"Initiating nodejs and serverless installs\"; \
                         curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.34.0/install.sh | bash; \
+                        export PATH=/usr/local/bin:/usr/bin:/usr/local/sbin:/usr/sbin; \
                         . ~/.nvm/nvm.sh; \
                         source ~/.bashrc; \
                         nvm install v14.17.0; \
