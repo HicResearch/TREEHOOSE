@@ -66,7 +66,7 @@ Log in to the [AWS Management Console](https://console.aws.amazon.com/) using yo
 - [ ] Run the following commands to create an isolated Python environment and deploy the CDK backend stack:
 
 ```bash
-cd `TODO`
+cd /home/ec2-user/tmp/TREEHOOSE/src/components/egress_app_backend/
 alias cdkv1="npx aws-cdk@1.154"
 python3 -m venv .venv
 source .venv/bin/activate
@@ -101,7 +101,7 @@ Log in to the [AWS Management Console](https://console.aws.amazon.com/) using yo
 - [ ] Run the following commands to build the React frontend code:
 
 ```bash
-cd `TODO`
+cd /home/ec2-user/tmp/TREEHOOSE/src/components/egress_app_frontend/
 nvm install v16.15.0
 nvm use v16.15.0
 npm install

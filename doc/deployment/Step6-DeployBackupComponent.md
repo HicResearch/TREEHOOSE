@@ -44,12 +44,11 @@ alias cdk2="npx aws-cdk@2.x"
 |move_to_cold_storage_after|defines the number of days after which the backup is archived to cold storage|90|AWS Backup for EBS currently does not support this. Uses S3 lifecycle policy for SageMaker backups|
 |sagemaker_enable_selfservice_restore|controls if SageMaker notebook user is able to restore backed-up files|true||
 
-- [ ] Change directory to root folder of the backup component code.
-
 - [ ] Run the following commands to create an isolated Python environment, bootstrap and deploy the CDK stack.
       Update DEPLOYMENT_ACCOUNT with the account number where you want to deploy the backup component:
 
 ```console
+cd /home/ec2-user/tmp/TREEHOOSE/src/components/workspace_backup/
 python3 -m venv .venv
 source .venv/bin/activate
 pip3 install -r requirements.txt
