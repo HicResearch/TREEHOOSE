@@ -111,7 +111,7 @@ npm run build
 - [ ] Run the following commands to build the React app:
 
 ```bash
-cd `TODO`/build
+cd /home/ec2-user/tmp/TREEHOOSE/src/components/egress_app_frontend/build
 zip -r ../build.zip ./
 ```
 
@@ -119,7 +119,7 @@ zip -r ../build.zip ./
  deployment to Amplify:
 
 ```bash
-cd `TODO`
+cd /home/ec2-user/tmp/TREEHOOSE/src/components/egress_app_frontend/
 aws s3 cp build.zip s3://{egress web app bucket created in Step 4B}
 ```
 
