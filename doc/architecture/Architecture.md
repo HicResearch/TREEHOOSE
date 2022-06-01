@@ -201,7 +201,7 @@ each TRE project and allows to
 
 - **Monitor** : set thresholds for sending budget alerts
 - **Report** : sending notification on budget usage
-- **Repsond** : automate actions to avoid over-spending
+- **Respond** : automate actions to avoid over-spending
 
 The component uses [AWS Budgets](https://aws.amazon.com/aws-cost-management/aws-budgets/)
  to plan and set expectations around TRE project costs.
