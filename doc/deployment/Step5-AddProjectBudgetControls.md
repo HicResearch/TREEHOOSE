@@ -51,9 +51,9 @@ For guidance identifying the default workspace types (products) created by SWB, 
 |NotificationThresholdActualCost2|Budget threshold percentage for receiving second notification based on actual costs|*99*|
 |NotificationThresholdForecastedCost|Budget threshold percentage for notification based on forecasted costs|*90*|
 |ActionThreshold|Budget threshold percentage for stopping new SWB workspace creation based on forecasted costs|*99*|
-|BudgetNotifySNSTopicName|The name of the SNS topic whose subscribers (includes TREAdminEmailAddress) receive alerts regarding project budget|*No default - must be specified*|
+|BudgetNotifySNSTopicName|The name of the SNS topic whose subscribers (includes TREAdminEmailAddress) receive alerts regarding project budget|*TREProject1Prod-BudgetNotifications*|
 |TREAdminEmailAddress|The email address for the TRE admin who will receive alerts regarding project budget|*No default - must be specified*|
-|SWBStackID|Specify the ID of existing IAM role initial-stack-ID-xacc-env-mgmt|*No default - must be specified*|
+|SWBStackID|Specify the ID of existing IAM role initial-stack-ID-xacc-env-mgmt (the number from `CrossAccountEnvMgmtRoleArn`)|*No default - must be specified*|
 |ServiceCatalogProductsList|Leave blank if you want to restrict all SWB workspace types. Otherwise, specify the 4 default products ID (prod-{ID}) from the Service Catalog portfolio created by SWB|*""*|
 
 - [ ] Confirm the stack status is "CREATE_COMPLETE"
