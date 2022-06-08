@@ -276,6 +276,19 @@ Resources:
                   - cloudformation:DescribeStackEvents
                 Effect: Allow
                 Resource: "*"
+        - PolicyName: CdkDeploy
+          PolicyDocument:
+            Statement:
+              # In addition to CloudFormationAccess
+              - Action:
+                  - cloudformation:CreateChangeSet
+                  - cloudformation:DescribeChangeSet
+                  - cloudformation:ExecuteChangeSet
+                  - ecr:CreateRepository
+                  - ecr:SetRepositoryPolicy
+                  - ecr:DescribeRepositories
+                Effect: Allow
+                Resource: "*"
         - PolicyName: LogsAccess
           PolicyDocument:
             Statement:
@@ -405,6 +418,9 @@ Resources:
                   - lambda:RemovePermission
                   - lambda:DeleteFunction
                   - lambda:UpdateFunctionCode
+                  # Needed for subsequent updates to deployment
+                  - lambda:UpdateFunctionConfiguration
+                  - lambda:ListTags
                 Resource: "*"
         - PolicyName: SMWorkflowPolicy
           PolicyDocument:
