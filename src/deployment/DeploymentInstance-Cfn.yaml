@@ -272,6 +272,7 @@ Resources:
                   - cloudformation:DeleteStack
                   - cloudformation:UpdateTerminationProtection
                   - cloudformation:ListStackResources
+                  - cloudformation:GetTemplate
                   - cloudformation:ValidateTemplate
                   - cloudformation:DescribeStackEvents
                 Effect: Allow
