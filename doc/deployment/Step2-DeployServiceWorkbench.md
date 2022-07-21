@@ -31,7 +31,7 @@ tar -xzf v5.1.1.tar.gz
 
 ```bash
 cd /home/ec2-user/tmp/service-workbench-on-aws-5.1.1/main/config/settings
-cp .defaults.yml treprod.yml
+cp example.yml treprod.yml
 nano treprod.yml
 ```
 
