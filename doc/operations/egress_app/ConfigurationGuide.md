@@ -84,6 +84,9 @@ Select topic *ResearchIT-Notifications*:
 - [ ] For each user of type Research IT Admin created in Part 2, use button *Create subscription* and select
     *Protocol*: Email. In *Endpoint* provide the user's email address. Submit and the user will receive an email to confirm the subscription
 
+If you are able to create your own email groups (e.g. Outlook groups) that can receive external emails you can create a subscription for the group email address instead, and manage subscriptions outside of AWS.
+
+
 ## Step 2. Setup Access for Information Governance Leads
 
 **Time to configure**: Approximately 15 minutes

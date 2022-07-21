@@ -84,7 +84,7 @@ Apply these steps only to accounts that are part of the **TRE Projects Prod** OU
 Log in to the [AWS Management Console](https://console.aws.amazon.com/) using your **TRE Project 1 Prod**
  account and Admin privileges.
 
-- [ ] Edit file *.env.local* in the `/home/ec2-user/tmp/TREEHOOSE/src/components/egress_app_frontend/` directory (Step 1C). Change the following required
+- [ ] Edit file [`.env.local`](../../src/components/egress_app_frontend/.env.local) in the `/home/ec2-user/tmp/TREEHOOSE/src/components/egress_app_frontend/` directory (Step 1C). Change the following required
  parameters for the web application:
 
 |Parameter Name|Description|Location|AWS Account|
