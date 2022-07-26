@@ -1,6 +1,7 @@
 # Acceptance testing
 
 This is a manual process performed after deployment to check the TRE is working correctly.
+These tests should be done by an admin, taking on the different roles.
 
 Prerequisites: a researcher user with access to study data has been created.
 
