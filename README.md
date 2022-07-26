@@ -43,8 +43,8 @@ first, either by
 [opening a GitHub issue on this repository](https://github.com/HicResearch/TREEHOOSE/issues)
 or by emailing `hicsupport@dundee.ac.uk`.
 
-We can talk you through some of the current strengths and weaknesses of the
-platform, and include your requirements when planning future work.
+We can help demonstrate features of the platform and see how they match your requirements,
+and discuss future enhancements.
 
 ---
 
