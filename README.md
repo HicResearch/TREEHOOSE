@@ -13,8 +13,11 @@ Open Original Science Exploration
 
 ## What is TREEHOOSE
 
-Trusted Research Environments(TREs) are used by many organisations to securely
-manage sensitive data for research.
+Trusted Research Environments (TREs) are secure computing environments providing 
+secure access to sensitive data for research purposes. HDR UK has a set of 
+[resources and guides](https://www.hdruk.ac.uk/access-to-health-data/trusted-research-environments/) 
+explaining TREs in more detail in terms of health data research, although TREs 
+are not exclusive to health data.
 
 TREEHOOSE is an open-source platform for deploying TREs on Amazon Web Services
 (AWS). It will include open-source tooling to streamline building and operating
@@ -50,9 +53,10 @@ and discuss future enhancements.
 
 ## Use cases
 
-TREEHOOSE is originally developed for use with confidential healthcare data such
-as patient medical records, but is designed to be used and customised for all
-research and analysis disciplines.
+TREEHOOSE was originally developed for use with confidential healthcare data 
+such as patient electronic health records, but is designed to be used and 
+customised for all research and analysis disciplines which require access to 
+sensitive data.
 
 ---
 
@@ -92,3 +96,12 @@ repository.
 ## License
 
 This project is licensed under the [Apache-2.0 License](./LICENSE).
+
+---
+
+## Funding
+
+This work was funded by UK Research & Innovation Grant Number MC_PC_21032 as 
+part of Phase 1 of the DARE UK (Data and Analytics Research Environments UK)
+programme, delivered in partnership with HDR UK and ADRUK.
+
