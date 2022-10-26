@@ -15,7 +15,7 @@ For a SWB instance (web application), a TRE admin should **create only one SWB P
 ## Create the SWB Project
 
 To create the SWB project required to perform any tasks in SWB (create workspaces, register data studies, etc.), follow the
- [instructions](https://github.com/awslabs/service-workbench-on-aws/blob/v5.1.1/docs/Service_Workbench_User_Guide.pdf)
+ [instructions](https://github.com/awslabs/service-workbench-on-aws/blob/v5.2.3/docs/Service_Workbench_User_Guide.pdf)
  from the official SWB user guide, pages 17-18.
 
 ## Create SWB Users
@@ -23,7 +23,7 @@ To create the SWB project required to perform any tasks in SWB (create workspace
 ### Roles
 
 To learn about the predefined user roles available in SWB, follow the
- [guidance](https://github.com/awslabs/service-workbench-on-aws/blob/v5.1.1/docs/Service_Workbench_User_Guide.pdf)
+ [guidance](https://github.com/awslabs/service-workbench-on-aws/blob/v5.2.3/docs/Service_Workbench_User_Guide.pdf)
  from the official SWB user guide, page 16.
 
 ### Users
@@ -53,12 +53,12 @@ In SWB:
 
 While SWB does support other identity providers, only Cognito is in scope for the TREEHOOSE TRE solution at this time. To
 learn more about SWB IdP support, check the
- [official SWB configuration guide](https://github.com/awslabs/service-workbench-on-aws/blob/v5.1.1/docs/Service_Workbench_Configuration_Guide.pdf).
+ [official SWB configuration guide](https://github.com/awslabs/service-workbench-on-aws/blob/v5.2.3/docs/Service_Workbench_Configuration_Guide.pdf).
 
 ### Add Users to Project
 
 To add users to the SWB project, follow the
- [instructions](https://github.com/awslabs/service-workbench-on-aws/blob/v5.1.1/docs/Service_Workbench_User_Guide.pdf)
+ [instructions](https://github.com/awslabs/service-workbench-on-aws/blob/v5.2.3/docs/Service_Workbench_User_Guide.pdf)
  from the official SWB user guide, page 18 - section *Adding a User to a Project*.
 
 ## Register Data Studies
@@ -67,11 +67,11 @@ An admin in SWB can register data studies and assign permissions to those studie
  attach the read-only data studies to a compute workspace to perform their research activities.
 
 To learn how to register external data studies, follow the
- [instructions](https://github.com/awslabs/service-workbench-on-aws/blob/v5.1.1/docs/Service_Workbench_User_Guide.pdf)
+ [instructions](https://github.com/awslabs/service-workbench-on-aws/blob/v5.2.3/docs/Service_Workbench_User_Guide.pdf)
  from the official SWB user guide, pages 26-28.
 
 To learn how to set permissions for data studies, follow the
- [instructions](https://github.com/awslabs/service-workbench-on-aws/blob/v5.1.1/docs/Service_Workbench_User_Guide.pdf)
+ [instructions](https://github.com/awslabs/service-workbench-on-aws/blob/v5.2.3/docs/Service_Workbench_User_Guide.pdf)
  from the official SWB user guide, page 25.
 
 For known issues with registered data studies in SWB, please refer to the
@@ -83,11 +83,11 @@ An admin in SWB can define workspace types and configurations. A researcher can 
  create compute workspaces to perform research activities.
 
 To learn about workspaces, follow the
- [instructions](https://github.com/awslabs/service-workbench-on-aws/blob/v5.1.1/docs/Service_Workbench_User_Guide.pdf)
+ [instructions](https://github.com/awslabs/service-workbench-on-aws/blob/v5.2.3/docs/Service_Workbench_User_Guide.pdf)
  from the official SWB user guide, pages 11-14.
 
 ## Learn More
 
 For more SWB guidance, please consult the
- [official SWB user guide](https://github.com/awslabs/service-workbench-on-aws/blob/v5.1.1/docs/Service_Workbench_User_Guide.pdf)
+ [official SWB user guide](https://github.com/awslabs/service-workbench-on-aws/blob/v5.2.3/docs/Service_Workbench_User_Guide.pdf)
  or ask questions in the [project's Issues page on GitHub](https://github.com/awslabs/service-workbench-on-aws/issues).

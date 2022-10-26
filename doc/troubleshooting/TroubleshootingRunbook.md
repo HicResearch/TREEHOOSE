@@ -14,7 +14,7 @@ Some services such as AWS Control Tower or Amazon AppStream 2.0 have default ser
 ## ServiceWorkbench (SWB)
 
 For general guidance on operating the ServiceWorkbench web application, please visit
- the official [documentation page](https://github.com/awslabs/service-workbench-on-aws/tree/v5.1.1/docs).
+ the official [documentation page](https://github.com/awslabs/service-workbench-on-aws/tree/v5.2.3/docs).
 
 For known issues affecting the ServiceWorkbench codebase, please visit the official
  [GitHub Issues page](https://github.com/awslabs/service-workbench-on-aws/issues).
@@ -80,7 +80,7 @@ If a researcher notices that the SWB workspace creation takes a long time, they 
 ### S3 File Mounts
 
 SWB workspaces use S3 file mounts which come with some limitations described in the
- [official SWB guide](https://github.com/awslabs/service-workbench-on-aws/blob/v5.1.1/docs/Service_Workbench_User_Guide.pdf),
+ [official SWB guide](https://github.com/awslabs/service-workbench-on-aws/blob/v5.2.3/docs/Service_Workbench_User_Guide.pdf),
  pages 13-14.
 
 ## Egress Add-On Application

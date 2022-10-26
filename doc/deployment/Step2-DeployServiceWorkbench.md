@@ -21,8 +21,8 @@ sudo -iu ec2-user
 
 ```bash
 cd /home/ec2-user/tmp
-wget https://github.com/awslabs/service-workbench-on-aws/archive/refs/tags/v5.1.1.tar.gz
-tar -xzf v5.1.1.tar.gz
+wget https://github.com/awslabs/service-workbench-on-aws/archive/refs/tags/v5.2.3.tar.gz
+tar -xzf v5.2.3.tar.gz
 ```
 
 ### Step 2C. Create configuration file
@@ -30,7 +30,7 @@ tar -xzf v5.1.1.tar.gz
 - [ ] Run the following commands to create a configuration file for SWB:
 
 ```bash
-cd /home/ec2-user/tmp/service-workbench-on-aws-5.1.1/main/config/settings
+cd /home/ec2-user/tmp/service-workbench-on-aws-5.2.3/main/config/settings
 cp example.yml treprod.yml
 nano treprod.yml
 ```
@@ -66,7 +66,7 @@ Note: Remove the versionNumber and versionDate in the configuration file every t
 - [ ] Run the following commands to install SWB:
 
 ```bash
-cd /home/ec2-user/tmp/service-workbench-on-aws-5.1.1
+cd /home/ec2-user/tmp/service-workbench-on-aws-5.2.3
 ./scripts/environment-deploy.sh treprod
 ```
 
@@ -85,7 +85,7 @@ sudo yum -y install packer
 - [ ] Run the following commands to build the default SWB workspace images:
 
 ```bash
-cd /home/ec2-user/tmp/service-workbench-on-aws-5.1.1/main/solution/machine-images
+cd /home/ec2-user/tmp/service-workbench-on-aws-5.2.3/main/solution/machine-images
 pnpx sls build-image -s treprod
 ```
 
@@ -100,7 +100,7 @@ pnpx sls build-image -s treprod
 - [ ] Run the following commands to create an image builder in AppStream:
 
 ```bash
-cd /home/ec2-user/tmp/service-workbench-on-aws-5.1.1/scripts/app-stream
+cd /home/ec2-user/tmp/service-workbench-on-aws-5.2.3/scripts/app-stream
 npm install
 npm audit fix
 npm run start-image-builder -- default eu-west-2 default default
@@ -119,7 +119,7 @@ Log in to the [AWS Management Console](https://console.aws.amazon.com/) using yo
 
 ```bash
 cd ~\Documents
-Invoke-WebRequest -Uri https://raw.githubusercontent.com/awslabs/service-workbench-on-aws/v5.1.1/scripts/app-stream/buildImage.ps1 -OutFile buildImage.ps1
+Invoke-WebRequest -Uri https://raw.githubusercontent.com/awslabs/service-workbench-on-aws/v5.2.3/scripts/app-stream/buildImage.ps1 -OutFile buildImage.ps1
 .\buildImage.ps1
 ```
 
@@ -132,7 +132,7 @@ You can view the image created in AppStream's menu option: [*Image registry*](ht
 - [ ] Run the following commands to get the web link for SWB:
 
 ```bash
-cd /home/ec2-user/tmp/service-workbench-on-aws-5.1.1
+cd /home/ec2-user/tmp/service-workbench-on-aws-5.2.3
 ./scripts/get-info.sh treprod
 ```
 
