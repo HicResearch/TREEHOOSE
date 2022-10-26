@@ -42,9 +42,6 @@ Inside the `treprod.yml` file, change the parameters below as instructed and the
 ```bash
 awsRegion: eu-west-2
 solutionName: pj1
-rootUserName: <replace this with TRE project IT admin's username>
-rootUserFirstName: <replace this with TRE project IT admin's first name>
-rootUserLastName: <replace this with TRE project IT admin's last name>
 rootUserEmail: <replace this with valid TRE project IT admin email address>
 enableEgressStore: true
 isAppStreamEnabled: true
