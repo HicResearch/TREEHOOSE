@@ -526,6 +526,19 @@ Resources:
               - Effect: Allow
                 Action: sts:AssumeRole
                 Resource: !Sub "arn:aws:iam::${AWS::AccountId}:role/cdk-*"
+        # Needed going from SWB v5.1.1 to v5.2.3, or for re-running after a failure
+        - PolicyName: SWB-v5-2-3
+          PolicyDocument:
+            Statement:
+              - Effect: Allow
+                Action:
+                  - lambda:TagResource
+                  - cloudformation:DeleteChangeSet
+                  - cloudformation:GetTemplateSummary
+                  # So that we can lookup the app URL from the CLI
+                  - amplify:GetApp
+                  - amplify:ListApps
+                Resource: "*"
 
 Outputs:
   InstanceId:
