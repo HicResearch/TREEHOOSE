@@ -120,7 +120,9 @@ Invoke-WebRequest -Uri https://raw.githubusercontent.com/awslabs/service-workben
 .\buildImage.ps1
 ```
 
+If the script successfully completes you will be automatically disconnected.
 You can view the image created in AppStream's menu option: [*Image registry*](https://eu-west-2.console.aws.amazon.com/appstream2/home?region=eu-west-2#/images).
+Wait for the Appstream image status to become `Available` (this will take several minutes).
 
 ### Step 2G. Onboard Account
 
@@ -157,7 +159,8 @@ Note there are 3 options you can select for the AppStream Fleet Type: ON_DEMAND,
 ALWAYS_ON will reduce the waiting time to establish an AppStream connection, but it will cost more.
 To learn more about AppStream fleet types, follow this [guide](https://docs.aws.amazon.com/appstream2/latest/developerguide/fleet-type.html).
 
-- [ ] Press on button *Onboard AWS Account* and follow all remaining instructions on the web page
+- [ ] Press on button *Onboard AWS Account* and follow all remaining instructions on the web page.
+  Do not edit any of the fields in CloudFormation.
 - [ ] Confirm the account status matches the image below
 
 ![Onboard AWS Account on SWB](../../res/images/Status-SWBOnboardAccount-Success.png)

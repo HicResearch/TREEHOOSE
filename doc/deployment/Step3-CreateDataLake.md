@@ -8,6 +8,8 @@ Ensure all steps below are executed in AWS region: [London (eu-west-2)](https://
 
 Due to design considerations, each account in the **TRE Data Prod** OU must contain only one data lake.
 
+Do not create a Datalake in the main (**TRE Project 1 Prod**) account, you will not be able to use it in the TRE.
+
 Log in to the [AWS Management Console](https://console.aws.amazon.com/) using your **TRE Datalake 1 Prod**
  account and Admin privileges.
 
@@ -27,3 +29,5 @@ Log in to the [AWS Management Console](https://console.aws.amazon.com/) using yo
 |LFDatabaseName|Lake Formation database name that will be created|*No default - must be specified*|
 
 - [ ] Confirm the stack status is "CREATE_COMPLETE"
+
+Tip: If you are adding data to the bucket you may need to enforce encryption (`aws s3 cp --sse aws:kms`) or the action may be rejected.
