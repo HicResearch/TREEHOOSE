@@ -59,7 +59,7 @@ Any package management requirements such as availability and security will need 
 
 | Component |Name                     | Source code location  |
 |:---------:|:------------------------|:-----------------------------------|
-| 1         | ServiceWorkbench | [Official Open-Source Repository](https://github.com/awslabs/service-workbench-on-aws/releases/tag/v5.1.1) |
+| 1         | ServiceWorkbench | [Official Open-Source Repository](https://github.com/awslabs/service-workbench-on-aws/releases/tag/v5.2.3) |
 | 2         | Data Lake | [CloudFormation Template](../../src/data_lake/DataLake-Cfn.yaml) |
 | 3         | Data Egress Application | [CDKv1 Application](./) |
 | 4         | Project Budget Controls | [CloudFormation Template](../../src/components/budget_controls/ProjectBudgetControl-Cfn.yaml) |

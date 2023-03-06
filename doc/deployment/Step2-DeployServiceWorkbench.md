@@ -21,8 +21,8 @@ sudo -iu ec2-user
 
 ```bash
 cd /home/ec2-user/tmp
-wget https://github.com/awslabs/service-workbench-on-aws/archive/refs/tags/v5.1.1.tar.gz
-tar -xzf v5.1.1.tar.gz
+wget https://github.com/awslabs/service-workbench-on-aws/archive/refs/tags/v5.2.3.tar.gz
+tar -xzf v5.2.3.tar.gz
 ```
 
 ### Step 2C. Create configuration file
@@ -30,7 +30,7 @@ tar -xzf v5.1.1.tar.gz
 - [ ] Run the following commands to create a configuration file for SWB:
 
 ```bash
-cd /home/ec2-user/tmp/service-workbench-on-aws-5.1.1/main/config/settings
+cd /home/ec2-user/tmp/service-workbench-on-aws-5.2.3/main/config/settings
 cp example.yml treprod.yml
 nano treprod.yml
 ```
@@ -42,9 +42,6 @@ Inside the `treprod.yml` file, change the parameters below as instructed and the
 ```bash
 awsRegion: eu-west-2
 solutionName: pj1
-rootUserName: <replace this with TRE project IT admin's username>
-rootUserFirstName: <replace this with TRE project IT admin's first name>
-rootUserLastName: <replace this with TRE project IT admin's last name>
 rootUserEmail: <replace this with valid TRE project IT admin email address>
 enableEgressStore: true
 isAppStreamEnabled: true
@@ -66,7 +63,7 @@ Note: Remove the versionNumber and versionDate in the configuration file every t
 - [ ] Run the following commands to install SWB:
 
 ```bash
-cd /home/ec2-user/tmp/service-workbench-on-aws-5.1.1
+cd /home/ec2-user/tmp/service-workbench-on-aws-5.2.3
 ./scripts/environment-deploy.sh treprod
 ```
 
@@ -85,7 +82,7 @@ sudo yum -y install packer
 - [ ] Run the following commands to build the default SWB workspace images:
 
 ```bash
-cd /home/ec2-user/tmp/service-workbench-on-aws-5.1.1/main/solution/machine-images
+cd /home/ec2-user/tmp/service-workbench-on-aws-5.2.3/main/solution/machine-images
 pnpx sls build-image -s treprod
 ```
 
@@ -100,7 +97,7 @@ pnpx sls build-image -s treprod
 - [ ] Run the following commands to create an image builder in AppStream:
 
 ```bash
-cd /home/ec2-user/tmp/service-workbench-on-aws-5.1.1/scripts/app-stream
+cd /home/ec2-user/tmp/service-workbench-on-aws-5.2.3/scripts/app-stream
 npm install
 npm audit fix
 npm run start-image-builder -- default eu-west-2 default default
@@ -119,11 +116,13 @@ Log in to the [AWS Management Console](https://console.aws.amazon.com/) using yo
 
 ```bash
 cd ~\Documents
-Invoke-WebRequest -Uri https://raw.githubusercontent.com/awslabs/service-workbench-on-aws/v5.1.1/scripts/app-stream/buildImage.ps1 -OutFile buildImage.ps1
+Invoke-WebRequest -Uri https://raw.githubusercontent.com/awslabs/service-workbench-on-aws/v5.2.3/scripts/app-stream/buildImage.ps1 -OutFile buildImage.ps1
 .\buildImage.ps1
 ```
 
+If the script successfully completes you will be automatically disconnected.
 You can view the image created in AppStream's menu option: [*Image registry*](https://eu-west-2.console.aws.amazon.com/appstream2/home?region=eu-west-2#/images).
+Wait for the Appstream image status to become `Available` (this will take several minutes).
 
 ### Step 2G. Onboard Account
 
@@ -132,7 +131,7 @@ You can view the image created in AppStream's menu option: [*Image registry*](ht
 - [ ] Run the following commands to get the web link for SWB:
 
 ```bash
-cd /home/ec2-user/tmp/service-workbench-on-aws-5.1.1
+cd /home/ec2-user/tmp/service-workbench-on-aws-5.2.3
 ./scripts/get-info.sh treprod
 ```
 
@@ -160,7 +159,8 @@ Note there are 3 options you can select for the AppStream Fleet Type: ON_DEMAND,
 ALWAYS_ON will reduce the waiting time to establish an AppStream connection, but it will cost more.
 To learn more about AppStream fleet types, follow this [guide](https://docs.aws.amazon.com/appstream2/latest/developerguide/fleet-type.html).
 
-- [ ] Press on button *Onboard AWS Account* and follow all remaining instructions on the web page
+- [ ] Press on button *Onboard AWS Account* and follow all remaining instructions on the web page.
+  Do not edit any of the fields in CloudFormation.
 - [ ] Confirm the account status matches the image below
 
 ![Onboard AWS Account on SWB](../../res/images/Status-SWBOnboardAccount-Success.png)
