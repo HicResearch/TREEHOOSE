@@ -38,10 +38,14 @@ sudo -iu ec2-user
 
 ```shell
 cd /home/ec2-user/tmp
+VERSION=v1.0.0-beta1
 mkdir TREEHOOSE
-wget https://github.com/HicResearch/TREEHOOSE/archive/refs/tags/v0.0.1-alpha.tar.gz
-tar --strip-components=1 -xzf TREEHOOSE-0.0.1-alpha.tar.gz -C TREEHOOSE
+wget https://github.com/HicResearch/TREEHOOSE/archive/$VERSION.tar.gz
+tar --strip-components=1 -xzf $VERSION.tar.gz -C TREEHOOSE
 ```
+
+Change `VERSION` if you want to install a different release of TREEHOOSE.
+If you are familiar with [`git`](https://git-scm.com/) you can clone the repository instead.
 
 > Note: The installation process requires 3rd party
 open-source libraries to be installed on the
