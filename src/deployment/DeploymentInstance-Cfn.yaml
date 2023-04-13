@@ -526,6 +526,7 @@ Resources:
               - Effect: Allow
                 Action: sts:AssumeRole
                 Resource: !Sub "arn:aws:iam::${AWS::AccountId}:role/cdk-*"
+
         # Needed going from SWB v5.1.1 to v5.2.3, or for re-running after a failure
         - PolicyName: SWB-v5-2-3
           PolicyDocument:
@@ -535,9 +536,35 @@ Resources:
                   - lambda:TagResource
                   - cloudformation:DeleteChangeSet
                   - cloudformation:GetTemplateSummary
-                  # So that we can lookup the app URL from the CLI
+                  - cloudfront:AssociateAlias
+                  - cloudfront:ListTagsForResource
+                  - cloudfront:UpdateCloudFrontOriginAccessIdentity
+                  - cloudfront:UpdateDistribution
+                  - iam:CreatePolicyVersion
+                  - iam:DeletePolicyVersion
+                  - route53:ChangeResourceRecordSets
+                  - route53:ChangeTagsForResource
+                  - route53:CreateHostedZone
+                  - route53:GetChange
+                  - route53:GetHostedZone
+                  - s3:GetBucketLogging
+                  - s3:GetAccelerateConfiguration
+                  - s3:GetBucketPublicAccessBlock
+                  - s3:GetBucketTagging
+                  - s3:GetBucketVersioning
+                Resource: "*"
+
+        # Additional permissions for the deployment scripts, e.g. to automatically lookup parameters
+        - PolicyName: deployment-scripts
+          PolicyDocument:
+            Statement:
+              - Effect: Allow
+                Action:
+                  # Allow lookup of the Amplify URL
                   - amplify:GetApp
                   - amplify:ListApps
+                  # So stacks with a matching wildcard name can be found, e.g. initial-stack-
+                  - cloudformation:ListStacks
                 Resource: "*"
 
 Outputs:
