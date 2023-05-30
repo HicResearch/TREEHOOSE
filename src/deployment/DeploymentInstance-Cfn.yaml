@@ -289,6 +289,9 @@ Resources:
                   - ecr:CreateRepository
                   - ecr:SetRepositoryPolicy
                   - ecr:DescribeRepositories
+                  - ecr:PutLifecyclePolicy
+                  - ecr:PutImageTagMutability
+                  - ecr:ListTagsForResource
                 Effect: Allow
                 Resource: "*"
         - PolicyName: LogsAccess
