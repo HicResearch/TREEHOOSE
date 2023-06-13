@@ -52,19 +52,19 @@ repos:
     rev: v1.3.1
     hooks:
       - id: python-safety-dependencies-check
-  # - repo: https://github.com/awslabs/git-secrets
-  #   rev: 99d01d58ebcc06e237c0e3f3ff5ae628aeef6aa6
-  #   hooks:
-  #     - id: git-secrets
-  #       verbose: true
-  #       entry: "git-secrets --register-aws"
-  #       language: script
-  #       name: git-secrets-register-aws-provider
-  #     - id: git-secrets
-  #       verbose: true
-  #       entry: "git-secrets --scan"
-  #       language: script
-  #       name: git-secrets-scan
+  - repo: https://github.com/awslabs/git-secrets
+    rev: 99d01d58ebcc06e237c0e3f3ff5ae628aeef6aa6
+    hooks:
+      - id: git-secrets
+        verbose: true
+        entry: "git-secrets --register-aws"
+        language: script
+        name: git-secrets-register-aws-provider
+      - id: git-secrets
+        verbose: true
+        entry: "git-secrets --scan"
+        language: script
+        name: git-secrets-scan
   - repo: https://github.com/pre-commit/mirrors-prettier
     rev: v2.7.1
     hooks:
