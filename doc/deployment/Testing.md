@@ -18,7 +18,6 @@ Perform the following tests for Linux and Windows workspaces
 
 - A researcher can copy files to the egress folder, and can request egress
 
-
 ### Egress (administrators)
 
 - A notification is received when a researcher requests egress
@@ -27,4 +26,3 @@ Perform the following tests for Linux and Windows workspaces
 - If an IG approves a request a notification is sent to the IT administrator
 - The IT admin can approve or deny an egress request
 - If the IT admin approves the request the IG can download the egressed files in the egress app
-

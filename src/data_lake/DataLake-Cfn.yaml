@@ -44,22 +44,22 @@ Resources:
           - Sid: Enable IAM Policies
             Effect: Allow
             Principal:
-              AWS: !Sub 'arn:aws:iam::${AWS::AccountId}:root'
+              AWS: !Sub "arn:aws:iam::${AWS::AccountId}:root"
             Action: kms:*
-            Resource: '*'
+            Resource: "*"
 
           - Sid: Enable Access From Egress App Account
             Effect: Allow
             Principal:
               AWS:
-                - !Sub 'arn:aws:iam::${EgressAppAccount}:root'
+                - !Sub "arn:aws:iam::${EgressAppAccount}:root"
             Action:
               - kms:Encrypt
               - kms:Decrypt
               - kms:ReEncrypt
               - kms:GenerateDataKey
               - kms:DescribeKey
-            Resource: '*'
+            Resource: "*"
 
   TRESourceBucketKMSKey:
     Type: AWS::KMS::Key
@@ -72,9 +72,9 @@ Resources:
           - Sid: Enable IAM Policies
             Effect: Allow
             Principal:
-              AWS: !Sub 'arn:aws:iam::${AWS::AccountId}:root'
+              AWS: !Sub "arn:aws:iam::${AWS::AccountId}:root"
             Action: kms:*
-            Resource: '*'
+            Resource: "*"
 
   TRESourceBucketKMSAlias:
     Type: AWS::KMS::Alias
@@ -93,9 +93,9 @@ Resources:
           - Sid: Enable IAM Policies
             Effect: Allow
             Principal:
-              AWS: !Sub 'arn:aws:iam::${AWS::AccountId}:root'
+              AWS: !Sub "arn:aws:iam::${AWS::AccountId}:root"
             Action: kms:*
-            Resource: '*'
+            Resource: "*"
 
   TREAnalystBucketKMSAlias:
     Type: AWS::KMS::Alias
@@ -114,9 +114,9 @@ Resources:
           - Sid: Enable IAM Policies
             Effect: Allow
             Principal:
-              AWS: !Sub 'arn:aws:iam::${AWS::AccountId}:root'
+              AWS: !Sub "arn:aws:iam::${AWS::AccountId}:root"
             Action: kms:*
-            Resource: '*'
+            Resource: "*"
 
   TREAccessLogsBucketKMSKey:
     Type: AWS::KMS::Key
@@ -129,9 +129,9 @@ Resources:
           - Sid: Enable IAM Policies
             Effect: Allow
             Principal:
-              AWS: !Sub 'arn:aws:iam::${AWS::AccountId}:root'
+              AWS: !Sub "arn:aws:iam::${AWS::AccountId}:root"
             Action: kms:*
-            Resource: '*'
+            Resource: "*"
 
   TREAccessLogsBucket:
     Type: AWS::S3::Bucket
@@ -162,60 +162,60 @@ Resources:
         Statement:
           - Sid: S3ServerAccessLogsPolicy-TRETargetBucket
             Action:
-              - 's3:PutObject'
+              - "s3:PutObject"
             Effect: Allow
             Resource: !Sub "arn:aws:s3:::${TREAccessLogsBucket}/logs-tre-target-bucket*"
             Principal:
               Service: logging.s3.amazonaws.com
             Condition:
               ArnLike:
-                'aws:SourceArn':
+                "aws:SourceArn":
                   - !GetAtt TRETargetBucket.Arn
               StringEquals:
-                'aws:SourceAccount':
-                  -  !Sub "${AWS::AccountId}"
+                "aws:SourceAccount":
+                  - !Sub "${AWS::AccountId}"
           - Sid: S3ServerAccessLogsPolicy-TRESourceBucket
             Action:
-              - 's3:PutObject'
+              - "s3:PutObject"
             Effect: Allow
             Resource: !Sub "arn:aws:s3:::${TREAccessLogsBucket}/logs-tre-source-bucket*"
             Principal:
               Service: logging.s3.amazonaws.com
             Condition:
               ArnLike:
-                'aws:SourceArn':
+                "aws:SourceArn":
                   - !GetAtt TRESourceBucket.Arn
               StringEquals:
-                'aws:SourceAccount':
-                  -  !Sub "${AWS::AccountId}"
+                "aws:SourceAccount":
+                  - !Sub "${AWS::AccountId}"
           - Sid: S3ServerAccessLogsPolicy-TREAnalystResultsBucket
             Action:
-              - 's3:PutObject'
+              - "s3:PutObject"
             Effect: Allow
             Resource: !Sub "arn:aws:s3:::${TREAccessLogsBucket}/logs-tre-analyst-results-bucket*"
             Principal:
               Service: logging.s3.amazonaws.com
             Condition:
               ArnLike:
-                'aws:SourceArn':
+                "aws:SourceArn":
                   - !GetAtt TREAnalystResultsBucket.Arn
               StringEquals:
-                'aws:SourceAccount':
-                  -  !Sub "${AWS::AccountId}"
+                "aws:SourceAccount":
+                  - !Sub "${AWS::AccountId}"
           - Sid: S3ServerAccessLogsPolicy-TRELakeAdminResultsBucket
             Action:
-              - 's3:PutObject'
+              - "s3:PutObject"
             Effect: Allow
             Resource: !Sub "arn:aws:s3:::${TREAccessLogsBucket}/logs-tre-lake-admin-results-bucket*"
             Principal:
               Service: logging.s3.amazonaws.com
             Condition:
               ArnLike:
-                'aws:SourceArn':
+                "aws:SourceArn":
                   - !GetAtt TRELakeAdminResultsBucket.Arn
               StringEquals:
-                'aws:SourceAccount':
-                  -  !Sub "${AWS::AccountId}"
+                "aws:SourceAccount":
+                  - !Sub "${AWS::AccountId}"
 
   TRETargetBucket:
     Type: AWS::S3::Bucket
@@ -308,8 +308,8 @@ Resources:
             Action:
               - s3:PutObject
             Effect: Deny
-            Resource: !Sub '${TRETargetBucket.Arn}/*'
-            Principal: '*'
+            Resource: !Sub "${TRETargetBucket.Arn}/*"
+            Principal: "*"
             Condition:
               StringNotEquals:
                 "s3:x-amz-server-side-encryption": "aws:kms"
@@ -317,8 +317,8 @@ Resources:
             Action:
               - s3:PutObject
             Effect: Deny
-            Resource: !Sub '${TRETargetBucket.Arn}/*'
-            Principal: '*'
+            Resource: !Sub "${TRETargetBucket.Arn}/*"
+            Principal: "*"
             Condition:
               "Null":
                 "s3:x-amz-server-side-encryption": true
@@ -329,21 +329,21 @@ Resources:
               - s3:List*
             Effect: Allow
             Resource:
-              - !Sub '${TRETargetBucket.Arn}/*'
-              - !Sub '${TRETargetBucket.Arn}'
+              - !Sub "${TRETargetBucket.Arn}/*"
+              - !Sub "${TRETargetBucket.Arn}"
             Principal:
               AWS:
-                - !Sub 'arn:aws:iam::${EgressAppAccount}:root'
+                - !Sub "arn:aws:iam::${EgressAppAccount}:root"
           - Sid: AllowWriteFromEgressAppAccount
             Action:
               - s3:PutObject
               - s3:Abort*
             Effect: Allow
             Resource:
-              - !Sub '${TRETargetBucket.Arn}/*'
+              - !Sub "${TRETargetBucket.Arn}/*"
             Principal:
               AWS:
-                - !Sub 'arn:aws:iam::${EgressAppAccount}:root'
+                - !Sub "arn:aws:iam::${EgressAppAccount}:root"
 
   TRESourceBucketPolicy:
     Type: AWS::S3::BucketPolicy
@@ -356,8 +356,8 @@ Resources:
             Action:
               - s3:PutObject
             Effect: Deny
-            Resource: !Sub '${TRESourceBucket.Arn}/*'
-            Principal: '*'
+            Resource: !Sub "${TRESourceBucket.Arn}/*"
+            Principal: "*"
             Condition:
               StringNotEquals:
                 "s3:x-amz-server-side-encryption": "aws:kms"
@@ -365,8 +365,8 @@ Resources:
             Action:
               - s3:PutObject
             Effect: Deny
-            Resource: !Sub '${TRESourceBucket.Arn}/*'
-            Principal: '*'
+            Resource: !Sub "${TRESourceBucket.Arn}/*"
+            Principal: "*"
             Condition:
               "Null":
                 "s3:x-amz-server-side-encryption": true
@@ -382,8 +382,8 @@ Resources:
             Action:
               - s3:PutObject
             Effect: Deny
-            Resource: !Sub '${TREAnalystResultsBucket.Arn}/*'
-            Principal: '*'
+            Resource: !Sub "${TREAnalystResultsBucket.Arn}/*"
+            Principal: "*"
             Condition:
               StringNotEquals:
                 "s3:x-amz-server-side-encryption": "aws:kms"
@@ -391,8 +391,8 @@ Resources:
             Action:
               - s3:PutObject
             Effect: Deny
-            Resource: !Sub '${TREAnalystResultsBucket.Arn}/*'
-            Principal: '*'
+            Resource: !Sub "${TREAnalystResultsBucket.Arn}/*"
+            Principal: "*"
             Condition:
               "Null":
                 "s3:x-amz-server-side-encryption": true
@@ -408,8 +408,8 @@ Resources:
             Action:
               - s3:PutObject
             Effect: Deny
-            Resource: !Sub '${TRELakeAdminResultsBucket.Arn}/*'
-            Principal: '*'
+            Resource: !Sub "${TRELakeAdminResultsBucket.Arn}/*"
+            Principal: "*"
             Condition:
               StringNotEquals:
                 "s3:x-amz-server-side-encryption": "aws:kms"
@@ -417,8 +417,8 @@ Resources:
             Action:
               - s3:PutObject
             Effect: Deny
-            Resource: !Sub '${TRELakeAdminResultsBucket.Arn}/*'
-            Principal: '*'
+            Resource: !Sub "${TRELakeAdminResultsBucket.Arn}/*"
+            Principal: "*"
             Condition:
               "Null":
                 "s3:x-amz-server-side-encryption": true
@@ -427,7 +427,7 @@ Resources:
     Type: AWS::IAM::ManagedPolicy
     Properties:
       PolicyDocument:
-        Version: '2012-10-17'
+        Version: "2012-10-17"
         Statement:
           - Sid: AllowKeyAdministration
             Effect: Allow
@@ -454,7 +454,7 @@ Resources:
     Type: AWS::IAM::ManagedPolicy
     Properties:
       PolicyDocument:
-        Version: '2012-10-17'
+        Version: "2012-10-17"
         Statement:
           - Sid: AllowKeyUsage
             Effect: Allow
@@ -472,22 +472,22 @@ Resources:
     Type: AWS::IAM::ManagedPolicy
     Properties:
       PolicyDocument:
-        Version: '2012-10-17'
+        Version: "2012-10-17"
         Statement:
           - Sid: AllowGlueUsage
             Effect: Allow
             Action:
               - iam:GetRole
               - iam:PassRole
-            Resource: !GetAtt 'TREGlueRole.Arn'
+            Resource: !GetAtt "TREGlueRole.Arn"
 
   TREDataAnalystRole:
     Type: AWS::IAM::Role
     Properties:
       ManagedPolicyArns:
         - arn:aws:iam::aws:policy/AmazonAthenaFullAccess
-        - !Ref 'TRELFQueryPolicy'
-        - !Ref 'TRES3DataAnalystPolicy'
+        - !Ref "TRELFQueryPolicy"
+        - !Ref "TRES3DataAnalystPolicy"
       AssumeRolePolicyDocument:
         Version: 2012-10-17
         Statement:
@@ -496,7 +496,7 @@ Resources:
               AWS:
                 - !Sub ${AWS::AccountId}
             Action:
-              - 'sts:AssumeRole'
+              - "sts:AssumeRole"
 
   TREDataLakeAdminRole:
     Type: AWS::IAM::Role
@@ -507,10 +507,10 @@ Resources:
         - arn:aws:iam::aws:policy/IAMReadOnlyAccess
         - arn:aws:iam::aws:policy/AmazonS3FullAccess
         - arn:aws:iam::aws:policy/AWSGlueConsoleFullAccess
-        - !Ref 'TRELFQueryPolicy'
-        - !Ref 'TRES3DataAnalystPolicy'
-        - !Ref 'TREDataLakeKMSUsagePolicy'
-        - !Ref 'TREGlueRolePolicy'
+        - !Ref "TRELFQueryPolicy"
+        - !Ref "TRES3DataAnalystPolicy"
+        - !Ref "TREDataLakeKMSUsagePolicy"
+        - !Ref "TREGlueRolePolicy"
       AssumeRolePolicyDocument:
         Version: 2012-10-17
         Statement:
@@ -519,7 +519,7 @@ Resources:
               AWS:
                 - !Sub ${AWS::AccountId}
             Action:
-              - 'sts:AssumeRole'
+              - "sts:AssumeRole"
 
   TREAdminRole:
     Type: AWS::IAM::Role
@@ -534,20 +534,20 @@ Resources:
         - !Ref TREDataLakeKMSManagementPolicy
         - !Ref TREGlueRolePolicy
       AssumeRolePolicyDocument:
-        Version: '2012-10-17'
+        Version: "2012-10-17"
         Statement:
           - Effect: Allow
             Principal:
               AWS:
                 - !Ref AWS::AccountId
             Action:
-              - 'sts:AssumeRole'
+              - "sts:AssumeRole"
 
   TRELFRegisterLocationServiceRole:
     Type: AWS::IAM::Role
     Properties:
       AssumeRolePolicyDocument:
-        Version: '2012-10-17'
+        Version: "2012-10-17"
         Statement:
           - Effect: Allow
             Principal:
@@ -565,7 +565,7 @@ Resources:
             reason: Lake Formation does not support resource ARNs
     Properties:
       AssumeRolePolicyDocument:
-        Version: '2012-10-17'
+        Version: "2012-10-17"
         Statement:
           - Effect: Allow
             Principal:
@@ -578,7 +578,7 @@ Resources:
       Policies:
         - PolicyName: glue-tre-policy
           PolicyDocument:
-            Version: '2012-10-17'
+            Version: "2012-10-17"
             Statement:
               - Effect: Allow
                 Action:
@@ -587,10 +587,10 @@ Resources:
                   - s3:DeleteObject
                   - s3:ListBucket
                 Resource:
-                  - !GetAtt 'TRESourceBucket.Arn'
-                  - !GetAtt 'TRETargetBucket.Arn'
-                  - !Sub '${TRESourceBucket.Arn}/*'
-                  - !Sub '${TRETargetBucket.Arn}/*'
+                  - !GetAtt "TRESourceBucket.Arn"
+                  - !GetAtt "TRETargetBucket.Arn"
+                  - !Sub "${TRESourceBucket.Arn}/*"
+                  - !Sub "${TRETargetBucket.Arn}/*"
               - Effect: Allow
                 Action:
                   - kms:Encrypt
@@ -603,28 +603,28 @@ Resources:
                 Action:
                   - lakeformation:GetDataAccess
                   - lakeformation:GrantPermissions
-                Resource: '*'
+                Resource: "*"
       Path: /
 
   TRES3DataLakePolicy:
     Type: AWS::IAM::ManagedPolicy
     Properties:
       PolicyDocument:
-        Version: '2012-10-17'
+        Version: "2012-10-17"
         Statement:
           - Effect: Allow
             Action:
               - s3:GetObject
               - s3:PutObject
             Resource:
-              - !Sub 'arn:aws:s3:::${TRETargetBucket}/*'
-              - !Sub 'arn:aws:s3:::${TRESourceBucket}/*'
+              - !Sub "arn:aws:s3:::${TRETargetBucket}/*"
+              - !Sub "arn:aws:s3:::${TRESourceBucket}/*"
           - Effect: Allow
             Action:
               - s3:ListBucket
             Resource:
-              - !GetAtt 'TRETargetBucket.Arn'
-              - !GetAtt 'TRESourceBucket.Arn'
+              - !GetAtt "TRETargetBucket.Arn"
+              - !GetAtt "TRESourceBucket.Arn"
           - Effect: Allow
             Action:
               - kms:Decrypt
@@ -634,7 +634,7 @@ Resources:
               - !GetAtt TRESourceBucketKMSKey.Arn
               - !GetAtt TRETargetBucketKMSKey.Arn
       Roles:
-        - !Ref 'TRELFRegisterLocationServiceRole'
+        - !Ref "TRELFRegisterLocationServiceRole"
 
   TRES3DataAnalystPolicy:
     Type: AWS::IAM::ManagedPolicy
@@ -645,25 +645,25 @@ Resources:
             reason: KMS ListAliases does not support resource ARNs
     Properties:
       PolicyDocument:
-        Version: '2012-10-17'
+        Version: "2012-10-17"
         Statement:
           - Effect: Allow
             Action:
               - s3:ListBucket
             Resource:
-              - !Sub 'arn:aws:s3:::${TREAnalystResultsBucket}'
-              - !Sub 'arn:aws:s3:::${TRESourceBucket}'
+              - !Sub "arn:aws:s3:::${TREAnalystResultsBucket}"
+              - !Sub "arn:aws:s3:::${TRESourceBucket}"
           - Effect: Allow
             Action:
               - s3:GetObject
             Resource:
-              - !Sub 'arn:aws:s3:::${TREAnalystResultsBucket}/*'
-              - !Sub 'arn:aws:s3:::${TRESourceBucket}/*'
+              - !Sub "arn:aws:s3:::${TREAnalystResultsBucket}/*"
+              - !Sub "arn:aws:s3:::${TRESourceBucket}/*"
           - Effect: Allow
             Action:
               - s3:PutObject
             Resource:
-              - !Sub 'arn:aws:s3:::${TREAnalystResultsBucket}/*'
+              - !Sub "arn:aws:s3:::${TREAnalystResultsBucket}/*"
           - Effect: Allow
             Action: kms:Decrypt
             Resource:
@@ -677,7 +677,7 @@ Resources:
           - Effect: Allow
             Action:
               - kms:ListAliases
-            Resource: '*'
+            Resource: "*"
 
   TRELFQueryPolicy:
     Type: AWS::IAM::ManagedPolicy
@@ -688,7 +688,7 @@ Resources:
             reason: Lake Formation does not support resource ARNs
     Properties:
       PolicyDocument:
-        Version: '2012-10-17'
+        Version: "2012-10-17"
         Statement:
           - Effect: Allow
             Action:
@@ -701,7 +701,7 @@ Resources:
               - lakeformation:GetQueryState
               - lakeformation:GetWorkUnits
               - lakeformation:Execute
-            Resource: '*'
+            Resource: "*"
 
   TRELFLocationPolicy:
     Type: AWS::IAM::Policy
@@ -711,9 +711,9 @@ Resources:
           - id: W12
             reason: Lake Formation does not support resource ARNs
     Properties:
-      PolicyName: !Sub 'TRELFLocationPolicy-${AWS::StackName}'
+      PolicyName: !Sub "TRELFLocationPolicy-${AWS::StackName}"
       PolicyDocument:
-        Version: '2012-10-17'
+        Version: "2012-10-17"
         Statement:
           - Effect: Allow
             Action:
@@ -722,36 +722,36 @@ Resources:
               - lakeformation:AbortTransaction
               - lakeformation:GetTableObjects
               - lakeformation:UpdateTableObjects
-            Resource: '*'
+            Resource: "*"
       Roles:
-        - !Ref 'TRELFRegisterLocationServiceRole'
+        - !Ref "TRELFRegisterLocationServiceRole"
 
   TRELFDataLakeSettings:
     Type: AWS::LakeFormation::DataLakeSettings
     Properties:
       Admins:
-        - DataLakePrincipalIdentifier: !GetAtt 'TREDataLakeAdminRole.Arn'
-        - DataLakePrincipalIdentifier: !GetAtt 'TREAdminRole.Arn'
+        - DataLakePrincipalIdentifier: !GetAtt "TREDataLakeAdminRole.Arn"
+        - DataLakePrincipalIdentifier: !GetAtt "TREAdminRole.Arn"
 
   TRELFDataLakeLocation1:
     Type: AWS::LakeFormation::Resource
     Properties:
-      ResourceArn: !Sub 'arn:aws:s3:::${TRETargetBucket}'
-      RoleArn: !GetAtt 'TRELFRegisterLocationServiceRole.Arn'
+      ResourceArn: !Sub "arn:aws:s3:::${TRETargetBucket}"
+      RoleArn: !GetAtt "TRELFRegisterLocationServiceRole.Arn"
       UseServiceLinkedRole: false
 
   TRELFDataLakeLocation2:
     Type: AWS::LakeFormation::Resource
     Properties:
-      ResourceArn: !Sub 'arn:aws:s3:::${TRESourceBucket}'
-      RoleArn: !GetAtt 'TRELFRegisterLocationServiceRole.Arn'
+      ResourceArn: !Sub "arn:aws:s3:::${TRESourceBucket}"
+      RoleArn: !GetAtt "TRELFRegisterLocationServiceRole.Arn"
       UseServiceLinkedRole: false
 
   TRELFDatabasePermissionForLFRegisterLocationServiceRole:
     Type: AWS::LakeFormation::Permissions
     Properties:
       DataLakePrincipal:
-        DataLakePrincipalIdentifier: !GetAtt 'TRELFRegisterLocationServiceRole.Arn'
+        DataLakePrincipalIdentifier: !GetAtt "TRELFRegisterLocationServiceRole.Arn"
       Permissions:
         - ALTER
         - CREATE_TABLE
@@ -759,64 +759,64 @@ Resources:
         - DROP
       Resource:
         DatabaseResource:
-          Name: !Ref 'TRELakeFormationDatabase'
+          Name: !Ref "TRELakeFormationDatabase"
 
   TRELFDatabasePermissionForAdminRole:
     Type: AWS::LakeFormation::Permissions
     Properties:
       DataLakePrincipal:
-        DataLakePrincipalIdentifier: !GetAtt 'TREAdminRole.Arn'
+        DataLakePrincipalIdentifier: !GetAtt "TREAdminRole.Arn"
       Permissions:
         - ALL
       PermissionsWithGrantOption:
         - ALL
       Resource:
         DatabaseResource:
-          Name: !Ref 'TRELakeFormationDatabase'
+          Name: !Ref "TRELakeFormationDatabase"
 
   TRELFDatabasePermissionForDataLakeAdminRole:
     Type: AWS::LakeFormation::Permissions
     Properties:
       DataLakePrincipal:
-        DataLakePrincipalIdentifier: !GetAtt 'TREDataLakeAdminRole.Arn'
+        DataLakePrincipalIdentifier: !GetAtt "TREDataLakeAdminRole.Arn"
       Permissions:
         - ALL
       PermissionsWithGrantOption:
         - ALL
       Resource:
         DatabaseResource:
-          Name: !Ref 'TRELakeFormationDatabase'
+          Name: !Ref "TRELakeFormationDatabase"
 
   TRELFDatabasePermissionForGlueRole:
     Type: AWS::LakeFormation::Permissions
     Properties:
       DataLakePrincipal:
-        DataLakePrincipalIdentifier: !GetAtt 'TREGlueRole.Arn'
+        DataLakePrincipalIdentifier: !GetAtt "TREGlueRole.Arn"
       Permissions:
         - ALL
       PermissionsWithGrantOption:
         - ALL
       Resource:
         DatabaseResource:
-          Name: !Ref 'TRELakeFormationDatabase'
+          Name: !Ref "TRELakeFormationDatabase"
 
   TRELFDataPermissionForGlueRole:
     Type: AWS::LakeFormation::Permissions
     Properties:
       DataLakePrincipal:
-        DataLakePrincipalIdentifier: !GetAtt 'TREGlueRole.Arn'
+        DataLakePrincipalIdentifier: !GetAtt "TREGlueRole.Arn"
       Permissions:
         - CREATE_TABLE_READ_WRITE
       Resource:
         DataLocationResource:
-          S3Resource: !Sub '${TRESourceBucket.Arn}/'
+          S3Resource: !Sub "${TRESourceBucket.Arn}/"
 
   TRELakeFormationDatabase:
     Type: AWS::Glue::Database
     Properties:
-      CatalogId: !Ref 'AWS::AccountId'
+      CatalogId: !Ref "AWS::AccountId"
       DatabaseInput:
-        Name: !Ref 'LFDatabaseName'
+        Name: !Ref "LFDatabaseName"
 
   TREGlueSecurityConfiguration:
     Type: AWS::Glue::SecurityConfiguration

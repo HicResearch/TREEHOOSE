@@ -13,7 +13,7 @@ Parameters:
     Description: Specify the ID of existing IAM role initial-stack-<ID>-xacc-env-mgmt
     Type: String
     MinLength: 1
-    AllowedPattern : "[0-9]+"
+    AllowedPattern: "[0-9]+"
     ConstraintDescription: Ensure only the ID part of the IAM role name is provided
 
   ServiceCatalogProductsList:
@@ -75,7 +75,7 @@ Parameters:
 
 Conditions:
   ApplyToAllSCProducts: !Equals
-    - !Join [ "", !Ref ServiceCatalogProductsList ]
+    - !Join ["", !Ref ServiceCatalogProductsList]
     - ""
 
 Resources:
@@ -93,16 +93,16 @@ Resources:
     Properties:
       PolicyDocument:
         Id: BudgetNotifySNSPolicy
-        Version: '2012-10-17'
+        Version: "2012-10-17"
         Statement:
-        - Sid: BudgetNotifySNSPolicyId1
-          Effect: Allow
-          Principal:
-            Service: budgets.amazonaws.com
-          Action: SNS:Publish
-          Resource: !Ref BudgetNotifySNS
+          - Sid: BudgetNotifySNSPolicyId1
+            Effect: Allow
+            Principal:
+              Service: budgets.amazonaws.com
+            Action: SNS:Publish
+            Resource: !Ref BudgetNotifySNS
       Topics:
-      - !Ref BudgetNotifySNS
+        - !Ref BudgetNotifySNS
 
   AWSBudgetsExecutionRole:
     Type: AWS::IAM::Role
@@ -115,7 +115,7 @@ Resources:
               Service:
                 - budgets.amazonaws.com
             Action:
-              - 'sts:AssumeRole'
+              - "sts:AssumeRole"
       ManagedPolicyArns:
         - arn:aws:iam::aws:policy/AWSBudgetsActionsWithAWSResourceControlAccess
       Policies:
@@ -135,7 +135,7 @@ Resources:
     Type: AWS::IAM::ManagedPolicy
     Properties:
       PolicyDocument:
-        Version: '2012-10-17'
+        Version: "2012-10-17"
         Statement:
           - Effect: Deny
             Action:
@@ -143,10 +143,50 @@ Resources:
             Resource: !If
               - ApplyToAllSCProducts
               - "*"
-              - - !Join [ "", [ "arn:aws:catalog:", !Ref AWS::Region, ":", !Ref AWS::AccountId, ":product/prod-", !Select [ 0, !Ref ServiceCatalogProductsList ] ] ]
-                - !Join [ "", [ "arn:aws:catalog:", !Ref AWS::Region, ":", !Ref AWS::AccountId, ":product/prod-", !Select [ 1, !Ref ServiceCatalogProductsList ] ] ]
-                - !Join [ "", [ "arn:aws:catalog:", !Ref AWS::Region, ":", !Ref AWS::AccountId, ":product/prod-", !Select [ 2, !Ref ServiceCatalogProductsList ] ] ]
-                - !Join [ "", [ "arn:aws:catalog:", !Ref AWS::Region, ":", !Ref AWS::AccountId, ":product/prod-", !Select [ 3, !Ref ServiceCatalogProductsList ] ] ]
+              - - !Join [
+                    "",
+                    [
+                      "arn:aws:catalog:",
+                      !Ref AWS::Region,
+                      ":",
+                      !Ref AWS::AccountId,
+                      ":product/prod-",
+                      !Select [0, !Ref ServiceCatalogProductsList],
+                    ],
+                  ]
+                - !Join [
+                    "",
+                    [
+                      "arn:aws:catalog:",
+                      !Ref AWS::Region,
+                      ":",
+                      !Ref AWS::AccountId,
+                      ":product/prod-",
+                      !Select [1, !Ref ServiceCatalogProductsList],
+                    ],
+                  ]
+                - !Join [
+                    "",
+                    [
+                      "arn:aws:catalog:",
+                      !Ref AWS::Region,
+                      ":",
+                      !Ref AWS::AccountId,
+                      ":product/prod-",
+                      !Select [2, !Ref ServiceCatalogProductsList],
+                    ],
+                  ]
+                - !Join [
+                    "",
+                    [
+                      "arn:aws:catalog:",
+                      !Ref AWS::Region,
+                      ":",
+                      !Ref AWS::AccountId,
+                      ":product/prod-",
+                      !Select [3, !Ref ServiceCatalogProductsList],
+                    ],
+                  ]
 
   TREProjectBudget:
     Type: AWS::Budgets::Budget
@@ -191,7 +231,7 @@ Resources:
       BudgetName: !Ref TREProjectBudget
       Definition:
         IamActionDefinition:
-          PolicyArn: !Ref 'DenyCreateWorkSpacePolicy'
+          PolicyArn: !Ref "DenyCreateWorkSpacePolicy"
           Roles:
             - !Sub "initial-stack-${SWBStackID}-xacc-env-mgmt"
       ExecutionRoleArn: !GetAtt AWSBudgetsExecutionRole.Arn

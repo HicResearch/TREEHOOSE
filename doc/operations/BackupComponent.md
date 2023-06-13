@@ -75,7 +75,7 @@ EBS by replacing it on the Workspace.
 1. Click on the `Volume ID` which should take you to `volumes` page, select
    the volume, click on `Action`->`Detach volume`, confirm `Detach`
 
-      *Note : At this point if the detached volume is no longer required it should be deleted.*
+   _Note : At this point if the detached volume is no longer required it should be deleted._
 
 1. Navigate to [AWS Backup](https://eu-west-2.console.aws.amazon.com/backup/home?region=eu-west-2#/backupvaults) console,
    navigate to `Backup vaults`, click on the vault name.
@@ -94,14 +94,14 @@ EBS by replacing it on the Workspace.
    that will have the snapshot ID, and other configurations.
    Fill the details as per below table and click on `Restore backup` button.
 
-      |Parameter|Value|
-      |----|----|
-      |Resource Type| Specify EBS volume.|
-      |Volume type| Select either the original volume type as noted earlier or a more appropriate type based on cost and performance requirements|
-      |Size| Select equivalent size of the backed up EBS volume as noted earlier.|
-      |IOS| 300/3000 - Baseline of 3 iops per GiB with a minimum of 100 IOPS, burstable to 3000 IOPS.|
-      |Availability Zone| Select the Availability Zone for the EC2 instance as noted in previous step|
-      |Restore role| Select Default role|
+   | Parameter         | Value                                                                                                                         |
+   | ----------------- | ----------------------------------------------------------------------------------------------------------------------------- |
+   | Resource Type     | Specify EBS volume.                                                                                                           |
+   | Volume type       | Select either the original volume type as noted earlier or a more appropriate type based on cost and performance requirements |
+   | Size              | Select equivalent size of the backed up EBS volume as noted earlier.                                                          |
+   | IOS               | 300/3000 - Baseline of 3 iops per GiB with a minimum of 100 IOPS, burstable to 3000 IOPS.                                     |
+   | Availability Zone | Select the Availability Zone for the EC2 instance as noted in previous step                                                   |
+   | Restore role      | Select Default role                                                                                                           |
 
 1. This will take you to restored jobs screen.
    The restored backup job will appear under Restore jobs in the the
@@ -196,33 +196,26 @@ files the restoration work needs to be undertaken by the TRE Admin.
    Replace values for `BACKUP_BUCKET` and `NOTEBOOK_NAME` variables.
 
    ```json
-      {
-         "Version": "2012-10-17",
-         "Statement": [
-            {
-                  "Effect": "Allow",
-                  "Action": ["s3:ListBucket"],
-                  "Resource": [
-                     "arn:aws:s3:::BACKUP_BUCKET/NOTEBOOK_NAME"
-                  ],
-                  "Condition": {
-                     "StringEquals": {
-                        "s3:prefix": "NOTEBOOK_NAME"
-                     }
-                  }
-            },
-            {
-                  "Effect": "Allow",
-                  "Action": [
-                     "s3:GetObject",
-                     "s3:GetObjectVersion"
-                  ],
-                  "Resource": [
-                     "arn:aws:s3:::BACKUP_BUCKET/NOTEBOOK_NAME/*"
-                  ],
-            },
-         ],
-      }
+   {
+     "Version": "2012-10-17",
+     "Statement": [
+       {
+         "Effect": "Allow",
+         "Action": ["s3:ListBucket"],
+         "Resource": ["arn:aws:s3:::BACKUP_BUCKET/NOTEBOOK_NAME"],
+         "Condition": {
+           "StringEquals": {
+             "s3:prefix": "NOTEBOOK_NAME"
+           }
+         }
+       },
+       {
+         "Effect": "Allow",
+         "Action": ["s3:GetObject", "s3:GetObjectVersion"],
+         "Resource": ["arn:aws:s3:::BACKUP_BUCKET/NOTEBOOK_NAME/*"]
+       }
+     ]
+   }
    ```
 
 1. Click on Review Policy. Provide policy name as `sagemaker-restore-policy-for-NOTEBOOK_NAME`

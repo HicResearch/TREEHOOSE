@@ -8,7 +8,7 @@ in the EU West (London) AWS Region is approximately **$30** for TRE account with
 Prices are subject to change.
 For full details, see the pricing page for each AWS service used in this solution.
 
-> **_NOTE:_**  Many AWS Services include a Free Tier – a baseline amount of the service that customers can use at no charge.
+> **_NOTE:_** Many AWS Services include a Free Tier – a baseline amount of the service that customers can use at no charge.
 > Actual costs may be more or less than the pricing examples provided.
 
 The baseline cost is just for spinning up the infrastructure.
@@ -42,20 +42,20 @@ solution with the default settings in EU West (Ireland) AWS Region.
 
 An installation of TRE without any workspaces and users.
 
-|AWS Service|Monthly cost|
-|----|----|
-|Networking services|$11|
-|KMS|$6|
-|Config|$4|
-|CloudTrail|$3.5|
-|EC2-other|$1.5|
-|DynamoDB|$6|
-|Service Catalog|$1|
-|Step Functions|$0.09|
-|Lambdas|$0.003|
-|CloudFront|$0.0002|
-|CloudWatch|$0.0003|
-|Total|$33.0935|
+| AWS Service         | Monthly cost |
+| ------------------- | ------------ |
+| Networking services | $11          |
+| KMS                 | $6           |
+| Config              | $4           |
+| CloudTrail          | $3.5         |
+| EC2-other           | $1.5         |
+| DynamoDB            | $6           |
+| Service Catalog     | $1           |
+| Step Functions      | $0.09        |
+| Lambdas             | $0.003       |
+| CloudFront          | $0.0002      |
+| CloudWatch          | $0.0003      |
+| Total               | $33.0935     |
 
 ### EC2 Usage
 

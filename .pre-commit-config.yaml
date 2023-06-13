@@ -83,4 +83,4 @@ repos:
 
 # workspace_backup/ has it's own pre-commit-config.yaml
 # egress_app_* are being moved to their own repos
-exclude: '^src/components/(egress_app_backend|egress_app_frontend|workspace_backup)/'
+exclude: "^src/components/(egress_app_backend|egress_app_frontend|workspace_backup)/"
