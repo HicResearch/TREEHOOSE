@@ -8,7 +8,6 @@ import json
 import aws_cdk as cdk
 import pytest
 from aws_cdk.assertions import Match, Template
-
 from src.workspace_backup_infrastructure_stack import WorkspaceBackupInfrastructureStack
 
 CONTEXT = {
