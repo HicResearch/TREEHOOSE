@@ -108,10 +108,10 @@ npm run start-image-builder -- default eu-west-2 default default
 Log in to the [AWS Management Console](https://console.aws.amazon.com/) using your **TRE Project 1 Prod** account and Admin privileges.
 
 - [ ] Go to Service: [AWS AppStream](https://eu-west-2.console.aws.amazon.com/appstream2/home?region=eu-west-2)
-- [ ] Select menu option *Images* -> [*Image builder*](https://eu-west-2.console.aws.amazon.com/appstream2/home?region=eu-west-2#/image-builder)
-- [ ] Select the image builder created in Part 1 above, then press on button *Connect*
-- [ ] On the new tab page that opened in your browser, log in as *Administrator*
-- [ ] On the Windows Desktop provided by AppStream, press on the Start button and right click on Windows Powershell to select *Run as administrator*
+- [ ] Select menu option _Images_ -> [_Image builder_](https://eu-west-2.console.aws.amazon.com/appstream2/home?region=eu-west-2#/image-builder)
+- [ ] Select the image builder created in Part 1 above, then press on button _Connect_
+- [ ] On the new tab page that opened in your browser, log in as _Administrator_
+- [ ] On the Windows Desktop provided by AppStream, press on the Start button and right click on Windows Powershell to select _Run as administrator_
 - [ ] Run the following commands in Windows Powershell to create an AppStream image:
 
 ```bash
@@ -121,7 +121,7 @@ Invoke-WebRequest -Uri https://raw.githubusercontent.com/awslabs/service-workben
 ```
 
 If the script successfully completes you will be automatically disconnected.
-You can view the image created in AppStream's menu option: [*Image registry*](https://eu-west-2.console.aws.amazon.com/appstream2/home?region=eu-west-2#/images).
+You can view the image created in AppStream's menu option: [_Image registry_](https://eu-west-2.console.aws.amazon.com/appstream2/home?region=eu-west-2#/images).
 Wait for the Appstream image status to become `Available` (this will take several minutes).
 
 ### Step 2G. Onboard Account
@@ -135,11 +135,11 @@ cd /home/ec2-user/tmp/service-workbench-on-aws-5.2.3
 ./scripts/get-info.sh treprod
 ```
 
-- [ ] Copy the value for *Website URL* and open the browser to access the page
-- [ ] Log in using the *rootUserEmail* user set in the configuration file in step 2C. For the first time login, use the temporary password received in an email.
-  Alternatively, use the password shown in the get-info.sh output under *Temporary Native Pool Password*
-- [ ] In the SWB website, select *Accounts* on the left side menu
-- [ ] Select *AWS Accounts* and press on button *Add AWS Account*. Some of the settings are adjustable (e.g. time limits, instance type). Below you can find suggested values:
+- [ ] Copy the value for _Website URL_ and open the browser to access the page
+- [ ] Log in using the _rootUserEmail_ user set in the configuration file in step 2C. For the first time login, use the temporary password received in an email.
+      Alternatively, use the password shown in the get-info.sh output under _Temporary Native Pool Password_
+- [ ] In the SWB website, select _Accounts_ on the left side menu
+- [ ] Select _AWS Accounts_ and press on button _Add AWS Account_. Some of the settings are adjustable (e.g. time limits, instance type). Below you can find suggested values:
 
 ```console
 Account Name: TRE-Project-1-Prod
@@ -159,8 +159,8 @@ Note there are 3 options you can select for the AppStream Fleet Type: ON_DEMAND,
 ALWAYS_ON will reduce the waiting time to establish an AppStream connection, but it will cost more.
 To learn more about AppStream fleet types, follow this [guide](https://docs.aws.amazon.com/appstream2/latest/developerguide/fleet-type.html).
 
-- [ ] Press on button *Onboard AWS Account* and follow all remaining instructions on the web page.
-  Do not edit any of the fields in CloudFormation.
+- [ ] Press on button _Onboard AWS Account_ and follow all remaining instructions on the web page.
+      Do not edit any of the fields in CloudFormation.
 - [ ] Confirm the account status matches the image below
 
 ![Onboard AWS Account on SWB](../../res/images/Status-SWBOnboardAccount-Success.png)

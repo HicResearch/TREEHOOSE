@@ -24,7 +24,7 @@ steps for installing the TRE setup and the source code already downloaded.
 ### Step 6A. Log in to the EC2 instance
 
 - [ ] Follow these [instructions](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/session-manager.html)
-  to learn how to connect via SSM to the EC2 instance created in Step 1.
+      to learn how to connect via SSM to the EC2 instance created in Step 1.
 - [ ] Run the following commands to initialise your environment:
 
 ```console
@@ -37,12 +37,12 @@ alias cdk2="npx aws-cdk@2.x"
 - [ ] Update the [`cdk.json`](../../src/components/workspace_backup/cdk.json) file to meet your requirements.
       Below are the options available
 
-|Parameter|Usage|Default Value|Notes|
-|---------|-----|-------------|-----|
-|frequency|controls the frequency of taking backups. possible values are daily and hourly|daily|For SageMaker notebooks, the instance needs to be running for the backup to happen. This might not always be the case so a backup is also taken when instance is started|
-|retention_period|defines the number of days backup is retained before deletion|180||
-|move_to_cold_storage_after|defines the number of days after which the backup is archived to cold storage|90|AWS Backup for EBS currently does not support this. Uses S3 lifecycle policy for SageMaker backups|
-|sagemaker_enable_selfservice_restore|controls if SageMaker notebook user is able to restore backed-up files|true||
+| Parameter                            | Usage                                                                          | Default Value | Notes                                                                                                                                                                    |
+| ------------------------------------ | ------------------------------------------------------------------------------ | ------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| frequency                            | controls the frequency of taking backups. possible values are daily and hourly | daily         | For SageMaker notebooks, the instance needs to be running for the backup to happen. This might not always be the case so a backup is also taken when instance is started |
+| retention_period                     | defines the number of days backup is retained before deletion                  | 180           |                                                                                                                                                                          |
+| move_to_cold_storage_after           | defines the number of days after which the backup is archived to cold storage  | 90            | AWS Backup for EBS currently does not support this. Uses S3 lifecycle policy for SageMaker backups                                                                       |
+| sagemaker_enable_selfservice_restore | controls if SageMaker notebook user is able to restore backed-up files         | true          |                                                                                                                                                                          |
 
 - [ ] Change directory to root folder of the backup component code: `src/components/workspace_backup/`.
 
@@ -75,7 +75,7 @@ this functionality.
 ### Validating EBS volume backups
 
 1. Login into the SWB (Service Workbench) Web App as an Admin.
-   Navigate to `Workspaces`. In  the list of
+   Navigate to `Workspaces`. In the list of
    all Available and Stopped workspaces check for a workspace
    based on EC2 and has been created using a configuration
    that has backup enabled.
@@ -83,9 +83,9 @@ this functionality.
 1. Once such workspace is identified, click on `View Detail`
    , navigate to `CloudFormation Output` and note `Ec2WorkspaceInstanceId`
 
-   *Note : You need to wait for the backup window to pass before
+   _Note : You need to wait for the backup window to pass before
    performing below steps. For Daily backup frequency wait for a day
-   and for hourly back frequency wait for atleast a few hours to pass.*
+   and for hourly back frequency wait for atleast a few hours to pass._
 
 1. Log in to the [AWS Management Console](https://console.aws.amazon.com/)
    of the TRE account using Admin privileges.
@@ -104,7 +104,7 @@ this functionality.
 ### Validating SageMaker Notebook backups
 
 1. Login into the SWB Web App as an Admin.
-   Navigate to `Workspaces`. In  the list of
+   Navigate to `Workspaces`. In the list of
    all Available and Stopped workspaces check for a workspace
    based on SageMaker Notebook and has been created using a configuration
    that has backup enabled.
@@ -112,9 +112,9 @@ this functionality.
 1. Once such workspace is identified, click on `View Detail`
    , navigate to `CloudFormation Output` and note `NotebookInstanceName`
 
-   *Note : You need to wait for the backup window to pass before
+   _Note : You need to wait for the backup window to pass before
    performing below steps Or the workspace to be restarted once
-   after files have been created in it.*
+   after files have been created in it._
 
 1. Log in to the [AWS Management Console](https://console.aws.amazon.com/)
    of the TRE account using Admin privileges. Navigate to Amazon S3 console.

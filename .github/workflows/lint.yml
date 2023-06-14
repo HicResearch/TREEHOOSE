@@ -1,0 +1,31 @@
+name: Lint
+
+on:
+  pull_request:
+  push:
+  workflow_dispatch:
+
+jobs:
+  pre-commit:
+    runs-on: ubuntu-22.04
+    timeout-minutes: 5
+
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-python@v4
+        with:
+          python-version: "3.10"
+
+      - name: Install git-secrets
+        run: |
+          git clone https://github.com/awslabs/git-secrets
+          cd git-secrets
+          git checkout 99d01d58ebcc06e237c0e3f3ff5ae628aeef6aa6
+          sudo make install
+
+      # ref: https://github.com/pre-commit/action
+      # Run "pre-commit run --all-files"
+      - uses: pre-commit/action@v3.0.0
+
+      - name: pre-commit workspace_backup
+        run: pre-commit run -a --config src/components/workspace_backup/.pre-commit-config.yaml

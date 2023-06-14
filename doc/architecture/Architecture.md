@@ -57,19 +57,19 @@ of the numbered steps in the diagram.
    with a comprehensive review process with multiple approvers
    before the data is available for download.
 1. Egress requests that are approved can be downloaded by Data Egress Managers
-  and shared with the Researcher who requested the data egress.
-  There is a configurable limit to the number of downloads which can be made.
+   and shared with the Researcher who requested the data egress.
+   There is a configurable limit to the number of downloads which can be made.
 1. Audit & Compliance teams get full visibility into all
-    user activities resulting in AWS API calls through centralised
-    CloudTrail logs. Additionally, they get breakglass
-    access to all TRE projects/accounts in the TRE through
-    a Lambda function role in the Audit account.
+   user activities resulting in AWS API calls through centralised
+   CloudTrail logs. Additionally, they get breakglass
+   access to all TRE projects/accounts in the TRE through
+   a Lambda function role in the Audit account.
 
 ## Component Overview
 
 ---
 
-### *AWS Control Tower*
+### _AWS Control Tower_
 
 ---
 
@@ -87,7 +87,7 @@ that will be setup by using the TREEHOOSE solution.
 
 ![Multi-account structure](../../res/images/multi-account-setup.png)
 
-### *Service Workbench on AWS Solution*
+### _Service Workbench on AWS Solution_
 
 ---
 
@@ -107,7 +107,7 @@ Key Components :
   (more services as desired; this is customisable by providing Service Catalog templates).
 - For the secure access environment: AWS AppStream 2.0
 
-### *Data Lake*
+### _Data Lake_
 
 ---
 
@@ -122,7 +122,7 @@ Key Components :
 
 - AWS Lake Formation, Amazon S3, AWS KMS, AWS Glue, Amazon Athena
 
-### *Data Egress Application*
+### _Data Egress Application_
 
 ---
 
@@ -149,7 +149,7 @@ Key Components :
 - For the backend: AWS Step Functions, Amazon EFS,
   AWS Lambda, Amazon DynamoDB, Amazon SES, Amazon S3, AWS KMS, Amazon SNS, Amazon Cognito, AWS AppSync
 
-### *Workspace backup*
+### _Workspace backup_
 
 ---
 
@@ -189,7 +189,7 @@ Key Components:
 - For the backend: AWS Step Functions,
   AWS Lambda, Amazon CloudWatch Events, AWS CloudFormation, AWS Backup, Amazon S3
 
-### *Budget controls*
+### _Budget controls_
 
 ---
 
@@ -204,7 +204,7 @@ each TRE project and allows to
 - **Respond** : automate actions to avoid over-spending
 
 The component uses [AWS Budgets](https://aws.amazon.com/aws-cost-management/aws-budgets/)
- to plan and set expectations around TRE project costs.
+to plan and set expectations around TRE project costs.
 
 Key Components:
 

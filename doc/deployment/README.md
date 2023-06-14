@@ -16,19 +16,19 @@ Please ensure you switch back to the correct region after the redirect.
 
 The TREEHOOSE TRE uses the **ServiceWorkbench** open-source software as the core component and deploys additional add-ons to enable other features.
 
-1) The prerequisites will cover the setup for an AWS Control Tower environment with a multi-account structure.
+1. The prerequisites will cover the setup for an AWS Control Tower environment with a multi-account structure.
 
-2) The solution deployment will be done from a pre-configured EC2 instance.
+2. The solution deployment will be done from a pre-configured EC2 instance.
 
-3) The following components are part of the TRE solution:
+3. The following components are part of the TRE solution:
 
-| Component | Type    | Name                     | Purpose                            |
-|:---------:|:--------|:-------------------------|:-----------------------------------|
-| 1         | Mandatory | [ServiceWorkbench](https://aws.amazon.com/government-education/research-and-technical-computing/service-workbench/)  | Core engine for TRE. It provides a simple GUI interface for Researchers to provision secure cloud compute resources with data analytics tools. |
-| 2         | Mandatory | [Data Lake](https://aws.amazon.com/lake-formation) | A pre-configured data lake to store and manage sensitive datasets. |
-| 3         | Optional  | Data Egress Application | Provides a GUI-based data egress approval workflow for researchers to take out data from the TRE with the permission of an Information Governance Lead and Research IT Admin |
-| 4         | Optional  | Project Budget Controls | Allows TRE administrators to set policies to stop new ServiceWorkbench workspace creation when the provided budget limit is reached |
-| 5         | Optional  | Workspace Backup | Allows TRE administrators to backup and restore ServiceWorkbench workspaces |
+| Component | Type      | Name                                                                                                                | Purpose                                                                                                                                                                      |
+| :-------: | :-------- | :------------------------------------------------------------------------------------------------------------------ | :--------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+|     1     | Mandatory | [ServiceWorkbench](https://aws.amazon.com/government-education/research-and-technical-computing/service-workbench/) | Core engine for TRE. It provides a simple GUI interface for Researchers to provision secure cloud compute resources with data analytics tools.                               |
+|     2     | Mandatory | [Data Lake](https://aws.amazon.com/lake-formation)                                                                  | A pre-configured data lake to store and manage sensitive datasets.                                                                                                           |
+|     3     | Optional  | Data Egress Application                                                                                             | Provides a GUI-based data egress approval workflow for researchers to take out data from the TRE with the permission of an Information Governance Lead and Research IT Admin |
+|     4     | Optional  | Project Budget Controls                                                                                             | Allows TRE administrators to set policies to stop new ServiceWorkbench workspace creation when the provided budget limit is reached                                          |
+|     5     | Optional  | Workspace Backup                                                                                                    | Allows TRE administrators to backup and restore ServiceWorkbench workspaces                                                                                                  |
 
 ## Tools and Dependencies
 
@@ -57,13 +57,13 @@ Any package management requirements such as availability and security will need 
 
 ---
 
-| Component |Name                     | Source code location  |
-|:---------:|:------------------------|:-----------------------------------|
-| 1         | ServiceWorkbench | [Official Open-Source Repository](https://github.com/awslabs/service-workbench-on-aws/releases/tag/v5.2.3) |
-| 2         | Data Lake | [CloudFormation Template](../../src/data_lake/DataLake-Cfn.yaml) |
-| 3         | Data Egress Application | [CDKv1 Application](./) |
-| 4         | Project Budget Controls | [CloudFormation Template](../../src/components/budget_controls/ProjectBudgetControl-Cfn.yaml) |
-| 5         | Workspace Backup | [CDKv2 Application](./) |
+| Component | Name                    | Source code location                                                                                       |
+| :-------: | :---------------------- | :--------------------------------------------------------------------------------------------------------- |
+|     1     | ServiceWorkbench        | [Official Open-Source Repository](https://github.com/awslabs/service-workbench-on-aws/releases/tag/v5.2.3) |
+|     2     | Data Lake               | [CloudFormation Template](../../src/data_lake/DataLake-Cfn.yaml)                                           |
+|     3     | Data Egress Application | [CDKv1 Application](./)                                                                                    |
+|     4     | Project Budget Controls | [CloudFormation Template](../../src/components/budget_controls/ProjectBudgetControl-Cfn.yaml)              |
+|     5     | Workspace Backup        | [CDKv2 Application](./)                                                                                    |
 
 ## [Installation Guide](./INSTALLATION.md)
 

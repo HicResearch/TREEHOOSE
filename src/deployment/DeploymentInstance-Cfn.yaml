@@ -144,46 +144,46 @@ Resources:
           commands:
             dependencies:
               command: !Sub "su ec2-user -c ' \
-                        echo \"Initiating yum packages installation\"; \
-                        sudo yum update -y; \
-                        sudo yum install -y yum-utils git jq; \
-                        echo \"Completed yum packages installation\"; \
-                        echo \"---\"; \
-                        echo \"Initiating nodejs and serverless installs\"; \
-                        curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.34.0/install.sh | bash; \
-                        export PATH=/usr/local/bin:/usr/bin:/usr/local/sbin:/usr/sbin; \
-                        . ~/.nvm/nvm.sh; \
-                        source ~/.bashrc; \
-                        nvm install v14.17.0; \
-                        npm install -g pnpm@5.18.9 serverless@3.8.0; \
-                        echo \"Completed nodejs and serverless installs\"; \
-                        echo \"---\"; \
-                        echo \"Downloading additional packages\"; \
-                        mkdir ~/tmp && cd ~/tmp; \
-                        curl \"https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip\" -o \"awscliv2.zip\"; \
-                        wget https://go.dev/dl/go1.18.linux-amd64.tar.gz; \
-                        echo \"Finished downloading additional packages\"; \
-                        echo \"---\"; \
-                        echo \"Extracting additional packages\"; \
-                        sudo unzip awscliv2.zip; \
-                        sudo rm -rf /usr/local/go; \
-                        sudo tar -C /usr/local -xzf go1.18.linux-amd64.tar.gz; \
-                        echo \"Finished extracting additional packages\"; \
-                        echo \"---\"; \
-                        echo \"Installing additional packages\"; \
-                        ./aws/install; \
-                        echo \"export PATH=/usr/local/go/bin:$PATH\" >>~/.bash_profile; \
-                        echo \"Finished installing additional packages\"; \
-                        echo \"---\"; \
-                        echo \"Create default AWS profile\"; \
-                        mkdir ~/.aws; \
-                        echo \"[default]\" > ~/.aws/config; \
-                        echo \"region = ${AWS::Region}\" >> ~/.aws/config; \
-                        echo \"[default]\" > ~/.aws/credentials; \
-                        echo \"region = ${AWS::Region}\" >> ~/.aws/credentials; \
-                        echo \"Create default VPC\"; \
-                        existing_vpc=`aws ec2 describe-vpcs --filters Name=isDefault,Values=true --query \"Vpcs[].VpcId\" --profile default | jq .[0]`; \
-                        if [ \"$existing_vpc_id\" == \"null\" ]; then aws ec2 create-default-vpc; fi;'"
+                echo \"Initiating yum packages installation\"; \
+                sudo yum update -y; \
+                sudo yum install -y yum-utils git jq; \
+                echo \"Completed yum packages installation\"; \
+                echo \"---\"; \
+                echo \"Initiating nodejs and serverless installs\"; \
+                curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.34.0/install.sh | bash; \
+                export PATH=/usr/local/bin:/usr/bin:/usr/local/sbin:/usr/sbin; \
+                . ~/.nvm/nvm.sh; \
+                source ~/.bashrc; \
+                nvm install v14.17.0; \
+                npm install -g pnpm@5.18.9 serverless@3.8.0; \
+                echo \"Completed nodejs and serverless installs\"; \
+                echo \"---\"; \
+                echo \"Downloading additional packages\"; \
+                mkdir ~/tmp && cd ~/tmp; \
+                curl \"https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip\" -o \"awscliv2.zip\"; \
+                wget https://go.dev/dl/go1.18.linux-amd64.tar.gz; \
+                echo \"Finished downloading additional packages\"; \
+                echo \"---\"; \
+                echo \"Extracting additional packages\"; \
+                sudo unzip awscliv2.zip; \
+                sudo rm -rf /usr/local/go; \
+                sudo tar -C /usr/local -xzf go1.18.linux-amd64.tar.gz; \
+                echo \"Finished extracting additional packages\"; \
+                echo \"---\"; \
+                echo \"Installing additional packages\"; \
+                ./aws/install; \
+                echo \"export PATH=/usr/local/go/bin:$PATH\" >>~/.bash_profile; \
+                echo \"Finished installing additional packages\"; \
+                echo \"---\"; \
+                echo \"Create default AWS profile\"; \
+                mkdir ~/.aws; \
+                echo \"[default]\" > ~/.aws/config; \
+                echo \"region = ${AWS::Region}\" >> ~/.aws/config; \
+                echo \"[default]\" > ~/.aws/credentials; \
+                echo \"region = ${AWS::Region}\" >> ~/.aws/credentials; \
+                echo \"Create default VPC\"; \
+                existing_vpc=`aws ec2 describe-vpcs --filters Name=isDefault,Values=true --query \"Vpcs[].VpcId\" --profile default | jq .[0]`; \
+                if [ \"$existing_vpc_id\" == \"null\" ]; then aws ec2 create-default-vpc; fi;'"
     Properties:
       Tags:
         - Key: "Name"
@@ -201,8 +201,8 @@ Resources:
             DeleteOnTermination: true
             Encrypted: true
       UserData: !Base64
-        'Fn::Join':
-          - ''
+        "Fn::Join":
+          - ""
           - - |
               #!/bin/bash -x
             - |
@@ -210,21 +210,21 @@ Resources:
             - |+
 
             - |
-            - '/opt/aws/bin/cfn-init -v '
-            - '         --stack '
-            - !Ref 'AWS::StackName'
-            - '         --resource Instance '
-            - '         --region '
-            - !Ref 'AWS::Region'
+            - "/opt/aws/bin/cfn-init -v "
+            - "         --stack "
+            - !Ref "AWS::StackName"
+            - "         --resource Instance "
+            - "         --region "
+            - !Ref "AWS::Region"
             - |+
 
             - |
-            - '/opt/aws/bin/cfn-signal -e $? '
-            - '         --stack '
-            - !Ref 'AWS::StackName'
-            - '         --resource Instance '
-            - '         --region '
-            - !Ref 'AWS::Region'
+            - "/opt/aws/bin/cfn-signal -e $? "
+            - "         --stack "
+            - !Ref "AWS::StackName"
+            - "         --resource Instance "
+            - "         --region "
+            - !Ref "AWS::Region"
             - |+
     CreationPolicy:
       ResourceSignal:
@@ -258,7 +258,7 @@ Resources:
               Service:
                 - ec2.amazonaws.com
             Action:
-              - 'sts:AssumeRole'
+              - "sts:AssumeRole"
       ManagedPolicyArns:
         - arn:aws:iam::aws:policy/AmazonAppStreamFullAccess
         - arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore

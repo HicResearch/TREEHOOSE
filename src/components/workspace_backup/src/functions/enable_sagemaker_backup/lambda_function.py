@@ -156,7 +156,6 @@ chmod +x /tmp/backup.sh
     current_status = describe_change_set_response["Status"]
 
     while current_status != "CREATE_COMPLETE":
-
         describe_change_set_response = cfn_client.describe_change_set(
             ChangeSetName="backupchangeset",
             StackName=notebook_cfn_stack_name,

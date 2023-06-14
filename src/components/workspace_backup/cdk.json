@@ -41,7 +41,7 @@
       "move_to_cold_storage_after": {
         "days": 90
       },
-      "sagemaker_enable_selfservice_restore" : "true"
+      "sagemaker_enable_selfservice_restore": "true"
     }
   }
 }
