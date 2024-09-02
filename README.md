@@ -24,7 +24,7 @@ TREEHOOSE is an open-source platform for deploying TREs on Amazon Web Services
 TREs on public cloud infrastructure whilst maintaining security and trust.
 
 The recent
-[Goldacre Review ("Better, Broader, Safer: Using Health Data for Research and Analysis")](https://www.goldacrereview.org/)
+[Goldacre Review ("Better, Broader, Safer: Using Health Data for Research and Analysis")](https://assets.publishing.service.gov.uk/media/624ea0ade90e072a014d508a/goldacre-review-using-health-data-for-research-and-analysis.pdf)
 highlighted the need for standardisation across TREs, ideally through the use of
 open-source infrastructure.
 
